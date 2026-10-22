@@ -1,0 +1,4 @@
+[{"eid": "E1a", "etype": "E1_goal_update",
+  "trigger": {"kind": "skill", "skill": ["place", "place_on_object"], "held": "butter_1"},
+  "params": {"object": "butter_1", "old_target": "white_storage_box_1", "new_target": "coffee_table_table_region", "new_pred": "in"},
+  "message": "Change of plan: do NOT put the butter into the storage box. Leave the butter on the coffee table, outside the box."}]

@@ -1,0 +1,10 @@
+assets: "/Users/Apple/Documents/\u5B9E\u9A8C\u5BA4/\u8BBA\u6587/\u5177\u8EAB\u667A\
+  \u80FD/repos/RoboCerebra/LIBERO/libero/libero/assets"
+bddl_files: "/Users/Apple/Documents/\u5B9E\u9A8C\u5BA4/\u8BBA\u6587/\u5177\u8EAB\u667A\
+  \u80FD/repos/RoboCerebra/LIBERO/libero/libero/bddl_files"
+benchmark_root: "/Users/Apple/Documents/\u5B9E\u9A8C\u5BA4/\u8BBA\u6587/\u5177\u8EAB\
+  \u667A\u80FD/repos/RoboCerebra/LIBERO/libero/libero"
+datasets: "/Users/Apple/Documents/\u5B9E\u9A8C\u5BA4/\u8BBA\u6587/\u5177\u8EAB\u667A\
+  \u80FD/data/libero_datasets"
+init_states: "/Users/Apple/Documents/\u5B9E\u9A8C\u5BA4/\u8BBA\u6587/\u5177\u8EAB\u667A\
+  \u80FD/repos/RoboCerebra/LIBERO/libero/libero/init_files"

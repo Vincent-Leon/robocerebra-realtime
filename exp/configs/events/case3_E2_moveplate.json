@@ -1,0 +1,4 @@
+[{"eid": "E2a", "etype": "E2_container_move",
+  "trigger": {"kind": "skill", "skill": "pour", "held": "cookies_1"},
+  "params": {"object": "plate_1", "dx": 0.0, "dy": -0.35, "move_s": 1.5},
+  "message": null}]

@@ -1,0 +1,25 @@
+# 第三方代码、数据集与论文 PDF 不入库（获取方式见 README）
+repos/
+data/
+papers/
+
+# 运行环境与实验输出
+exp/.venv/
+**/__pycache__/
+exp/runs/
+*.npz
+*.hdf5
+*.mp4
+*.log
+_downloads/
+.DS_Store
+
+# 密钥：任何目录下的 .env 都不入库（模板见 exp/.env.example）
+.env
+**/.env
+
+# 历史代码快照（版本由 git 记录；排行榜所用代码即首个提交中的 exp/）
+exp_r*snap/
+
+# 合并文档的临时素材（含他人原图，不入库）
+notes/合并文档素材/

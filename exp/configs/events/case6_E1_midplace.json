@@ -1,0 +1,4 @@
+[{"eid": "E1a", "etype": "E1_goal_update",
+  "trigger": {"kind": "skill", "skill": "place", "arg": "short_cabinet_1_middle_region"},
+  "params": {"object": "butter_1", "old_target": "short_cabinet_1_middle_region", "new_target": "plate_1", "new_pred": "on"},
+  "message": "Change of plan: put the butter on the plate instead of in the short cabinet."}]

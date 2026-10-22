@@ -1,0 +1,5 @@
+[{"eid": "E3a", "etype": "E3_deadline_close",
+  "trigger": {"kind": "subgoals", "n": 2},
+  "params": {"region": "short_cabinet_1_middle_region", "close_s": 1.0, "lock_s": 1000000},
+  "message": "Warning: the short cabinet middle drawer will close automatically in 6 seconds and then stay locked.",
+  "window_s": 6}]
