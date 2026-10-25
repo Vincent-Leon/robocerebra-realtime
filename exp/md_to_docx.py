@@ -1,7 +1,8 @@
 """把本项目报告用到的 Markdown 子集转成 Word（.docx），用于导入飞书文档。
 支持：# / ## / ### 标题、段落（**加粗**、`代码`）、- 无序列表（两级，缩进 2 空格为第二级）、1. 有序列表（每个列表重新编号）、
 列表项下的缩进续行、表格（可缩进书写）、单独一行的图片 ![说明](相对路径)。
-用法: python3 md_to_docx.py <输入.md> [输出.docx]（图片路径相对输入文件所在目录）
+用法: python3 md_to_docx.py <输入.md> [输出.docx] [--drop-title]（图片路径相对输入文件所在目录）
+  --drop-title：去掉开头的一级标题，其余标题各升一级。导入飞书时用，因为飞书文档自带标题栏，导入时用 --name 指定标题。
 """
 import re, sys, copy
 from pathlib import Path
@@ -69,7 +70,7 @@ def add_table(doc, rows):
     doc.add_paragraph()
 
 
-def convert(src: Path, dst: Path):
+def convert(src: Path, dst: Path, drop_title: bool = False):
     doc = Document()
     st = doc.styles["Normal"]; st.font.name = CJK_FONT; st.font.size = Pt(11)
     st.element.rPr.rFonts.set(qn("w:eastAsia"), CJK_FONT)
@@ -77,6 +78,10 @@ def convert(src: Path, dst: Path):
         h = doc.styles[name]; h.font.name = CJK_FONT; h.element.rPr.rFonts.set(qn("w:eastAsia"), CJK_FONT); h.font.color.rgb = RGBColor(0x1D, 0x1D, 0x1F)
     num = Numbering(doc); cur_num = None; last_list_par = False
     lines = src.read_text(encoding="utf-8").splitlines(); i = 0
+    if drop_title:
+        k = next(j for j, ln in enumerate(lines) if ln.strip())
+        if lines[k].startswith("# "): lines = lines[:k] + lines[k + 1:]
+        lines = [ln[1:] if re.match(r"^#{2,3}\s", ln) else ln for ln in lines]
     while i < len(lines):
         raw = lines[i]; s = raw.strip()
         if not s:
@@ -113,5 +118,6 @@ def convert(src: Path, dst: Path):
 
 
 if __name__ == "__main__":
-    src = Path(sys.argv[1]); dst = Path(sys.argv[2]) if len(sys.argv) > 2 else src.with_suffix(".docx")
-    print("saved", convert(src, dst))
+    args = [a for a in sys.argv[1:] if not a.startswith("--")]
+    src = Path(args[0]); dst = Path(args[1]) if len(args) > 1 else src.with_suffix(".docx")
+    print("saved", convert(src, dst, drop_title="--drop-title" in sys.argv))
