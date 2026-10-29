@@ -114,6 +114,8 @@ details li b { color: var(--ink); font-weight: 600; }
 .tl text { font-size: 11.5px; } .tl .rowlab { fill: var(--muted); font-size: 11.5px; }
 .tl .hit { cursor: pointer; } .tl .bgclick { cursor: crosshair; }
 .grid2c { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid2 > *, .grid2c > *, .grid3 > *, .cats > *, .findings > *, .kpis > * { min-width: 0; }   /* 网格项默认不收窄，窄屏下会撑宽整页 */
+#planTbl, #calTbl { overflow-x: auto; }
 .grid2c .box h3 { font-size: 15.5px; } .grid2c .box p { font-size: 13.5px; }
 table.mini { font-size: 13px; } table.mini th, table.mini td { padding: 5px 6px; }
 .swatch { display: inline-block; width: 18px; height: 10px; border-radius: 3px; vertical-align: middle; }
