@@ -1,0 +1,22 @@
+# r5b 补充试点：失败屏蔽改为 3 次、被屏蔽的选择不计入中止并在连续坚持 3 次时放行；受屏蔽影响最大的 4 个任务 + 提前完成的 3 个任务
+Mix/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast

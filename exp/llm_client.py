@@ -69,11 +69,14 @@ def load_dotenv(path: Optional[str] = None) -> None:
 
 
 class LLMClient:
-    def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None, timeout: float = 120.0):
+    def __init__(self, base_url: Optional[str] = None, api_key: Optional[str] = None, model: Optional[str] = None, timeout: float = 120.0,
+                 profile: Optional[str] = None):
         load_dotenv()
         from openai import OpenAI
         # 配置档：LLM_PROFILE=exp → 读 LLM_EXP_*（L20 自部署实验实例，可控前缀缓存）；默认读 LLM_*（实验室网关）
-        pre = "LLM_EXP_" if os.environ.get("LLM_PROFILE", "").lower() == "exp" else "LLM_"
+        # profile 参数（exp | gateway）优先于环境变量，用于快慢分支分别连不同服务（r5 异构组合）
+        prof = (profile or os.environ.get("LLM_PROFILE", "")).lower()
+        pre = "LLM_EXP_" if prof == "exp" else "LLM_"
         self.profile = "exp" if pre == "LLM_EXP_" else "gateway"
         self.base_url = base_url or os.environ.get(pre + "BASE_URL", "http://localhost:8000/v1")
         self.api_key = api_key or os.environ.get(pre + "API_KEY", "EMPTY")

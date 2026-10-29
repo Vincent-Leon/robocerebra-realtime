@@ -1,0 +1,1471 @@
+{
+ "rows": [
+  {
+   "cfg": "qwen3.8-27b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3.8-27b · 双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.8096608484108483
+   ],
+   "score": 0.8096608484108483,
+   "sd": null,
+   "succ": 0.48333333333333334,
+   "cat": {
+    "Ideal": 0.8016150516150515,
+    "Memory_Execution": 0.8196428571428571,
+    "Memory_Exploration": 0.8573809523809525,
+    "Mix": 0.8200854700854702,
+    "Observation_Mismatching": 0.7833333333333332,
+    "Random_Disturbance": 0.7759074259074259
+   },
+   "fast_p50": 0.5481191873550415,
+   "fast_p95": 0.8232712507247923,
+   "slow_p50": 2.962766647338867,
+   "time_med": 105.15,
+   "tok_med": 29475.0,
+   "tok_cached_med": 34104.0,
+   "gpu_med": 42.009650111198425,
+   "tok_mean": {
+    "tok_cached": 39121.6,
+    "tok_in_nc": 28952.383333333335,
+    "tok_out": 586.75
+   },
+   "fail_med": 6.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 7.383333333333334,
+   "repeat_mean": 4.583333333333333,
+   "wait_mean": 4.8,
+   "premature": 9,
+   "premature_gt": 6,
+   "verify_mean": 0.4,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 29,
+    "planner_done": 9,
+    "abort": 0,
+    "max_skills": 22,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.5012244237244237,
+    "60": 0.7067072742072741,
+    "120": 0.797018398268398,
+    "180": 0.8041052928552929,
+    "None": 0.8096608484108483
+   }
+  },
+  {
+   "cfg": "qwen3.8-27b|dual_shared_jev|屏蔽3·核实",
+   "mode": "dual_shared_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3.8-27b · 双分支·完整计划·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.806301615051615
+   ],
+   "score": 0.806301615051615,
+   "sd": null,
+   "succ": 0.43333333333333335,
+   "cat": {
+    "Ideal": 0.8197968697968697,
+    "Memory_Execution": 0.8065476190476192,
+    "Memory_Exploration": 0.862857142857143,
+    "Mix": 0.7973581973581975,
+    "Observation_Mismatching": 0.7788888888888889,
+    "Random_Disturbance": 0.7723609723609723
+   },
+   "fast_p50": 0.499881386756897,
+   "fast_p95": 0.6834138154983513,
+   "slow_p50": 48.6916538476944,
+   "time_med": 96.275,
+   "tok_med": 31385.0,
+   "tok_cached_med": 42336.0,
+   "gpu_med": 62.7874755859375,
+   "tok_mean": {
+    "tok_cached": 29582.933333333334,
+    "tok_in_nc": 23174.016666666666,
+    "tok_out": 1284.2333333333333
+   },
+   "fail_med": 3.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 6.383333333333334,
+   "repeat_mean": 3.966666666666667,
+   "wait_mean": 7.733333333333333,
+   "premature": 3,
+   "premature_gt": 2,
+   "verify_mean": 0.15,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 26,
+    "planner_done": 3,
+    "abort": 0,
+    "max_skills": 31,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.5060767473267473,
+    "60": 0.6793583731083731,
+    "120": 0.7903624616124617,
+    "180": 0.7991587579087579,
+    "None": 0.806301615051615
+   }
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_jev|屏蔽3·核实",
+   "mode": "fast_shared_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3.8-27b · 仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.803465885965886
+   ],
+   "score": 0.803465885965886,
+   "sd": null,
+   "succ": 0.48333333333333334,
+   "cat": {
+    "Ideal": 0.7974891774891775,
+    "Memory_Execution": 0.763095238095238,
+    "Memory_Exploration": 0.8528571428571429,
+    "Mix": 0.8348484848484847,
+    "Observation_Mismatching": 0.8555555555555555,
+    "Random_Disturbance": 0.716949716949717
+   },
+   "fast_p50": 0.48177027702331543,
+   "fast_p95": 0.6936993122100827,
+   "slow_p50": null,
+   "time_med": 92.0,
+   "tok_med": 23703.5,
+   "tok_cached_med": 18424.0,
+   "gpu_med": 12.920928239822388,
+   "tok_mean": {
+    "tok_cached": 26133.333333333332,
+    "tok_in_nc": 22052.45,
+    "tok_out": 29.733333333333334
+   },
+   "fail_med": 4.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 6.483333333333333,
+   "repeat_mean": 4.1,
+   "wait_mean": 5.583333333333333,
+   "premature": 3,
+   "premature_gt": 2,
+   "verify_mean": 0.13333333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 29,
+    "planner_done": 3,
+    "abort": 0,
+    "max_skills": 28,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.4946000758500759,
+    "60": 0.6769435656935657,
+    "120": 0.784061124061124,
+    "180": 0.8020769970769971,
+    "None": 0.803465885965886
+   }
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3.8-27b · 仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.7869647482147483
+   ],
+   "score": 0.7869647482147483,
+   "sd": null,
+   "succ": 0.43333333333333335,
+   "cat": {
+    "Ideal": 0.8774891774891774,
+    "Memory_Execution": 0.8196428571428571,
+    "Memory_Exploration": 0.7940476190476191,
+    "Mix": 0.6946581196581196,
+    "Observation_Mismatching": 0.7699999999999999,
+    "Random_Disturbance": 0.765950715950716
+   },
+   "fast_p50": 2.684678554534912,
+   "fast_p95": 4.133525967597961,
+   "slow_p50": null,
+   "time_med": 144.675,
+   "tok_med": 17024.0,
+   "tok_cached_med": 16464.0,
+   "gpu_med": 53.66451096534729,
+   "tok_mean": {
+    "tok_cached": 29844.266666666666,
+    "tok_in_nc": 18615.416666666668,
+    "tok_out": 1561.0833333333333
+   },
+   "fail_med": 3.5,
+   "invalid_mean": 0.13333333333333333,
+   "fail_mean": 6.1,
+   "repeat_mean": 3.8,
+   "wait_mean": 6.616666666666666,
+   "premature": 9,
+   "premature_gt": 6,
+   "verify_mean": 0.4666666666666667,
+   "blocked_mean": 1.9333333333333333,
+   "ends": {
+    "all_done": 26,
+    "planner_done": 9,
+    "abort": 0,
+    "max_skills": 17,
+    "max_sim": 8
+   },
+   "budget": {
+    "30": 0.38610287860287856,
+    "60": 0.637216255966256,
+    "120": 0.7465218577718578,
+    "180": 0.7806155418655418,
+    "None": 0.7869647482147483
+   }
+  },
+  {
+   "cfg": "qwen3-vl-32b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "model": "qwen3-vl-32b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-32b · 仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.7765303215303215
+   ],
+   "score": 0.7765303215303215,
+   "sd": null,
+   "succ": 0.4166666666666667,
+   "cat": {
+    "Ideal": 0.8177489177489179,
+    "Memory_Execution": 0.8327380952380953,
+    "Memory_Exploration": 0.7114835164835165,
+    "Mix": 0.7667152292152292,
+    "Observation_Mismatching": 0.7733333333333333,
+    "Random_Disturbance": 0.7571628371628372
+   },
+   "fast_p50": 5.801534652709961,
+   "fast_p95": 9.52106785774231,
+   "slow_p50": null,
+   "time_med": 300.0,
+   "tok_med": 10841.0,
+   "tok_cached_med": 35584.0,
+   "gpu_med": 165.0598691701889,
+   "tok_mean": {
+    "tok_cached": 31160.0,
+    "tok_in_nc": 7192.483333333334,
+    "tok_out": 2020.25
+   },
+   "fail_med": 6.0,
+   "invalid_mean": 0.25,
+   "fail_mean": 6.5,
+   "repeat_mean": 4.25,
+   "wait_mean": 2.816666666666667,
+   "premature": 1,
+   "premature_gt": 1,
+   "verify_mean": 0.16666666666666666,
+   "blocked_mean": 2.0,
+   "ends": {
+    "all_done": 25,
+    "planner_done": 1,
+    "abort": 0,
+    "max_skills": 0,
+    "max_sim": 34
+   },
+   "budget": {
+    "30": 0.2692010304510305,
+    "60": 0.4636058848558849,
+    "120": 0.6417841417841418,
+    "180": 0.7303478928478928,
+    "None": 0.7765303215303215
+   }
+  },
+  {
+   "cfg": "qwen3-vl-32b|fast_shared_jev|屏蔽3·核实",
+   "mode": "fast_shared_jev",
+   "model": "qwen3-vl-32b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-32b · 仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.7227257464757464
+   ],
+   "score": 0.7227257464757464,
+   "sd": null,
+   "succ": 0.4166666666666667,
+   "cat": {
+    "Ideal": 0.7614552114552114,
+    "Memory_Execution": 0.5783730158730159,
+    "Memory_Exploration": 0.7681135531135531,
+    "Mix": 0.7843434343434343,
+    "Observation_Mismatching": 0.7033333333333334,
+    "Random_Disturbance": 0.7407359307359307
+   },
+   "fast_p50": 0.35228073596954346,
+   "fast_p95": 0.4318090915679932,
+   "slow_p50": null,
+   "time_med": 121.15,
+   "tok_med": 17995.0,
+   "tok_cached_med": 55072.0,
+   "gpu_med": 13.696068286895752,
+   "tok_mean": {
+    "tok_cached": 42364.53333333333,
+    "tok_in_nc": 14200.516666666666,
+    "tok_out": 38.266666666666666
+   },
+   "fail_med": 4.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 7.216666666666667,
+   "repeat_mean": 4.583333333333333,
+   "wait_mean": 4.416666666666667,
+   "premature": 1,
+   "premature_gt": 1,
+   "verify_mean": 0.11666666666666667,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 25,
+    "planner_done": 1,
+    "abort": 0,
+    "max_skills": 34,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.4763886113886114,
+    "60": 0.6327447552447553,
+    "120": 0.6952837440337442,
+    "180": 0.71115675990676,
+    "None": 0.7227257464757464
+   }
+  },
+  {
+   "cfg": "qwen3-vl-32b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "model": "qwen3-vl-32b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-32b · 双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.7036289173789173
+   ],
+   "score": 0.7036289173789173,
+   "sd": null,
+   "succ": 0.35,
+   "cat": {
+    "Ideal": 0.7104595404595404,
+    "Memory_Execution": 0.8244047619047619,
+    "Memory_Exploration": 0.6233716283716284,
+    "Mix": 0.6391219891219891,
+    "Observation_Mismatching": 0.7233333333333334,
+    "Random_Disturbance": 0.7010822510822511
+   },
+   "fast_p50": 0.3864879608154297,
+   "fast_p95": 0.49837570190429686,
+   "slow_p50": 2.9144246578216553,
+   "time_med": 135.2,
+   "tok_med": 24276.0,
+   "tok_cached_med": 89624.0,
+   "gpu_med": 73.59972333908081,
+   "tok_mean": {
+    "tok_cached": 76061.06666666667,
+    "tok_in_nc": 19328.216666666667,
+    "tok_out": 706.05
+   },
+   "fail_med": 5.5,
+   "invalid_mean": 0.0,
+   "fail_mean": 8.766666666666667,
+   "repeat_mean": 5.666666666666667,
+   "wait_mean": 3.683333333333333,
+   "premature": 0,
+   "premature_gt": 0,
+   "verify_mean": 0.05,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 21,
+    "planner_done": 0,
+    "abort": 0,
+    "max_skills": 39,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.4161868686868686,
+    "60": 0.5765521978021979,
+    "120": 0.6821362433862433,
+    "180": 0.6984701872201874,
+    "None": 0.7036289173789173
+   }
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_think|屏蔽3·核实",
+   "mode": "fast_shared_think",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3.8-27b · 仅慢（每步开思考）",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6988144263144263
+   ],
+   "score": 0.6988144263144263,
+   "sd": null,
+   "succ": 0.38333333333333336,
+   "cat": {
+    "Ideal": 0.8190309690309692,
+    "Memory_Execution": 0.4982142857142856,
+    "Memory_Exploration": 0.770952380952381,
+    "Mix": 0.6079156954156953,
+    "Observation_Mismatching": 0.8033333333333333,
+    "Random_Disturbance": 0.6934398934398934
+   },
+   "fast_p50": 11.95802915096283,
+   "fast_p95": 59.861542999744415,
+   "slow_p50": null,
+   "time_med": 300.0,
+   "tok_med": 10152.0,
+   "tok_cached_med": 6272.0,
+   "gpu_med": 195.09418213367462,
+   "tok_mean": {
+    "tok_cached": 6559.466666666666,
+    "tok_in_nc": 6161.1,
+    "tok_out": 4056.6833333333334
+   },
+   "fail_med": 2.0,
+   "invalid_mean": 0.06666666666666667,
+   "fail_mean": 2.1666666666666665,
+   "repeat_mean": 0.7833333333333333,
+   "wait_mean": 0.31666666666666665,
+   "premature": 1,
+   "premature_gt": 0,
+   "verify_mean": 0.03333333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 23,
+    "planner_done": 1,
+    "abort": 0,
+    "max_skills": 0,
+    "max_sim": 36
+   },
+   "budget": {
+    "30": 0.17618136493136494,
+    "60": 0.35582311207311207,
+    "120": 0.5398295223295223,
+    "180": 0.6234766622266623,
+    "None": 0.6988144263144263
+   }
+  },
+  {
+   "cfg": "qwen3-vl-4b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "model": "qwen3-vl-4b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-4b · 双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6731704406704407
+   ],
+   "score": 0.6731704406704407,
+   "sd": null,
+   "succ": 0.21666666666666667,
+   "cat": {
+    "Ideal": 0.6437895437895438,
+    "Memory_Execution": 0.7329365079365079,
+    "Memory_Exploration": 0.6608225108225108,
+    "Mix": 0.7280691530691531,
+    "Observation_Mismatching": 0.5916666666666668,
+    "Random_Disturbance": 0.6817382617382618
+   },
+   "fast_p50": 0.15355932712554932,
+   "fast_p95": 0.18556216955184937,
+   "slow_p50": 0.5487220287322998,
+   "time_med": 154.575,
+   "tok_med": 24047.0,
+   "tok_cached_med": 90584.0,
+   "gpu_med": 16.021889328956604,
+   "tok_mean": {
+    "tok_cached": 82785.06666666667,
+    "tok_in_nc": 21001.033333333333,
+    "tok_out": 627.7
+   },
+   "fail_med": 10.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 10.633333333333333,
+   "repeat_mean": 7.116666666666666,
+   "wait_mean": 3.466666666666667,
+   "premature": 4,
+   "premature_gt": 2,
+   "verify_mean": 0.35,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 13,
+    "planner_done": 4,
+    "abort": 0,
+    "max_skills": 42,
+    "max_sim": 1
+   },
+   "budget": {
+    "30": 0.3723939486439486,
+    "60": 0.511968586968587,
+    "120": 0.6263030488030488,
+    "180": 0.6666533466533465,
+    "None": 0.6731704406704407
+   }
+  },
+  {
+   "cfg": "qwen3-vl-8b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "model": "qwen3-vl-8b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-8b · 双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6638481425981426
+   ],
+   "score": 0.6638481425981426,
+   "sd": null,
+   "succ": 0.18333333333333332,
+   "cat": {
+    "Ideal": 0.791005661005661,
+    "Memory_Execution": 0.6581349206349206,
+    "Memory_Exploration": 0.5466699966699966,
+    "Mix": 0.5932400932400932,
+    "Observation_Mismatching": 0.6544444444444444,
+    "Random_Disturbance": 0.7395937395937395
+   },
+   "fast_p50": 0.1892392635345459,
+   "fast_p95": 0.2325788021087646,
+   "slow_p50": 0.8784496784210205,
+   "time_med": 152.375,
+   "tok_med": 23985.0,
+   "tok_cached_med": 93648.0,
+   "gpu_med": 23.014650464057922,
+   "tok_mean": {
+    "tok_cached": 83062.4,
+    "tok_in_nc": 20272.8,
+    "tok_out": 606.9333333333333
+   },
+   "fail_med": 7.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 7.366666666666666,
+   "repeat_mean": 4.816666666666666,
+   "wait_mean": 4.516666666666667,
+   "premature": 5,
+   "premature_gt": 2,
+   "verify_mean": 0.4666666666666667,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 11,
+    "planner_done": 5,
+    "abort": 0,
+    "max_skills": 41,
+    "max_sim": 3
+   },
+   "budget": {
+    "30": 0.3927433214933215,
+    "60": 0.5269074444074444,
+    "120": 0.6336505624005624,
+    "180": 0.6581663244163244,
+    "None": 0.6638481425981426
+   }
+  },
+  {
+   "cfg": "qwen3-vl-8b|fast_shared_jev|屏蔽3·核实",
+   "mode": "fast_shared_jev",
+   "model": "qwen3-vl-8b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-8b · 仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6397559385059385
+   ],
+   "score": 0.6397559385059385,
+   "sd": null,
+   "succ": 0.08333333333333333,
+   "cat": {
+    "Ideal": 0.7474025974025974,
+    "Memory_Execution": 0.5890873015873016,
+    "Memory_Exploration": 0.6016167166167167,
+    "Mix": 0.5736985236985237,
+    "Observation_Mismatching": 0.6527777777777778,
+    "Random_Disturbance": 0.6739527139527139
+   },
+   "fast_p50": 0.17864787578582764,
+   "fast_p95": 0.20688300132751464,
+   "slow_p50": null,
+   "time_med": 168.3,
+   "tok_med": 20341.0,
+   "tok_cached_med": 61616.0,
+   "gpu_med": 7.48093056678772,
+   "tok_mean": {
+    "tok_cached": 55782.13333333333,
+    "tok_in_nc": 18592.283333333333,
+    "tok_out": 56.4
+   },
+   "fail_med": 6.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 7.733333333333333,
+   "repeat_mean": 5.466666666666667,
+   "wait_mean": 5.433333333333334,
+   "premature": 3,
+   "premature_gt": 3,
+   "verify_mean": 0.55,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 5,
+    "planner_done": 3,
+    "abort": 0,
+    "max_skills": 52,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.4219734432234432,
+    "60": 0.5864740352240351,
+    "120": 0.6251184926184925,
+    "180": 0.6342725330225331,
+    "None": 0.6397559385059385
+   }
+  },
+  {
+   "cfg": "qwen3-vl-4b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "model": "qwen3-vl-4b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-4b · 仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6250082325082325
+   ],
+   "score": 0.6250082325082325,
+   "sd": null,
+   "succ": 0.18333333333333332,
+   "cat": {
+    "Ideal": 0.6537495837495837,
+    "Memory_Execution": 0.5154761904761904,
+    "Memory_Exploration": 0.6935647685647686,
+    "Mix": 0.5595765345765347,
+    "Observation_Mismatching": 0.6766666666666666,
+    "Random_Disturbance": 0.651015651015651
+   },
+   "fast_p50": 0.8316588401794434,
+   "fast_p95": 1.1436388492584229,
+   "slow_p50": null,
+   "time_med": 164.3,
+   "tok_med": 18736.5,
+   "tok_cached_med": 72248.0,
+   "gpu_med": 38.889894127845764,
+   "tok_mean": {
+    "tok_cached": 123824.26666666666,
+    "tok_in_nc": 19652.583333333332,
+    "tok_out": 3468.65
+   },
+   "fail_med": 11.5,
+   "invalid_mean": 1.0666666666666667,
+   "fail_mean": 15.066666666666666,
+   "repeat_mean": 12.0,
+   "wait_mean": 0.85,
+   "premature": 3,
+   "premature_gt": 3,
+   "verify_mean": 0.3,
+   "blocked_mean": 27.95,
+   "ends": {
+    "all_done": 11,
+    "planner_done": 3,
+    "abort": 1,
+    "max_skills": 44,
+    "max_sim": 1
+   },
+   "budget": {
+    "30": 0.4086093073593074,
+    "60": 0.5285462685462686,
+    "120": 0.6005902430902431,
+    "180": 0.618526751026751,
+    "None": 0.6250082325082325
+   }
+  },
+  {
+   "cfg": "qwen3-vl-8b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "model": "qwen3-vl-8b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-8b · 仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.5865290265290266
+   ],
+   "score": 0.5865290265290266,
+   "sd": null,
+   "succ": 0.25,
+   "cat": {
+    "Ideal": 0.7402597402597403,
+    "Memory_Execution": 0.5845238095238094,
+    "Memory_Exploration": 0.396964701964702,
+    "Mix": 0.33585858585858586,
+    "Observation_Mismatching": 0.6844444444444445,
+    "Random_Disturbance": 0.7771228771228771
+   },
+   "fast_p50": 1.290901780128479,
+   "fast_p95": 1.9229809045791626,
+   "slow_p50": null,
+   "time_med": 179.77499999999998,
+   "tok_med": 21996.5,
+   "tok_cached_med": 99856.0,
+   "gpu_med": 79.82938146591187,
+   "tok_mean": {
+    "tok_cached": 138685.33333333334,
+    "tok_in_nc": 19615.383333333335,
+    "tok_out": 3426.1
+   },
+   "fail_med": 14.0,
+   "invalid_mean": 0.11666666666666667,
+   "fail_mean": 15.783333333333333,
+   "repeat_mean": 13.9,
+   "wait_mean": 0.8,
+   "premature": 3,
+   "premature_gt": 3,
+   "verify_mean": 0.1,
+   "blocked_mean": 36.56666666666667,
+   "ends": {
+    "all_done": 15,
+    "planner_done": 3,
+    "abort": 1,
+    "max_skills": 32,
+    "max_sim": 9
+   },
+   "budget": {
+    "30": 0.36833652458652455,
+    "60": 0.4908212158212158,
+    "120": 0.5385390535390535,
+    "180": 0.5578974728974728,
+    "None": 0.5865290265290266
+   }
+  },
+  {
+   "cfg": "qwen3-vl-4b|fast_shared_jev|屏蔽3·核实",
+   "mode": "fast_shared_jev",
+   "model": "qwen3-vl-4b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-4b · 仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.5755268342768344
+   ],
+   "score": 0.5755268342768344,
+   "sd": null,
+   "succ": 0.13333333333333333,
+   "cat": {
+    "Ideal": 0.6157042957042956,
+    "Memory_Execution": 0.679563492063492,
+    "Memory_Exploration": 0.3201332001332002,
+    "Mix": 0.5188811188811189,
+    "Observation_Mismatching": 0.6755555555555555,
+    "Random_Disturbance": 0.6433233433233433
+   },
+   "fast_p50": 0.13984441757202148,
+   "fast_p95": 0.1642416000366211,
+   "slow_p50": null,
+   "time_med": 165.325,
+   "tok_med": 19992.0,
+   "tok_cached_med": 60824.0,
+   "gpu_med": 5.711090922355652,
+   "tok_mean": {
+    "tok_cached": 55961.333333333336,
+    "tok_in_nc": 18330.366666666665,
+    "tok_out": 59.88333333333333
+   },
+   "fail_med": 7.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 10.183333333333334,
+   "repeat_mean": 7.516666666666667,
+   "wait_mean": 3.3,
+   "premature": 0,
+   "premature_gt": 0,
+   "verify_mean": 0.31666666666666665,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 8,
+    "planner_done": 0,
+    "abort": 0,
+    "max_skills": 50,
+    "max_sim": 2
+   },
+   "budget": {
+    "30": 0.37575956450956455,
+    "60": 0.4935773948273949,
+    "120": 0.551115874865875,
+    "180": 0.5755268342768344,
+    "None": 0.5755268342768344
+   }
+  },
+  {
+   "cfg": "qwen3-vl-2b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "model": "qwen3-vl-2b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-2b · 双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.49330327080327074
+   ],
+   "score": 0.49330327080327074,
+   "sd": null,
+   "succ": 0.05,
+   "cat": {
+    "Ideal": 0.5696436896436896,
+    "Memory_Execution": 0.5059523809523809,
+    "Memory_Exploration": 0.45431734931734935,
+    "Mix": 0.49916472416472424,
+    "Observation_Mismatching": 0.4144444444444445,
+    "Random_Disturbance": 0.5162970362970363
+   },
+   "fast_p50": 0.12834978103637695,
+   "fast_p95": 0.16150217056274413,
+   "slow_p50": 0.4303574562072754,
+   "time_med": 133.8,
+   "tok_med": 25779.5,
+   "tok_cached_med": 94728.0,
+   "gpu_med": 14.191234707832336,
+   "tok_mean": {
+    "tok_cached": 87034.4,
+    "tok_in_nc": 21874.4,
+    "tok_out": 1064.0666666666666
+   },
+   "fail_med": 12.5,
+   "invalid_mean": 0.0,
+   "fail_mean": 12.783333333333333,
+   "repeat_mean": 9.533333333333333,
+   "wait_mean": 0.0,
+   "premature": 14,
+   "premature_gt": 12,
+   "verify_mean": 0.7833333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 3,
+    "planner_done": 14,
+    "abort": 0,
+    "max_skills": 40,
+    "max_sim": 3
+   },
+   "budget": {
+    "30": 0.3417816905316905,
+    "60": 0.4022694435194435,
+    "120": 0.46435069560069553,
+    "180": 0.48973184223184224,
+    "None": 0.49330327080327074
+   }
+  },
+  {
+   "cfg": "qwen3-vl-2b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "model": "qwen3-vl-2b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-2b · 仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.3924967162467163
+   ],
+   "score": 0.3924967162467163,
+   "sd": null,
+   "succ": 0.1,
+   "cat": {
+    "Ideal": 0.49750582750582745,
+    "Memory_Execution": 0.4623015873015873,
+    "Memory_Exploration": 0.18182650682650683,
+    "Mix": 0.2731060606060606,
+    "Observation_Mismatching": 0.48277777777777775,
+    "Random_Disturbance": 0.45746253746253746
+   },
+   "fast_p50": 0.5950155258178711,
+   "fast_p95": 1.50576913356781,
+   "slow_p50": null,
+   "time_med": 116.225,
+   "tok_med": 30303.0,
+   "tok_cached_med": 121264.0,
+   "gpu_med": 48.9248685836792,
+   "tok_mean": {
+    "tok_cached": 163879.73333333334,
+    "tok_in_nc": 23357.216666666667,
+    "tok_out": 6757.466666666666
+   },
+   "fail_med": 21.5,
+   "invalid_mean": 7.95,
+   "fail_mean": 20.183333333333334,
+   "repeat_mean": 16.966666666666665,
+   "wait_mean": 0.03333333333333333,
+   "premature": 1,
+   "premature_gt": 1,
+   "verify_mean": 0.11666666666666667,
+   "blocked_mean": 39.06666666666667,
+   "ends": {
+    "all_done": 6,
+    "planner_done": 1,
+    "abort": 17,
+    "max_skills": 36,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.2509178321678322,
+    "60": 0.2993106893106894,
+    "120": 0.36622386872386875,
+    "180": 0.3924967162467163,
+    "None": 0.3924967162467163
+   }
+  },
+  {
+   "cfg": "qwen3-vl-2b|fast_shared_jev|屏蔽3·核实",
+   "mode": "fast_shared_jev",
+   "model": "qwen3-vl-2b",
+   "variant": "屏蔽3·核实",
+   "name": "qwen3-vl-2b · 仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.37320799570799573
+   ],
+   "score": 0.37320799570799573,
+   "sd": null,
+   "succ": 0.016666666666666666,
+   "cat": {
+    "Ideal": 0.4999300699300699,
+    "Memory_Execution": 0.31388888888888894,
+    "Memory_Exploration": 0.4125774225774226,
+    "Mix": 0.23885003885003883,
+    "Observation_Mismatching": 0.33444444444444443,
+    "Random_Disturbance": 0.4395571095571095
+   },
+   "fast_p50": 0.11518621444702148,
+   "fast_p95": 0.12959370613098145,
+   "slow_p50": null,
+   "time_med": 127.475,
+   "tok_med": 18870.0,
+   "tok_cached_med": 63192.0,
+   "gpu_med": 4.705293893814087,
+   "tok_mean": {
+    "tok_cached": 52171.2,
+    "tok_in_nc": 17303.166666666668,
+    "tok_out": 115.13333333333334
+   },
+   "fail_med": 6.5,
+   "invalid_mean": 0.0,
+   "fail_mean": 10.183333333333334,
+   "repeat_mean": 7.45,
+   "wait_mean": 0.0,
+   "premature": 16,
+   "premature_gt": 15,
+   "verify_mean": 0.9333333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 1,
+    "planner_done": 16,
+    "abort": 0,
+    "max_skills": 41,
+    "max_sim": 2
+   },
+   "budget": {
+    "30": 0.2929421504421504,
+    "60": 0.31706830206830205,
+    "120": 0.36438626188626183,
+    "180": 0.3669656269656269,
+    "None": 0.37320799570799573
+   }
+  }
+ ],
+ "gt": {
+  "score": 0.8249085636585637,
+  "succ": 0.4,
+  "n": 60,
+  "cat": {
+   "Ideal": 0.7851781551781551,
+   "Memory_Execution": 0.83234126984127,
+   "Memory_Exploration": 0.8928571428571429,
+   "Mix": 0.7817599067599068,
+   "Observation_Mismatching": 0.8277777777777778,
+   "Random_Disturbance": 0.8295371295371294
+  }
+ },
+ "bad": [],
+ "pairs": [
+  {
+   "cfg": "qwen3.8-27b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3.8-27b · 双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.006194962444962446,
+   "lo": -0.03460608257483256,
+   "hi": 0.04974861712361713,
+   "win": 13,
+   "tie": 33,
+   "loss": 14
+  },
+  {
+   "cfg": "qwen3.8-27b|dual_shared_jev|屏蔽3·核实",
+   "mode": "dual_shared_jev",
+   "name": "qwen3.8-27b · 双分支·完整计划·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.0028357290857290865,
+   "lo": -0.03744576603951605,
+   "hi": 0.04311535570910568,
+   "win": 8,
+   "tie": 42,
+   "loss": 10
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3.8-27b · 仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": -0.01650113775113775,
+   "lo": -0.07128699888074888,
+   "hi": 0.03802137677137674,
+   "win": 9,
+   "tie": 34,
+   "loss": 17
+  },
+  {
+   "cfg": "qwen3-vl-32b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-32b · 仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": 0.053804575054575046,
+   "lo": -0.010706962019462016,
+   "hi": 0.11817987914862914,
+   "win": 18,
+   "tie": 30,
+   "loss": 12
+  },
+  {
+   "cfg": "qwen3-vl-32b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-32b · 双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": -0.019096829096829103,
+   "lo": -0.08650309412809414,
+   "hi": 0.047708102083102,
+   "win": 12,
+   "tie": 32,
+   "loss": 16
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_think|屏蔽3·核实",
+   "mode": "fast_shared_think",
+   "name": "qwen3.8-27b · 仅慢（每步开思考）",
+   "budget": null,
+   "n": 60,
+   "diff": -0.10465145965145965,
+   "lo": -0.16988835816960818,
+   "hi": -0.04057168525918528,
+   "win": 9,
+   "tie": 28,
+   "loss": 23
+  },
+  {
+   "cfg": "qwen3-vl-4b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-4b · 双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.09764360639360639,
+   "lo": 0.021816788535538527,
+   "hi": 0.17123347601472602,
+   "win": 31,
+   "tie": 16,
+   "loss": 13
+  },
+  {
+   "cfg": "qwen3-vl-8b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-8b · 双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.024092204092204087,
+   "lo": -0.03000874125874126,
+   "hi": 0.07870300070300068,
+   "win": 20,
+   "tie": 22,
+   "loss": 18
+  },
+  {
+   "cfg": "qwen3-vl-4b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-4b · 仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": 0.04948139823139823,
+   "lo": -0.019622221528471526,
+   "hi": 0.11704906551781549,
+   "win": 23,
+   "tie": 21,
+   "loss": 16
+  },
+  {
+   "cfg": "qwen3-vl-8b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-8b · 仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": -0.05322691197691198,
+   "lo": -0.13560246813371815,
+   "hi": 0.03210061466311457,
+   "win": 18,
+   "tie": 16,
+   "loss": 26
+  },
+  {
+   "cfg": "qwen3-vl-2b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-2b · 双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.1200952750952751,
+   "lo": 0.0674384435009435,
+   "hi": 0.17741960123210124,
+   "win": 32,
+   "tie": 20,
+   "loss": 8
+  },
+  {
+   "cfg": "qwen3-vl-2b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-2b · 仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": 0.019288720538720543,
+   "lo": -0.06268329471454472,
+   "hi": 0.10487078083953083,
+   "win": 20,
+   "tie": 14,
+   "loss": 26
+  },
+  {
+   "cfg": "qwen3.8-27b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3.8-27b · 双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.029763708513708513,
+   "lo": -0.010833377270877275,
+   "hi": 0.07198545320420317,
+   "win": 15,
+   "tie": 32,
+   "loss": 13
+  },
+  {
+   "cfg": "qwen3.8-27b|dual_shared_jev|屏蔽3·核实",
+   "mode": "dual_shared_jev",
+   "name": "qwen3.8-27b · 双分支·完整计划·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.002414807414807411,
+   "lo": -0.021678626928626932,
+   "hi": 0.027812414437414425,
+   "win": 8,
+   "tie": 43,
+   "loss": 9
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3.8-27b · 仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.03972730972730973,
+   "lo": -0.08989167776667777,
+   "hi": 0.010904831279831275,
+   "win": 10,
+   "tie": 22,
+   "loss": 28
+  },
+  {
+   "cfg": "qwen3-vl-32b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-32b · 仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.1691388703888704,
+   "lo": -0.23188411357161356,
+   "hi": -0.10590931637806646,
+   "win": 7,
+   "tie": 14,
+   "loss": 39
+  },
+  {
+   "cfg": "qwen3-vl-32b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-32b · 双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.05619255744255745,
+   "lo": -0.11473426226551224,
+   "hi": -0.0030905275280275328,
+   "win": 8,
+   "tie": 36,
+   "loss": 16
+  },
+  {
+   "cfg": "qwen3.8-27b|fast_shared_think|屏蔽3·核实",
+   "mode": "fast_shared_think",
+   "name": "qwen3.8-27b · 仅慢（每步开思考）",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.3211204536204536,
+   "lo": -0.38215885734635735,
+   "hi": -0.2600299075924076,
+   "win": 4,
+   "tie": 8,
+   "loss": 48
+  },
+  {
+   "cfg": "qwen3-vl-4b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-4b · 双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.01839119214119213,
+   "lo": -0.04053930560180561,
+   "hi": 0.0731579323454323,
+   "win": 23,
+   "tie": 24,
+   "loss": 13
+  },
+  {
+   "cfg": "qwen3-vl-8b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-8b · 双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.05956659081659081,
+   "lo": -0.10722242456617456,
+   "hi": -0.012488861832611838,
+   "win": 11,
+   "tie": 22,
+   "loss": 27
+  },
+  {
+   "cfg": "qwen3-vl-4b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-4b · 仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.034968873718873715,
+   "lo": -0.021999691280941275,
+   "hi": 0.09104886201761202,
+   "win": 26,
+   "tie": 16,
+   "loss": 18
+  },
+  {
+   "cfg": "qwen3-vl-8b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-8b · 仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.0956528194028194,
+   "lo": -0.1623137175324675,
+   "hi": -0.027290871165871203,
+   "win": 16,
+   "tie": 15,
+   "loss": 29
+  },
+  {
+   "cfg": "qwen3-vl-2b|dual_advice_jev|屏蔽3·核实",
+   "mode": "dual_advice_jev",
+   "name": "qwen3-vl-2b · 双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.08520114145114145,
+   "lo": 0.048546996984496986,
+   "hi": 0.12264795621045621,
+   "win": 29,
+   "tie": 24,
+   "loss": 7
+  },
+  {
+   "cfg": "qwen3-vl-2b|fast_shared_text|屏蔽3·核实",
+   "mode": "fast_shared_text",
+   "name": "qwen3-vl-2b · 仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.017757612757612753,
+   "lo": -0.07967945017945016,
+   "hi": 0.04704715423465422,
+   "win": 20,
+   "tie": 17,
+   "loss": 23
+  }
+ ]
+}

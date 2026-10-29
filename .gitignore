@@ -23,3 +23,7 @@ exp_r*snap/
 
 # 合并文档的临时素材（含他人原图，不入库）
 notes/合并文档素材/
+
+# 生成物：网站（exp/make_site.py、render_demo.py 生成，含视频）与逐局统计（analyze_leaderboard.py 可从 exp/runs 重新生成）
+site/
+notes/figs_lb/*_episodes.json

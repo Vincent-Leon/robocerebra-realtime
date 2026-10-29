@@ -1,0 +1,735 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Embodied Real-Time Bench — preview</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --ring: rgba(11,11,11,0.10); --wash: rgba(11,11,11,0.045);
+  --m0: #008300; --m1: #2a78d6; --m2: #eda100; --m3: #6250d6; --m4: #eb6834; --accent: #1c5cab;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { color-scheme: dark;
+    --page: #121211; --surface: #1a1a19; --ink: #f2f1ec; --ink2: #b8b7b0; --muted: #85847d;
+    --grid: #2c2c2a; --axis: #45443f; --ring: rgba(242,241,236,0.12); --wash: rgba(242,241,236,0.05);
+    --m0: #2bb62b; --m1: #5e9fec; --m2: #f2b733; --m3: #8f80ef; --m4: #f2864f; --accent: #86b6ef; }
+}
+:root[data-theme="dark"] { color-scheme: dark;
+  --page: #121211; --surface: #1a1a19; --ink: #f2f1ec; --ink2: #b8b7b0; --muted: #85847d;
+  --grid: #2c2c2a; --axis: #45443f; --ring: rgba(242,241,236,0.12); --wash: rgba(242,241,236,0.05);
+  --m0: #2bb62b; --m1: #5e9fec; --m2: #f2b733; --m3: #8f80ef; --m4: #f2864f; --accent: #86b6ef; }
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { margin: 0; background: var(--page); color: var(--ink); font: 15px/1.6 system-ui, -apple-system, "Segoe UI", "Helvetica Neue", Arial, sans-serif; }
+a { color: var(--accent); text-decoration: none; } a:hover { text-decoration: underline; }
+nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--page) 92%, transparent); backdrop-filter: blur(6px); border-bottom: 1px solid var(--grid); }
+nav .in { max-width: 1240px; margin: 0 auto; padding: 10px 24px; display: flex; gap: 22px; align-items: center; }
+nav .brand { font-weight: 700; letter-spacing: 0.01em; color: var(--ink); }
+nav .links { display: flex; gap: 18px; flex: 1; font-size: 14px; }
+nav .links a { color: var(--ink2); }
+.btn { white-space: nowrap; font: inherit; font-size: 13px; color: var(--ink2); background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 5px 12px; cursor: pointer; }
+.btn:hover { background: var(--wash); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 24px 64px; }
+.hero { padding: 56px 0 28px; }
+.tag { display: inline-block; font-size: 12px; color: var(--ink2); border: 1px solid var(--ring); border-radius: 999px; padding: 2px 10px; margin-bottom: 14px; }
+h1 { font-size: 40px; line-height: 1.15; margin: 0 0 12px; font-weight: 720; letter-spacing: -0.01em; }
+.lead { font-size: 18px; color: var(--ink2); max-width: 820px; margin: 0; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 22px; }
+.cta a { font-size: 14px; padding: 8px 16px; border-radius: 10px; border: 1px solid var(--ring); color: var(--ink); background: var(--surface); }
+.cta a.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.cta a:hover { text-decoration: none; filter: brightness(0.96); }
+.orgs { margin-top: 26px; } .orgs .cap { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
+.orgs .row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.orgs .org { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--ink2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 10px 12px; background: var(--surface); }
+.orgs .org img { height: 52px; width: auto; display: block; }
+.kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 30px 0 4px; }
+.tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; }
+.tile .v { font-size: 28px; font-weight: 700; line-height: 1.2; }
+.tile .l { color: var(--ink2); font-size: 13px; }
+section.card { background: var(--surface); border: 1px solid var(--ring); border-radius: 14px; padding: 22px 24px; margin-top: 22px; }
+h2 { font-size: 22px; margin: 0 0 4px; font-weight: 700; }
+.how { color: var(--ink2); font-size: 14px; margin: 2px 0 14px; max-width: 980px; }
+.controls { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin: 6px 0 14px; }
+.controls .cl { font-size: 13px; color: var(--muted); margin-right: 6px; }
+.seg { display: inline-flex; border: 1px solid var(--ring); border-radius: 10px; overflow: hidden; background: var(--surface); }
+.seg button { font: inherit; font-size: 13.5px; border: 0; background: transparent; color: var(--ink2); padding: 6px 12px; cursor: pointer; }
+.seg button + button { border-left: 1px solid var(--ring); }
+.seg button:hover { background: var(--wash); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--surface); font-weight: 600; }
+.seg button:disabled { color: var(--muted); cursor: not-allowed; opacity: 0.5; }
+select { font: inherit; font-size: 13.5px; color: var(--ink); background: var(--surface); border: 1px solid var(--ring); border-radius: 8px; padding: 5px 8px; }
+table { border-collapse: collapse; width: 100%; font-size: 14px; }
+th, td { text-align: left; padding: 8px 7px; border-bottom: 1px solid var(--grid); vertical-align: middle; }
+th { color: var(--ink2); font-weight: 600; font-size: 12.5px; white-space: nowrap; }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+tr.ref td { color: var(--ink2); font-style: italic; }
+tr:hover td { background: var(--wash); }
+.rank { font-weight: 700; font-variant-numeric: tabular-nums; }
+.mname { font-weight: 600; white-space: nowrap; } .msub { color: var(--muted); font-size: 12px; white-space: nowrap; }
+.fw { display: flex; align-items: center; gap: 8px; white-space: nowrap; } .dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+.barcell { min-width: 190px; } .bar { position: relative; height: 10px; background: var(--wash); border-radius: 0 4px 4px 0; }
+.bar > i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.bar > em { position: absolute; top: -4px; bottom: -4px; width: 1.5px; background: var(--ink2); }
+.val { font-weight: 700; font-variant-numeric: tabular-nums; } .sd { color: var(--muted); font-size: 12.5px; font-weight: 400; }
+.note { color: var(--muted); font-size: 12.5px; margin-top: 10px; }
+.grid2 { display: grid; grid-template-columns: minmax(0, 1fr); gap: 0; align-items: start; }
+#scatter { max-width: 980px; }
+.grid3 { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.box { border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; background: var(--page); }
+.box h3 { font-size: 15px; margin: 0 0 6px; } .box p, .box li { font-size: 13.5px; color: var(--ink2); margin: 4px 0; } .box ul { padding-left: 18px; margin: 4px 0; }
+svg { display: block; width: 100%; height: auto; overflow: visible; }
+svg text { fill: var(--ink2); font-size: 12px; font-family: inherit; }
+svg .axis-label { fill: var(--muted); } svg .lbl { fill: var(--ink); font-size: 12px; }
+svg .halo { paint-order: stroke; stroke: var(--surface); stroke-width: 4px; stroke-linejoin: round; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 13px; color: var(--ink2); margin: 2px 0 8px; }
+.legend span { display: inline-flex; align-items: center; gap: 6px; }
+.cats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.cat { border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; background: var(--page); }
+.cat h3 { font-size: 15px; margin: 0; display: flex; justify-content: space-between; } .cat h3 span { color: var(--muted); font-weight: 500; font-size: 13px; }
+.cat p { font-size: 13px; color: var(--ink2); margin: 4px 0 8px; }
+details summary { cursor: pointer; font-size: 13px; color: var(--accent); }
+details ol { padding-left: 18px; margin: 8px 0 0; } details li { font-size: 12.5px; color: var(--ink2); margin: 5px 0; }
+details li b { color: var(--ink); font-weight: 600; }
+.findings { counter-reset: f; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+.finding { border-left: 3px solid var(--accent); padding: 4px 0 4px 14px; }
+.finding h3 { font-size: 15px; margin: 0 0 4px; } .finding p { font-size: 13.5px; color: var(--ink2); margin: 0; }
+#clk td { white-space: nowrap; }
+:root { --bad: #cf3a1f; --warn: #d98a00; --exec: #3a6ea5; --idle: #e0662a; }
+:root[data-theme="dark"] { --bad: #f06a50; --warn: #f2b733; --exec: #6b9bd8; --idle: #f2864f; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --bad: #f06a50; --warn: #f2b733; --exec: #6b9bd8; --idle: #f2864f; } }
+.lead2 { font-size: 14.5px; color: var(--ink2); max-width: 1000px; margin: 4px 0 6px; }
+.eprow { display: grid; grid-template-columns: 400px minmax(0, 1fr); gap: 18px; align-items: start; margin: 16px 0 6px; }
+.epvid video { width: 100%; border-radius: 10px; background: #000; display: block; aspect-ratio: 4 / 3; }
+.ephead { font-size: 14px; font-weight: 650; display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 2px 0 2px; }
+.ephead .msub { font-weight: 400; }
+.tl text { font-size: 11.5px; } .tl .rowlab { fill: var(--muted); font-size: 11.5px; }
+.tl .hit { cursor: pointer; } .tl .bgclick { cursor: crosshair; }
+.grid2c { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.grid2c .box h3 { font-size: 15.5px; } .grid2c .box p { font-size: 13.5px; }
+table.mini { font-size: 13px; } table.mini th, table.mini td { padding: 5px 6px; }
+.swatch { display: inline-block; width: 18px; height: 10px; border-radius: 3px; vertical-align: middle; }
+@media (max-width: 900px) { .eprow, .grid2c { grid-template-columns: 1fr; } }
+#tip { position: fixed; pointer-events: none; z-index: 20; background: var(--surface); color: var(--ink); border: 1px solid var(--ring); border-radius: 10px; padding: 9px 12px; font-size: 13px; box-shadow: 0 6px 24px rgba(0,0,0,0.12); display: none; min-width: 160px; }
+#tip .t { color: var(--ink2); font-size: 12px; margin-bottom: 4px; } #tip .r { display: flex; gap: 10px; justify-content: space-between; } #tip .r b { font-variant-numeric: tabular-nums; text-align: right; }
+#tip { max-width: 400px; } #tip .p { font-size: 12.5px; line-height: 1.45; margin-top: 6px; color: var(--ink); }
+footer { color: var(--muted); font-size: 12.5px; margin-top: 30px; border-top: 1px solid var(--grid); padding-top: 14px; }
+.empty { color: var(--muted); font-size: 14px; padding: 24px 0; text-align: center; }
+@media (max-width: 900px) { .orgs .row { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid2, .grid3, .cats, .findings { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: 30px; }
+  nav .links { display: none; } .hide-sm { display: none; } }
+</style>
+</head>
+<body>
+<nav><div class="in">
+  <span class="brand">Embodied Real-Time Bench</span>
+  <span class="links"><a href="#leaderboard">Leaderboard</a><a href="#time">Over time</a><a href="#clocks">Clocks</a><a href="#episodes">Episodes</a><a href="#analysis">Analysis</a><a href="#tasks">Tasks</a><a href="#how">How it works</a><a href="#findings">Findings</a></span>
+  <button class="btn" id="themeBtn" type="button">Theme: auto</button>
+</div></nav>
+<div class="wrap">
+<header class="hero">
+  <span class="tag">v0.1 preview · limited circulation</span>
+  <h1>Can robot agents think fast enough?</h1>
+  <p class="lead">A benchmark for language-model agents controlling a simulated robot on long-horizon household tasks, where <b>the world keeps moving while the model thinks</b>. Every decision costs time, objects get displaced, and the scene changes under the agent's feet.</p>
+  <div class="cta"><a class="primary" href="#leaderboard">View leaderboard</a><a href="#tasks">Browse tasks</a><a href="#how">How it works</a></div>
+  <div class="orgs"><div class="cap">Contributors from</div><div class="row" id="orgs"></div></div>
+  <div class="kpis" id="kpis"></div>
+</header>
+
+<section class="card" id="leaderboard">
+  <h2>Leaderboard</h2>
+  <p class="how" id="lbhow"></p>
+  <div class="controls">
+    <span><span class="cl">Clock</span><span class="seg" id="segClock"></span></span>
+    <span><span class="cl">Metric</span><span class="seg" id="segMetric"></span></span>
+    <span><span class="cl">Time budget</span><span class="seg" id="segBudget"></span></span>
+    <span><span class="cl">Category</span><select id="selCat"></select></span>
+  </div>
+  <div style="overflow-x:auto"><table id="lb"></table></div>
+  <p class="note" id="lbnote"></p>
+</section>
+
+<section class="card" id="time">
+  <h2>Score over time</h2>
+  <p class="how">Mean score counted up to each moment of the episode, under the clock and task category selected above. Fast frameworks gain early; thinking before every action pays for each decision in environment time and catches up late, if at all. The dashed line is the scripted reference at the end of the episode.</p>
+  <div class="controls">
+    <span><span class="cl">Compare</span><span class="seg" id="segCmp"></span></span>
+    <span><span class="cl" id="cmpLabel">Model</span><select id="selCmp"></select></span>
+  </div>
+  <div class="legend" id="atLegend"></div>
+  <div id="anytime"></div>
+</section>
+
+<div class="grid2">
+  <section class="card">
+    <h2>Score vs. decision latency</h2>
+    <p class="how">Each point is one model × framework under the selected clock. The x-axis is the median time a decision costs the environment (log scale; the fast branch for dual frameworks). Up and to the left is better; the thin line connects the Pareto front. Marker size grows with model size.</p>
+    <div class="legend" id="scLegend"></div>
+    <div id="scatter"></div>
+    <div class="legend" id="scSize" style="margin-top:6px"></div>
+  </section>
+  <section class="card" id="clocks">
+    <h2>Three clocks</h2>
+    <p class="how">The same agents under three timing protocols (selected metric, category and budget). <b>Paused</b> removes the cost of thinking, <b>Token</b> charges a fixed price per token, <b>Wall</b> charges real inference time. The gap between Paused and Wall is the price of thinking in real time.</p>
+    <div style="overflow-x:auto"><table id="clk"></table></div>
+    <p class="note">* Under the paused clock thinking costs no environment time, so Slow · Think and Dual · Plan keep thinking for up to 40 decisions per episode; they were run on 12 pilot tasks only and are not ranked. Gap = Wall − Paused.</p>
+  </section>
+</div>
+
+<section class="card" id="episodes">
+  <h2>Inside an episode</h2>
+  <p class="how">Replays of single episodes (wall clock, models served on H20), with the agent's timeline under each video. The top row is the share of subgoals done; <b>Robot</b> shows each skill (red = failed); <b>Fast branch</b> marks every decision — a tick for a one-token Jev decision (amber when the chosen option had probability below 0.5), a bar for thinking; <b>Slow branch</b> shows advice and plan calls from the moment they start to the moment their answer arrives. Hover for details; click a timeline to jump the video there.</p>
+  <div class="controls"><span class="seg" id="segStory"></span><span><span class="cl">Speed</span><span class="seg" id="segSpeed"></span></span><button class="btn" id="playBoth" type="button">Play together</button></div>
+  <p class="lead2" id="storyLead"></p>
+  <div id="storyBody"></div>
+</section>
+
+<section class="card" id="analysis">
+  <h2>What the timelines show</h2>
+  <p class="how">Statistics over all <span id="nEv"></span> episodes, aligning every model call with the skill it issued and the outcome (clock selected above).</p>
+  <div class="grid2c">
+    <div class="box"><h3>Where the time goes</h3><p id="tbTxt"></p><div class="controls" style="margin:4px 0 6px"><span class="cl">Model</span><select id="selTbModel"></select></div><div class="legend" id="tbLegend"></div><div id="timeBars"></div></div>
+    <div class="box"><h3>Advice arrives one decision late</h3><p id="advTxt"></p><div class="legend" id="advLegend"></div><div id="advChart"></div></div>
+    <div class="box"><h3>Plans arrive after the world has moved on</h3><p id="planTxt"></p><div id="planTbl"></div></div>
+    <div class="box"><h3>Jev confidence is a weak failure signal</h3><p id="calTxt"></p><div id="calTbl" style="overflow-x:auto"></div></div>
+  </div>
+</section>
+
+<section class="card" id="tasks">
+  <h2>Tasks</h2>
+  <p class="how">60 long-horizon tasks in six categories, built on the RoboCerebra scenes (LIBERO / robosuite, MuJoCo, 20 Hz control). Each task is scored by the fraction of its ordered subgoals completed within 300 s; the reference is a scripted executor replaying the demonstration plan (no language model).</p>
+  <div class="cats" id="cats"></div>
+</section>
+
+<section class="card" id="how">
+  <h2>How it works</h2>
+  <p class="how">The simulator runs in real time. The agent reads timestamped snapshots, issues skill calls to a scripted executor, and can cancel them at any control step. Nothing waits for the model.</p>
+  <div id="diagram"></div>
+  <div class="grid3" style="margin-top:16px">
+    <div class="box"><h3>Environment</h3><ul>
+      <li>MuJoCo physics at 20 Hz; the agent sees object states and a 3rd-person camera image.</li>
+      <li>Skills: pick, place, place-on, pour, open / close drawer, turn on; each runs for seconds and can be interrupted.</li>
+      <li>Dynamics from RoboCerebra: random disturbances, observation mismatch, hidden objects in drawers.</li></ul></div>
+    <div class="box"><h3>Agent frameworks</h3><ul id="fwlist"></ul></div>
+    <div class="box"><h3>Clocks and metrics</h3><ul>
+      <li><b>Wall</b> (default): the world advances during inference by the measured latency; results reflect decisions and serving speed. Hardware is reported per row.</li>
+      <li><b>Token</b>: the world pauses during the call, then advances by a fixed cost: <span id="tokformula"></span>. Independent of hardware; rewards short outputs and cache reuse.</li>
+      <li><b>Paused</b>: inference costs no environment time — an upper bound on decision quality.</li>
+      <li><b>Score</b>: fraction of subgoals completed (± SD over 3 seeds). <b>Success</b>: whole task completed. <b>pass^3</b>: task completed in all 3 seeds.</li></ul></div>
+  </div>
+</section>
+
+<section class="card" id="findings">
+  <h2>Findings so far</h2>
+  <p class="how">Computed from the data on this page; they update as runs complete.</p>
+  <div class="findings" id="find"></div>
+</section>
+
+<footer id="foot"></footer>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script>
+const DATA = __DATA__;
+const MODES = DATA.modes, CFGS = DATA.cfgs, TASKS = DATA.tasks, CATS = DATA.cats, MODELS = DATA.models;
+const CLOCKS = [["wall", "Wall"], ["token", "Token"], ["paused", "Paused"]];
+const METRICS = [["score", "Score"], ["succ", "Success"], ["pass3", "pass^3"]];
+const BUDGETS = [[Infinity, "Full (300 s)"], [120, "120 s"], [60, "60 s"]];
+const state = { clock: DATA.meta.clocks.includes("wall") ? "wall" : DATA.meta.clocks[0], metric: "score", B: Infinity, cat: -1 };
+const SVGNS = "http://www.w3.org/2000/svg";
+const mcol = i => `var(--m${i})`;
+function el(tag, attrs, ...kids) {
+  const svg = ["svg", "g", "line", "rect", "circle", "path", "text", "polyline", "defs", "marker", "polygon", "title"].includes(tag);
+  const n = svg ? document.createElementNS(SVGNS, tag) : document.createElement(tag);
+  for (const [k, v] of Object.entries(attrs || {})) {
+    if (v === null || v === undefined || v === false) continue;
+    if (k === "text") n.textContent = v; else if (k === "html") n.innerHTML = v;
+    else if (k.startsWith("on")) n.addEventListener(k.slice(2), v);
+    else if (k === "style" && typeof v === "object") Object.assign(n.style, v);
+    else n.setAttribute(k, v);
+  }
+  for (const c of kids.flat()) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(c));
+  return n;
+}
+const f3 = v => v === null || v === undefined || Number.isNaN(v) ? "—" : v.toFixed(3);
+const pct = v => v === null || v === undefined || Number.isNaN(v) ? "—" : Math.round(v * 100) + "%";
+const sec = v => v === null || v === undefined ? "—" : (v < 10 ? v.toFixed(2) : v.toFixed(0)) + " s";
+const ktok = v => v === null || v === undefined ? "—" : (v / 1000).toFixed(1) + "k";
+
+// ---------- 指标（逐局现算） ----------
+const BY = CFGS.map(() => []);
+for (const e of DATA.eps) BY[e[0]].push(e);
+function cnt(ev, B) { if (B === Infinity) return ev.length; let c = 0; for (const x of ev) { if (x <= B) c++; else break; } return c; }
+const memo = new Map();
+function metrics(ci, cat, B) {
+  const key = ci + "|" + cat + "|" + B; if (memo.has(key)) return memo.get(key);
+  const nTask = TASKS.filter(t => cat < 0 || t.cat === cat).length;
+  const all = BY[ci].filter(e => cat < 0 || TASKS[e[1]].cat === cat);
+  const seeds = {}; for (const e of all) (seeds[e[2]] = seeds[e[2]] || []).push(e);
+  const fullSeeds = Object.entries(seeds).filter(([s, v]) => new Set(v.map(e => e[1])).size >= 0.95 * nTask);   // 只用基本覆盖全部任务的批次
+  if (!fullSeeds.length) { memo.set(key, null); return null; }
+  const eps = fullSeeds.flatMap(([s, v]) => v);
+  const sc = e => cnt(e[5], B) / Math.max(e[3], 1);
+  const ok = e => B === Infinity ? e[4] === 1 : cnt(e[5], B) >= e[3];
+  const full = fullSeeds.map(([s, v]) => v.reduce((a, e) => a + sc(e), 0) / v.length);
+  const mean = full.length ? full.reduce((a, b) => a + b, 0) / full.length : null;
+  const sd = full.length > 1 ? Math.sqrt(full.reduce((a, b) => a + (b - mean) ** 2, 0) / (full.length - 1)) : null;
+  const byTask = {}; for (const e of eps) (byTask[e[1]] = byTask[e[1]] || []).push(e);
+  const tk = Object.values(byTask).filter(v => v.length >= 3);
+  const pass3 = tk.length ? tk.filter(v => v.slice().sort((a, b) => a[2] - b[2]).slice(0, 3).every(ok)).length / tk.length : null;
+  const out = { score: mean, sd, succ: eps.filter(ok).length / eps.length, pass3, n: eps.length, nseeds: full.length, ntasks: Object.keys(byTask).length };
+  memo.set(key, out); return out;
+}
+function gtFor(cat) {
+  const v = TASKS.filter(t => (cat < 0 || t.cat === cat) && t.gt[0] !== null);
+  return v.length ? { score: v.reduce((a, t) => a + t.gt[0], 0) / v.length, succ: v.filter(t => t.gt[1]).length / v.length } : null;
+}
+const metricOf = (m, k) => m ? m[k] : null;
+const label = c => `${MODELS[c.model].label}`;
+
+// ---------- 提示框 ----------
+const tip = document.getElementById("tip");
+function showTip(ev, title, rows) {   // rows: [键, 值] 或整段文字（字符串）
+  tip.innerHTML = ""; tip.append(el("div", { class: "t", text: title }), ...rows.filter(Boolean).map(r => typeof r === "string" ? el("div", { class: "p", text: r }) : el("div", { class: "r" }, el("span", { text: r[0] }), el("b", { text: r[1] }))));
+  tip.style.display = "block"; const x = Math.min(ev.clientX + 14, innerWidth - tip.offsetWidth - 8), y = Math.min(ev.clientY + 14, innerHeight - tip.offsetHeight - 8);
+  tip.style.left = x + "px"; tip.style.top = y + "px";
+}
+function hideTip() { tip.style.display = "none"; }
+
+// ---------- 控件 ----------
+function seg(id, items, cur, onpick, avail) {
+  const host = document.getElementById(id); host.innerHTML = "";
+  for (const [v, t] of items) host.append(el("button", { type: "button", "aria-pressed": String(v === cur), disabled: avail && !avail.includes(v) ? "" : null, onclick: () => onpick(v), text: t }));
+}
+function controls() {
+  seg("segClock", CLOCKS, state.clock, v => { state.clock = v; render(); }, DATA.meta.clocks);
+  seg("segMetric", METRICS, state.metric, v => { state.metric = v; render(); });
+  seg("segBudget", BUDGETS, state.B, v => { state.B = v; render(); });
+  const s = document.getElementById("selCat");
+  if (!s.options.length) {
+    s.append(el("option", { value: -1, text: "All 60 tasks" }), ...CATS.map((c, i) => el("option", { value: i, text: c.name })));
+    s.onchange = () => { state.cat = +s.value; render(); };
+  }
+}
+
+// ---------- 排行榜 ----------
+function leaderboard() {
+  const host = document.getElementById("lb"); host.innerHTML = "";
+  const cs = CFGS.map((c, i) => ({ c, i, m: metrics(i, state.cat, state.B) })).filter(x => x.c.clock === state.clock && x.m);
+  const running = CFGS.filter((c, i) => c.clock === state.clock && !metrics(i, state.cat, state.B)).length;
+  cs.sort((a, b) => (metricOf(b.m, state.metric) ?? -1) - (metricOf(a.m, state.metric) ?? -1) || (b.m.score ?? 0) - (a.m.score ?? 0));
+  const g = gtFor(state.cat); const gv = g ? (state.metric === "score" ? g.score : state.metric === "succ" ? g.succ : null) : null;
+  host.append(el("thead", {}, el("tr", {},
+    el("th", { class: "num", text: "#" }), el("th", { text: "Model" }), el("th", { text: "Framework" }),
+    el("th", { class: "barcell", text: METRICS.find(m => m[0] === state.metric)[1] + (state.B === Infinity ? "" : ` (≤ ${state.B} s)`) }),
+    el("th", { class: "num", text: "Score ± SD" }), el("th", { class: "num", text: "Success" }), el("th", { class: "num", text: "pass^3" }),
+    el("th", { class: "num hide-sm", text: "Decision p50" }), el("th", { class: "num hide-sm", text: "Time / task" }), el("th", { class: "num hide-sm", text: "Tokens / task" }), el("th", { class: "num hide-sm", text: "Episodes" }))));
+  const tb = el("tbody");
+  if (!cs.length) tb.append(el("tr", {}, el("td", { colspan: 11, class: "empty", text: "No runs under this clock yet." })));
+  cs.forEach(({ c, i, m }, r) => {
+    const v = metricOf(m, state.metric); const mo = MODELS[c.model];
+    tb.append(el("tr", {},
+      el("td", { class: "num rank", text: r + 1 }),
+      el("td", {}, el("div", { class: "mname", text: mo.label }), el("div", { class: "msub", text: `${mo.active ? mo.params + "B (" + mo.active + "B active)" : mo.params + "B"} · ${mo.prec}${c.hw !== "any" ? " · " + c.hw : ""}` })),
+      el("td", {}, el("div", { class: "fw" }, el("span", { class: "dot", style: { background: mcol(c.mode) } }), el("span", { text: MODES[c.mode].name }))),
+      el("td", { class: "barcell" }, el("div", { class: "bar", title: gv !== null ? `Scripted reference: ${f3(gv)}` : "" },
+        el("i", { style: { width: `${Math.max(0, (v ?? 0)) * 100}%`, background: mcol(c.mode) } }), gv !== null ? el("em", { style: { left: `${gv * 100}%` } }) : null)),
+      el("td", { class: "num" }, el("span", { class: "val", text: f3(m.score) }), m.sd !== null ? el("span", { class: "sd", text: ` ± ${m.sd.toFixed(3)}` }) : el("span", { class: "sd", text: m.nseeds < 2 ? " †" : "" })),
+      el("td", { class: "num", text: pct(m.succ) }), el("td", { class: "num", text: m.pass3 === null ? "—" : pct(m.pass3) }),
+      el("td", { class: "num hide-sm", text: state.clock === "paused" ? "0 (paused)" : sec(c.stats.lat50) }), el("td", { class: "num hide-sm", text: sec(c.stats.time) }),
+      el("td", { class: "num hide-sm", text: ktok(c.stats.tok) }), el("td", { class: "num hide-sm", text: m.n })));
+  });
+  if (g) tb.append(el("tr", { class: "ref" }, el("td", { class: "num", text: "–" }), el("td", { colspan: 2, text: "Reference: scripted executor following the demonstration plan (no language model)" }),
+    el("td", { class: "barcell" }, el("div", { class: "bar" }, el("i", { style: { width: `${(gv ?? 0) * 100}%`, background: "var(--axis)" } }))),
+    el("td", { class: "num", text: f3(g.score) }), el("td", { class: "num", text: pct(g.succ) }), el("td", { class: "num", text: "—" }), el("td", { colspan: 4, class: "hide-sm" })));
+  host.append(tb);
+  const clockNote = { wall: "Wall clock: each model is served by its own vLLM instance (prefix caching on) on the hardware shown, two episodes per instance, the simulator on the same host. ",
+    token: `Token clock: each call costs ${DATA.meta.token_rates[0]} s + uncached input / ${DATA.meta.token_rates[1]} tok/s + output / ${DATA.meta.token_rates[2]} tok/s of environment time (reference rates fitted on Qwen3.8-27B FP8, 1× L20). `,
+    paused: "Paused clock: the world is frozen while any model call is in flight. " };
+  document.getElementById("lbnote").textContent = clockNote[state.clock] + "Bars: selected metric; the vertical tick is the scripted reference. † one seed so far, no SD. Decision p50: the median environment time charged per fast-branch decision. Only configurations with at least one complete seed are ranked" + (running ? `; ${running} more are still running.` : ".");
+  document.getElementById("lbhow").innerHTML = `Rows are model × agent framework. Agents act under a <b>${CLOCKS.find(c => c[0] === state.clock)[1].toLowerCase()} clock</b>; switch the clock, the metric, the time budget (score counted up to that time) or the task category above.`;
+}
+
+// ---------- 散点 ----------
+function scatter() {
+  const host = document.getElementById("scatter"); host.innerHTML = "";
+  const lg = document.getElementById("scLegend"); lg.innerHTML = "";
+  MODES.forEach((m, i) => { if (CFGS.some(c => c.mode === i && c.clock === state.clock)) lg.append(el("span", {}, el("span", { class: "dot", style: { background: mcol(i) } }), m.name)); });
+  if (state.clock === "paused") { host.append(el("div", { class: "empty", text: "Under the paused clock decisions cost no environment time; switch to Wall or Token." })); return; }
+  const pts = CFGS.map((c, i) => ({ c, i, m: metrics(i, state.cat, state.B) })).filter(p => p.c.clock === state.clock && p.m && p.c.stats.lat50)
+    .map(p => ({ ...p, x: p.c.stats.lat50, y: metricOf(p.m, state.metric) })).filter(p => p.y !== null);
+  if (!pts.length) { host.append(el("div", { class: "empty", text: "No data." })); return; }
+  const W = 960, H = 440, L = 52, Rm = 16, T = 12, Bm = 44;
+  const x0 = Math.min(...pts.map(p => p.x)) / 1.4, x1 = Math.max(...pts.map(p => p.x)) * 1.4;
+  const y0 = Math.max(0, Math.min(...pts.map(p => p.y)) - 0.06), y1 = Math.min(1, Math.max(...pts.map(p => p.y)) + 0.06);
+  const X = v => L + (Math.log(v) - Math.log(x0)) / (Math.log(x1) - Math.log(x0)) * (W - L - Rm), Y = v => T + (1 - (v - y0) / (y1 - y0)) * (H - T - Bm);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Score versus decision latency" });
+  for (let k = 0; k <= 5; k++) { const v = y0 + (y1 - y0) * k / 5; svg.append(el("line", { x1: L, x2: W - Rm, y1: Y(v), y2: Y(v), stroke: "var(--grid)" }), el("text", { x: L - 8, y: Y(v) + 4, "text-anchor": "end", text: v.toFixed(2) })); }
+  for (const v of [0.1, 0.2, 0.5, 1, 2, 5, 10, 20, 50]) if (v >= x0 && v <= x1) svg.append(el("line", { x1: X(v), x2: X(v), y1: T, y2: H - Bm, stroke: "var(--grid)" }), el("text", { x: X(v), y: H - Bm + 16, "text-anchor": "middle", text: v + " s" }));
+  svg.append(el("text", { x: (L + W) / 2, y: H - 8, "text-anchor": "middle", class: "axis-label", text: "Median decision latency charged to the environment (log)" }));
+  const front = pts.slice().sort((a, b) => a.x - b.x || b.y - a.y).filter((p, k, arr) => arr.slice(0, k).every(q => q.y < p.y));
+  svg.append(el("polyline", { points: front.map(p => `${X(p.x)},${Y(p.y)}`).join(" "), fill: "none", stroke: "var(--ink2)", "stroke-width": 1, "stroke-dasharray": "3 3" }));
+  for (const p of pts.sort((a, b) => MODELS[b.c.model].params - MODELS[a.c.model].params)) {
+    const r = 4 + 2.2 * Math.log2(Math.min(MODELS[p.c.model].params, 64));   // MoE 按 64B 封顶，避免过大
+    const dot = el("circle", { cx: X(p.x), cy: Y(p.y), r, fill: mcol(p.c.mode), "fill-opacity": 0.78, stroke: "var(--surface)", "stroke-width": 2 });
+    dot.addEventListener("mousemove", ev => showTip(ev, `${MODELS[p.c.model].label} · ${MODES[p.c.mode].name}`, [["Score", f3(p.m.score)], ["Success", pct(p.m.succ)], ["Decision p50", sec(p.x)], ["Time / task", sec(p.c.stats.time)]]));
+    dot.addEventListener("mouseleave", hideTip); svg.append(dot);
+  }
+  // 只标帕累托前沿上放得下的点：与已放的标签或其他点重叠就不标（详细数值看悬停提示），避免标签漂到别的点旁边
+  const placed = [], dots = pts.map(p => [X(p.x), Y(p.y), 4 + 2.2 * Math.log2(Math.min(MODELS[p.c.model].params, 64))]);
+  const hits = (x, y, w) => placed.some(b => x < b[0] + b[2] && b[0] < x + w && Math.abs(y - b[1]) < 14) ||
+    dots.some(([cx, cy, r]) => cx + r > x && cx - r < x + w && cy + r > y - 11 && cy - r < y + 3);
+  for (const p of front) {
+    const t = `${MODELS[p.c.model].short.replace("Qwen3-VL-", "").replace("Qwen3.8-27B", "27B").replace("DeepSeek-V4.1-Flash", "V4.1")} ${MODES[p.c.mode].name.split(" · ")[1]}`, w = 6.6 * t.length + 6;
+    const r = 4 + 2.2 * Math.log2(Math.min(MODELS[p.c.model].params, 64));
+    const cands = [[X(p.x) + r + 4, Y(p.y) + 4], [X(p.x) - r - 4 - w, Y(p.y) + 4], [X(p.x) - w / 2, Y(p.y) - r - 6], [X(p.x) - w / 2, Y(p.y) + r + 14]];
+    const spot = cands.find(([x, y]) => x > L && x + w < W - Rm && y > T + 10 && y < H - Bm && !hits(x, y, w));
+    if (spot) { placed.push([spot[0], spot[1], w]); svg.append(el("text", { x: spot[0], y: spot[1], class: "lbl halo", text: t })); }
+  }
+  const sk = document.getElementById("scSize"); sk.innerHTML = "";
+  for (const [lab, b] of [["2B", 2], ["8B", 8], ["27–32B", 27], ["MoE (284B)", 284]]) {
+    const r = 4 + 2.2 * Math.log2(Math.min(b, 64)); const sv = el("svg", { width: 2 * r + 4, height: 2 * r + 4, style: { width: (2 * r + 4) + "px", display: "inline" } });
+    sv.append(el("circle", { cx: r + 2, cy: r + 2, r, fill: "var(--axis)" })); sk.append(el("span", {}, sv, lab));
+  }
+  host.append(svg);
+}
+
+// ---------- 三种时钟对照 ----------
+function clocks() {
+  const host = document.getElementById("clk"); host.innerHTML = "";
+  const keys = []; const seen = new Set();
+  for (const c of CFGS) { const k = c.model + "|" + c.mode; if (!seen.has(k)) { seen.add(k); keys.push([c.model, c.mode]); } }
+  keys.sort((a, b) => MODELS[b[0]].params - MODELS[a[0]].params || a[1] - b[1]);
+  const have = CLOCKS.filter(([k]) => DATA.meta.clocks.includes(k));
+  host.append(el("thead", {}, el("tr", {}, el("th", { text: "Model" }), el("th", { text: "Framework" }), ...["paused", "token", "wall"].map(k => el("th", { class: "num", text: CLOCKS.find(c => c[0] === k)[1] })), el("th", { class: "num", text: "Gap", title: "Wall − Paused: the score lost to real inference time" }))));
+  const tb = el("tbody");
+  for (const [model, mode] of keys) {
+    const v = {}, run = {}; for (const k of ["paused", "token", "wall"]) { const ci = CFGS.findIndex(c => c.model === model && c.mode === mode && c.clock === k && (k !== "wall" || c.hw === "1× H20" || !CFGS.some(d => d.model === model && d.mode === mode && d.clock === "wall" && d.hw === "1× H20"))); v[k] = ci >= 0 ? metricOf(metrics(ci, state.cat, state.B), state.metric) : null; run[k] = ci >= 0 && v[k] === null ? (k === "paused" && CFGS[ci].ntasks <= 20 ? "subset" : "running") : false; }
+    if (v.paused === null && v.token === null && v.wall === null && !run.paused && !run.token && !run.wall) continue;
+    tb.append(el("tr", {}, el("td", {}, el("div", { class: "mname", text: MODELS[model].short })),
+      el("td", {}, el("div", { class: "fw" }, el("span", { class: "dot", style: { background: mcol(mode) } }), MODES[mode].name)),
+      ...["paused", "token", "wall"].map(k => el("td", { class: "num", text: v[k] === null ? (run[k] === "subset" ? "12 tasks*" : run[k] ? "running" : "—") : state.metric === "score" ? f3(v[k]) : pct(v[k]), style: v[k] === null && run[k] ? { color: "var(--muted)", "font-size": "12px" } : null })),
+      el("td", { class: "num", text: v.wall !== null && v.paused !== null ? (state.metric === "score" ? (v.wall - v.paused >= 0 ? "+" : "−") + Math.abs(v.wall - v.paused).toFixed(3) : Math.round((v.wall - v.paused) * 100) + " pp") : "—" })));
+  }
+  host.append(tb);
+}
+
+// ---------- 任务 ----------
+function tasks() {
+  const host = document.getElementById("cats"); host.innerHTML = "";
+  CATS.forEach((c, i) => {
+    const ts = TASKS.filter(t => t.cat === i);
+    const g = ts.filter(t => t.gt[0] !== null); const gm = g.length ? g.reduce((a, t) => a + t.gt[0], 0) / g.length : null;
+    host.append(el("div", { class: "cat" }, el("h3", {}, c.name, el("span", { text: `${ts.length} tasks` })), el("p", { text: c.desc }),
+      el("p", { class: "msub", text: gm !== null ? `Scripted reference: ${f3(gm)}` : "" }),
+      el("details", {}, el("summary", { text: "Show tasks" }), el("ol", {}, ...ts.map(t => el("li", {}, el("b", { text: t.id.split("/")[1] + " · " }), t.instr || "(instruction unavailable)", t.n ? el("span", { class: "msub", text: ` · ${t.n} subgoals` }) : null))))));
+  });
+}
+
+// ---------- 示意图 ----------
+function diagram() {
+  const W = 1180, H = 230; const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Real-time agent loop" });
+  svg.append(el("defs", {}, el("marker", { id: "ar", viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 7, markerHeight: 7, orient: "auto-start-reverse" }, el("path", { d: "M0,0 L10,5 L0,10 z", fill: "var(--ink2)" }))));
+  const box = (x, y, w, h, title, sub) => { svg.append(el("rect", { x, y, width: w, height: h, rx: 12, fill: "var(--page)", stroke: "var(--axis)" }), el("text", { x: x + w / 2, y: y + 26, "text-anchor": "middle", class: "lbl", style: { "font-weight": 650, "font-size": "14px" }, text: title }));
+    sub.forEach((s, k) => svg.append(el("text", { x: x + w / 2, y: y + 48 + k * 17, "text-anchor": "middle", text: s }))); };
+  box(20, 30, 300, 130, "Simulator (20 Hz, never waits)", ["MuJoCo · LIBERO / RoboCerebra scenes", "disturbances · hidden objects · mismatch", "scored on ordered subgoals"]);
+  box(440, 30, 300, 130, "Agent", ["fast branch: Jev (1 token) or text", "slow branch: plan or advice (optional)", "decides on the latest snapshot"]);
+  box(860, 30, 300, 130, "Scripted executor", ["pick · place · pour · open / close", "turn on · wait — seconds each", "cancellable at every control step"]);
+  const arrow = (x1, y1, x2, y2, t) => { svg.append(el("line", { x1, y1, x2, y2, stroke: "var(--ink2)", "stroke-width": 1.5, "marker-end": "url(#ar)" })); if (t) svg.append(el("text", { x: (x1 + x2) / 2, y: y1 - 8, "text-anchor": "middle", text: t })); };
+  arrow(322, 70, 438, 70, "timestamped snapshot"); arrow(742, 70, 858, 70, "skill call / cancel"); arrow(858, 125, 322, 125, "");
+  svg.append(el("text", { x: 590, y: 145, "text-anchor": "middle", text: "skills run inside the simulator; the world keeps moving during inference" }));
+  svg.append(el("text", { x: 590, y: 205, "text-anchor": "middle", class: "axis-label", text: "Wall: inference costs measured time · Token: costs a fixed price per token · Paused: costs nothing" }));
+  document.getElementById("diagram").append(svg);
+  document.getElementById("fwlist").append(...MODES.map((m, i) => el("li", {}, el("b", { text: m.name + ": " }), m.desc)));
+  const r = DATA.meta.token_rates; document.getElementById("tokformula").textContent = `${r[0]} s + uncached input ÷ ${r[1]} tok/s + output ÷ ${r[2]} tok/s`;
+}
+
+// ---------- 发现（由数据现算） ----------
+function findings() {
+  const host = document.getElementById("find"); host.innerHTML = ""; const out = [];
+  const find = (model, mode, clock) => CFGS.findIndex(c => c.model === model && MODES[c.mode].key === mode && c.clock === clock && (clock !== "wall" || c.hw === "1× H20" || !CFGS.some(d => d.model === model && MODES[d.mode].key === mode && d.clock === "wall" && d.hw === "1× H20")));
+  const S = (ci, B = Infinity) => ci >= 0 ? metrics(ci, -1, B)?.score ?? null : null;
+  // 1 时间代价
+  let best = null;
+  for (const m of Object.keys(MODELS)) for (const md of MODES.map(x => x.key)) { const p = S(find(m, md, "paused")), w = S(find(m, md, "wall")); if (p !== null && w !== null && (!best || p - w > best.d)) best = { m, md, p, w, d: p - w }; }
+  if (best) out.push(["Thinking in real time is costly", `The largest gap: ${MODELS[best.m].label} with ${MODES.find(x => x.key === best.md).name} scores ${f3(best.p)} when the world pauses during inference but ${f3(best.w)} on the wall clock.`]);
+  // 2 规模
+  const jev = Object.keys(MODELS).map(m => [m, S(find(m, "fast_shared_jev", state.clock)), CFGS[find(m, "fast_shared_jev", state.clock)]?.stats.lat50]).filter(x => x[1] !== null).sort((a, b) => MODELS[a[0]].params - MODELS[b[0]].params);
+  if (jev.length >= 3) out.push(["Bigger models decide better — and still fast with Jev", `Fast · Jev under the ${state.clock} clock: ` + jev.map(x => `${MODELS[x[0]].params}B ${f3(x[1])}`).join(", ") + `; median decision latency ${sec(jev[0][2])} → ${sec(jev[jev.length - 1][2])}.`]);
+  // 3 建议注入
+  const adv = Object.keys(MODELS).map(m => [m, S(find(m, "dual_advice_jev", state.clock)), S(find(m, "fast_shared_jev", state.clock))]).filter(x => x[1] !== null && x[2] !== null).sort((a, b) => MODELS[a[0]].params - MODELS[b[0]].params);
+  if (adv.length) out.push(["Advice from a slow branch helps small models most", "Dual · Advice minus Fast · Jev: " + adv.map(x => `${MODELS[x[0]].params}B ${(x[1] - x[2] >= 0 ? "+" : "−") + Math.abs(x[1] - x[2]).toFixed(3)}`).join(", ") + "."]);
+  // 4 思考
+  const th = find("qwen3.8-27b", "fast_shared_think", state.clock), jv = find("qwen3.8-27b", "fast_shared_jev", state.clock);
+  if (th >= 0 && jv >= 0) out.push(["More thinking is not always better", `Qwen3.8-27B thinking before every action scores ${f3(S(th))} at 300 s and ${f3(S(th, 60))} at 60 s, versus ${f3(S(jv))} and ${f3(S(jv, 60))} for one-token Jev decisions.`]);
+  // 5–6 时间线统计
+  const EV = DATA.events;
+  if (EV) {
+    const tw = (md) => EV.time.find(r => r.clock === "wall" && r.model === "qwen3.8-27b" && r.mode === md);
+    const thk = tw("fast_shared_think"), jvv = tw("fast_shared_jev");
+    if (thk && jvv) out.push(["A thinking robot mostly stands still", `On the wall clock, Qwen3.8-27B thinking before every action leaves the robot idle ${pct(thk.idle)} of the episode (median ${s1(thk.gap)} between actions); with one-token Jev decisions it is idle ${pct(jvv.idle)} of the time (${s1(jvv.gap)} between actions).`]);
+    const at = EV.advice_timing.filter(r => r.clock === "wall" && r.early !== null), rp = EV.repeat_pos.filter(r => r.clock === "wall");
+    if (at.length && rp.length) { const d = rp.map(r => r.jev1 - r.adv1), avg = d.reduce((a, b) => a + b, 0) / d.length;
+      out.push(["Advice helps, but arrives one decision late", `After a failed skill the fast branch re-decides before the advice triggered by that failure arrives in ${pct(Math.min(...at.map(a => a.early)))}–${pct(Math.max(...at.map(a => a.early)))} of cases. Advice already in context still lowers the chance that the next decision repeats the failed action by ${Math.round(avg * 100)} points on average.`]); }
+  }
+  if (!out.length) host.append(el("div", { class: "empty", text: "Waiting for runs." }));
+  for (const [h, p] of out) host.append(el("div", { class: "finding" }, el("h3", { text: h }), el("p", { text: p })));
+}
+
+// ---------- 得分随时间 ----------
+const tipOn = (node, title, rows) => { node.addEventListener("mousemove", ev => showTip(ev, title, typeof rows === "function" ? rows() : rows)); node.addEventListener("mouseleave", hideTip); };
+function cfgFor(model, mode, clock) {   // 同一模型 × 框架 × 时钟若有多份（L20 / H20 真实时钟），优先 H20
+  const c = CFGS.map((x, i) => [x, i]).filter(([x]) => x.model === model && x.mode === mode && x.clock === clock);
+  if (!c.length) return -1; return (c.find(([x]) => x.hw !== "1× L20") || c[0])[1];
+}
+const atState = { cmp: "modes", model: null, mode: 0 };
+function anytime() {
+  const host = document.getElementById("anytime"); host.innerHTML = "";
+  const lg = document.getElementById("atLegend"); lg.innerHTML = "";
+  seg("segCmp", [["modes", "Frameworks of one model"], ["models", "Models with one framework"]], atState.cmp, v => { atState.cmp = v; anytime(); });
+  const sel = document.getElementById("selCmp"); sel.innerHTML = "";
+  const ok = ci => ci >= 0 && metrics(ci, state.cat, Infinity);
+  const modelsAvail = Object.keys(MODELS).filter(m => MODES.some((_, i) => ok(cfgFor(m, i, state.clock)))).sort((a, b) => MODELS[b].params - MODELS[a].params);
+  const modesAvail = MODES.map((_, i) => i).filter(i => Object.keys(MODELS).some(m => ok(cfgFor(m, i, state.clock))));
+  let series = [];
+  if (atState.cmp === "modes") {
+    document.getElementById("cmpLabel").textContent = "Model";
+    if (!modelsAvail.includes(atState.model)) atState.model = modelsAvail.includes("qwen3.8-27b") ? "qwen3.8-27b" : modelsAvail[0];
+    for (const m of modelsAvail) sel.append(el("option", { value: m, text: MODELS[m].label, selected: m === atState.model ? "" : null }));
+    sel.onchange = () => { atState.model = sel.value; anytime(); };
+    series = MODES.map((md, i) => ({ ci: cfgFor(atState.model, i, state.clock), name: md.name, short: md.name, color: mcol(i) })).filter(s => ok(s.ci));
+  } else {
+    document.getElementById("cmpLabel").textContent = "Framework";
+    if (!modesAvail.includes(atState.mode)) atState.mode = modesAvail[0];
+    for (const i of modesAvail) sel.append(el("option", { value: i, text: MODES[i].name, selected: i === atState.mode ? "" : null }));
+    sel.onchange = () => { atState.mode = +sel.value; anytime(); };
+    const ms = Object.keys(MODELS).filter(m => ok(cfgFor(m, atState.mode, state.clock))).sort((a, b) => MODELS[a].params - MODELS[b].params);
+    series = ms.map((m, k) => ({ ci: cfgFor(m, atState.mode, state.clock), name: MODELS[m].label, short: MODELS[m].short.replace("Qwen3-VL-", "VL-").replace("DeepSeek-V4.1-Flash", "V4.1"),
+      color: `color-mix(in srgb, ${mcol(atState.mode)} ${Math.round(30 + 70 * k / Math.max(ms.length - 1, 1))}%, var(--ink2))` }));   // 同一色相，越大的模型越深
+  }
+  if (!series.length) { host.append(el("div", { class: "empty", text: "No complete configuration under this clock yet." })); return; }
+  const TS = []; for (let t = 0; t <= 300; t += 2) TS.push(t);
+  for (const s of series) s.v = TS.map(t => metrics(s.ci, state.cat, t)?.score ?? null);
+  for (const s of series) lg.append(el("span", {}, el("span", { class: "swatch", style: { background: s.color } }), s.name));
+  const g = gtFor(state.cat);
+  const W = 960, H = 380, L = 48, Rm = 130, T = 12, Bm = 40;
+  const ymax = Math.min(1, Math.ceil((Math.max(...series.flatMap(s => s.v.filter(v => v !== null)), g ? g.score : 0) + 0.04) * 10) / 10);
+  const X = t => L + t / 300 * (W - L - Rm), Y = v => T + (1 - v / ymax) * (H - T - Bm);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Score over time" });
+  const step = ymax > 0.5 ? 0.2 : 0.1;
+  for (let v = 0; v <= ymax + 1e-9; v += step) svg.append(el("line", { x1: L, x2: W - Rm, y1: Y(v), y2: Y(v), stroke: "var(--grid)" }), el("text", { x: L - 8, y: Y(v) + 4, "text-anchor": "end", text: v.toFixed(1) }));
+  for (let t = 0; t <= 300; t += 30) svg.append(el("text", { x: X(t), y: H - Bm + 16, "text-anchor": "middle", text: t + " s" }));
+  for (const t of [60, 120]) svg.append(el("line", { x1: X(t), x2: X(t), y1: T, y2: H - Bm, stroke: "var(--axis)", "stroke-dasharray": "2 4" }));
+  svg.append(el("text", { x: (L + W - Rm) / 2, y: H - 6, "text-anchor": "middle", class: "axis-label", text: "Time since the episode started (environment time)" }));
+  if (g) svg.append(el("line", { x1: L, x2: W - Rm, y1: Y(g.score), y2: Y(g.score), stroke: "var(--ink2)", "stroke-dasharray": "5 4" }),
+    el("text", { x: L + 8, y: Y(g.score) - 6, class: "lbl halo", text: `scripted reference at the end: ${f3(g.score)}` }));
+  for (const s of series) svg.append(el("polyline", { points: TS.map((t, k) => s.v[k] === null ? "" : `${X(t)},${Y(s.v[k])}`).join(" "), fill: "none", style: { stroke: s.color }, "stroke-width": 2.2, "stroke-linejoin": "round" }));
+  const ends = series.map(s => ({ s, y: Y(s.v[s.v.length - 1] ?? 0) })).sort((a, b) => a.y - b.y);
+  for (let k = 1; k < ends.length; k++) if (ends[k].y - ends[k - 1].y < 15) ends[k].y = ends[k - 1].y + 15;
+  for (const e of ends) svg.append(el("text", { x: W - Rm + 8, y: e.y + 4, class: "lbl", text: `${e.s.short} ${f3(e.s.v[e.s.v.length - 1])}` }));
+  const cross = el("line", { y1: T, y2: H - Bm, stroke: "var(--ink2)", "stroke-width": 1, visibility: "hidden" });
+  const dots = series.map(s => el("circle", { r: 4, style: { fill: s.color }, stroke: "var(--surface)", "stroke-width": 2, visibility: "hidden" }));
+  svg.append(cross, ...dots);
+  const hit = el("rect", { x: L, y: T, width: W - L - Rm, height: H - T - Bm, fill: "transparent" });
+  hit.addEventListener("mousemove", ev => {
+    const r = svg.getBoundingClientRect(), px = (ev.clientX - r.left) / r.width * W;
+    const k = Math.max(0, Math.min(TS.length - 1, Math.round((px - L) / (W - L - Rm) * (TS.length - 1))));
+    cross.setAttribute("x1", X(TS[k])); cross.setAttribute("x2", X(TS[k])); cross.setAttribute("visibility", "visible");
+    dots.forEach((d, i) => { if (series[i].v[k] === null) return; d.setAttribute("cx", X(TS[k])); d.setAttribute("cy", Y(series[i].v[k])); d.setAttribute("visibility", "visible"); });
+    showTip(ev, `Score up to ${TS[k]} s`, series.filter(s => s.v[k] !== null).sort((a, b) => b.v[k] - a.v[k]).map(s => [s.name, f3(s.v[k])]));
+  });
+  hit.addEventListener("mouseleave", () => { hideTip(); cross.setAttribute("visibility", "hidden"); dots.forEach(d => d.setAttribute("visibility", "hidden")); });
+  svg.append(hit); host.append(svg);
+}
+
+// ---------- 单局回放：视频 + 时间线 ----------
+const demoState = { story: 0, speed: 1 }; let demoVids = [];
+const s1 = v => v.toFixed(1) + " s";
+const JEV_MODES = new Set(["fast_shared_jev", "dual_shared_jev", "dual_advice_jev"]);
+function epTimeline(e, Tmax, vid) {
+  const W = 760, L = 92, Rr = 12, G = 5;
+  const rows = [["sub", "Subgoals", 46], ["rob", "Robot", 22], ["fast", "Fast branch", 22]];
+  if (e.slow.length) rows.push(["slow", "Slow branch", 22]);
+  if (e.dist.length) rows.push(["ev", "Disturbance", 16]);
+  const y = {}; let yy = 6; for (const [k, , h] of rows) { y[k] = [yy, h]; yy += h + G; }
+  const H = yy + 22, X = t => L + Math.max(0, Math.min(t, Tmax)) / Tmax * (W - L - Rr);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, class: "tl", role: "img", "aria-label": "Episode timeline" });
+  svg.append(el("rect", { x: L, y: 0, width: W - L - Rr, height: yy, fill: "transparent", class: "bgclick" }));
+  for (const [k, lab] of rows) { const [y0, h] = y[k]; svg.append(el("text", { x: L - 10, y: y0 + h / 2 + 4, "text-anchor": "end", class: "rowlab", text: lab }), el("line", { x1: L, x2: W - Rr, y1: y0 + h + G / 2, y2: y0 + h + G / 2, stroke: "var(--grid)" })); }
+  const step = Tmax > 200 ? 30 : Tmax > 90 ? 20 : 10;
+  for (let t = 0; t <= Tmax + 1e-9; t += step) svg.append(el("line", { x1: X(t), x2: X(t), y1: 0, y2: yy - G, stroke: "var(--grid)", "stroke-dasharray": "2 3" }), el("text", { x: X(t), y: yy + 12, "text-anchor": "middle", text: t + " s" }));
+  if (e.T < Tmax - 0.5) svg.append(el("rect", { x: X(e.T), y: 0, width: X(Tmax) - X(e.T), height: yy - G, fill: "var(--wash)" }), el("text", { x: (X(e.T) + X(Tmax)) / 2, y: y.rob[0] + 15, "text-anchor": "middle", class: "rowlab", text: "episode over" }));
+  { // 子目标进度（阶梯线）
+    const [y0, h] = y.sub; let d = `M${X(0)},${y0 + h}`, k = 0;
+    for (const t of e.sub) { k++; d += ` H${X(t)} V${y0 + h - k / e.n * h}`; }
+    svg.append(el("line", { x1: L, x2: W - Rr, y1: y0, y2: y0, stroke: "var(--grid)" }), el("path", { d: d + ` H${X(e.T)}`, fill: "none", stroke: "var(--ink)", "stroke-width": 1.8 }));
+    k = 0; for (const t of e.sub) { k++; const c = el("circle", { cx: X(t), cy: y0 + h - k / e.n * h, r: 3.2, fill: "var(--ink)", class: "hit" }); tipOn(c, `Subgoal ${k} of ${e.n}`, [["Completed at", s1(t)]]); svg.append(c); }
+    svg.append(el("text", { x: X(e.T) + 4, y: y0 + h - (e.sub.length / e.n) * h + 4, class: "lbl", text: `${e.sub.length}/${e.n}` }));
+  }
+  { const [y0, h] = y.rob;   // 技能
+    for (const [t0, t1, name, okk, why] of e.skills) {
+      const wait = name.startsWith("wait"), r = el("rect", { x: X(t0), y: y0 + 3, width: Math.max(1.5, X(t1) - X(t0) - 1), height: h - 6, rx: 2, class: "hit",
+        fill: okk ? (wait ? "var(--axis)" : "var(--exec)") : "var(--bad)", "fill-opacity": okk && !wait ? 0.7 : 0.95 });
+      tipOn(r, name, [["Started", s1(t0)], ["Took", s1(t1 - t0)], ["Result", okk ? "ok" : "failed"], okk ? null : why]); svg.append(r);
+    }
+  }
+  { const [y0, h] = y.fast, jev = JEV_MODES.has(MODES[e.mode].key);   // 快分支决策
+    for (const [t0, t1, p, lab] of e.dec) {
+      const low = p !== null && p < 0.5, rows_ = () => [["Decided at", s1(t1)], ["Took", s1(t1 - t0)], p !== null ? ["P(chosen option)", p.toFixed(2)] : null, "Chose: " + lab];
+      if (jev) {
+        const g_ = el("g", { class: "hit" }, el("rect", { x: X(t1) - 3, y: y0, width: 6, height: h, fill: "transparent" }),
+          el("line", { x1: X(t1), x2: X(t1), y1: y0 + 3, y2: y0 + h - 3, stroke: low ? "var(--warn)" : mcol(0), "stroke-width": 2, "stroke-opacity": p === null ? 1 : 0.35 + 0.65 * p }));
+        tipOn(g_, lab.startsWith("(") ? "Jev decision " + lab : "Jev decision", rows_); svg.append(g_);
+      } else {
+        const r = el("rect", { x: X(t0), y: y0 + 4, width: Math.max(2, X(t1) - X(t0)), height: h - 8, rx: 2, fill: mcol(e.mode), "fill-opacity": 0.8, class: "hit" });
+        tipOn(r, MODES[e.mode].key === "fast_shared_think" ? "Thinking (robot idle)" : "Decision", rows_); svg.append(r);
+      }
+    }
+  }
+  if (y.slow) { const [y0, h] = y.slow;   // 慢分支：建议 / 计划
+    for (const [t0, t1, kind, trig, out] of e.slow) {
+      const c = kind === "advice" ? mcol(4) : mcol(3), adv = kind === "advice" ? e.adv.find(a => Math.abs(a[0] - t1) < 0.2) : null;
+      const g_ = el("g", { class: "hit" }, el("rect", { x: X(t0) + 1, y: y0 + 5, width: Math.max(2, X(t1) - X(t0) - 2), height: h - 10, rx: 2, fill: c, "fill-opacity": 0.35 }));   // 两端各留 1 px，相邻调用之间看得出间隔
+      if (kind === "advice") g_.append(el("polygon", { points: `${X(t1)},${y0 + 3} ${X(t1) + 5},${y0 + h / 2} ${X(t1)},${y0 + h - 3} ${X(t1) - 5},${y0 + h / 2}`, fill: c }));
+      else if (out.startsWith("adopted")) g_.append(el("circle", { cx: X(t1), cy: y0 + h / 2, r: 5, fill: c }));
+      else g_.append(el("path", { d: `M${X(t1) - 4},${y0 + h / 2 - 4} l8,8 m0,-8 l-8,8`, stroke: "var(--bad)", "stroke-width": 2.2 }));
+      tipOn(g_, kind === "advice" ? "Advice (slow branch, thinking off)" : "Plan (slow branch, thinking on)",
+        [["Called at", s1(t0)], ["Answer after", s1(t1 - t0)], "Trigger: " + trig, kind === "advice" ? (adv ? "Advice: " + adv[1] : "no advice returned") : "Result: " + (out || "—")]);
+      svg.append(g_);
+    }
+  }
+  if (y.ev) { const [y0, h] = y.ev;
+    for (const [t, obj] of e.dist) { const p_ = el("polygon", { points: `${X(t)},${y0 + 2} ${X(t) + 5},${y0 + h - 2} ${X(t) - 5},${y0 + h - 2}`, fill: "var(--bad)", class: "hit" }); tipOn(p_, "Disturbance", [["At", s1(t)], ["Object displaced", obj]]); svg.append(p_); }
+  }
+  const ph = el("line", { y1: 0, y2: yy - G, stroke: "var(--ink)", "stroke-width": 1.5 }); svg.append(ph);
+  const tf = e.video ? e.video.t_first : 0;
+  const upd = () => { const t = Math.min(tf + vid.currentTime, e.T); ph.setAttribute("x1", X(t)); ph.setAttribute("x2", X(t)); };
+  let raf = null; const loop = () => { upd(); raf = vid.paused ? null : requestAnimationFrame(loop); };
+  vid.addEventListener("timeupdate", upd); vid.addEventListener("seeked", upd); vid.addEventListener("play", () => { if (!raf) raf = requestAnimationFrame(loop); }); upd();
+  svg.addEventListener("click", ev => { const r = svg.getBoundingClientRect(), t = ((ev.clientX - r.left) / r.width * W - L) / (W - L - Rr) * Tmax; if (t >= 0 && t <= e.T) vid.currentTime = Math.max(0, t - tf); });
+  return svg;
+}
+function demos() {
+  const D = DATA.demos || [];
+  if (!D.length || !D.some(s => s.eps.some(e => e.video))) { document.getElementById("episodes").style.display = "none"; return; }
+  demoVids.forEach(v => v.pause());
+  seg("segStory", D.map((s, i) => [i, s.title]), demoState.story, v => { demoState.story = v; demos(); });
+  const speeds = () => seg("segSpeed", [[1, "1×"], [2, "2×"], [4, "4×"]], demoState.speed, v => { demoState.speed = v; demoVids.forEach(x => x.playbackRate = v); speeds(); }); speeds();
+  const st = D[demoState.story]; document.getElementById("storyLead").textContent = st.lead;
+  const body = document.getElementById("storyBody"); body.innerHTML = ""; demoVids = [];
+  const Tmax = Math.max(...st.eps.map(e => e.T));
+  for (const e of st.eps) {
+    const at60 = e.sub.filter(t => t <= 60).length;
+    const vid = el("video", { controls: "", muted: "", playsinline: "", preload: "metadata", poster: e.video ? e.video.poster : null, src: e.video ? e.video.src : null });
+    vid.muted = true; vid.playbackRate = demoState.speed; vid.addEventListener("loadedmetadata", () => { vid.playbackRate = demoState.speed; });
+    const head = el("div", { class: "ephead" }, el("span", { class: "dot", style: { background: mcol(e.mode) } }), `${MODELS[e.model].label} · ${MODES[e.mode].name}`,
+      el("span", { class: "msub", text: `${e.done}/${e.n} subgoals${e.success ? " (task complete)" : ""} in ${Math.round(e.T)} s · ${at60}/${e.n} by 60 s` }));
+    body.append(el("div", { class: "eprow" }, el("div", { class: "epvid" }, vid),
+      el("div", {}, head, el("div", { class: "msub", style: { margin: "0 0 4px", "white-space": "normal" }, text: `${e.task} · seed ${e.seed} · ${e.instr}` }), epTimeline(e, Tmax, vid))));
+    demoVids.push(vid);
+  }
+  const pb = document.getElementById("playBoth"); pb.style.display = demoVids.length > 1 ? "" : "none";
+  pb.onclick = () => { demoVids.forEach(v => { v.currentTime = 0; v.playbackRate = demoState.speed; }); demoVids.forEach(v => v.play()); };
+}
+
+// ---------- 时间线统计（analyze_events.py 汇总） ----------
+const tbState = { model: null };
+const byParams = (a, b) => MODELS[b].params - MODELS[a].params;
+function analysis() {
+  const EV = DATA.events; if (!EV) { document.getElementById("analysis").style.display = "none"; return; }
+  document.getElementById("nEv").textContent = (EV.n_episodes || 0).toLocaleString("en-US");
+  const ck = state.clock, ckName = CLOCKS.find(c => c[0] === ck)[1].toLowerCase(), mi = k => MODES.findIndex(m => m.key === k);
+  // 1 时间花在哪
+  const tm = [...new Set(EV.time.filter(r => r.clock === ck && MODELS[r.model]).map(r => r.model))].sort(byParams);
+  if (!tm.includes(tbState.model)) tbState.model = tm.includes("qwen3.8-27b") ? "qwen3.8-27b" : tm[0];
+  const sm = document.getElementById("selTbModel"); sm.innerHTML = ""; for (const m of tm) sm.append(el("option", { value: m, text: MODELS[m].label, selected: m === tbState.model ? "" : null }));
+  sm.onchange = () => { tbState.model = sm.value; analysis(); };
+  const rows = EV.time.filter(r => r.clock === ck && r.model === tbState.model && mi(r.mode) >= 0).sort((a, b) => mi(a.mode) - mi(b.mode));
+  const tb = document.getElementById("timeBars"); tb.innerHTML = "";
+  const lg = document.getElementById("tbLegend"); lg.innerHTML = "";
+  for (const [c, t] of [["var(--exec)", "executing skills"], ["var(--axis)", "deliberate wait"], ["var(--idle)", "robot idle, waiting for the model"]]) lg.append(el("span", {}, el("span", { class: "swatch", style: { background: c } }), t));
+  const W = 560, L = 104, Rr = 44, rh = 26, svg = el("svg", { viewBox: `0 0 ${W} ${rows.length * rh + 6}`, role: "img", "aria-label": "Time breakdown" });
+  rows.forEach((r, k) => {
+    const y0 = k * rh + 4, Xw = v => v * (W - L - Rr); let x = L;
+    svg.append(el("text", { x: L - 8, y: y0 + 13, "text-anchor": "end", text: MODES[mi(r.mode)].name }));
+    for (const [v, c] of [[r.exec, "var(--exec)"], [r.wait, "var(--axis)"], [r.idle, "var(--idle)"]]) { svg.append(el("rect", { x: x + 1, y: y0, width: Math.max(0, Xw(v) - 2), height: rh - 10, rx: 2, fill: c })); x += Xw(v); }
+    svg.append(el("text", { x: W - Rr + 6, y: y0 + 13, class: "lbl", text: pct(r.idle) }));
+    const hit = el("rect", { x: L, y: y0, width: W - L - Rr, height: rh - 10, fill: "transparent" });
+    tipOn(hit, `${MODELS[r.model].label} · ${MODES[mi(r.mode)].name}`, [["Executing", pct(r.exec)], ["Deliberate wait", pct(r.wait)], ["Idle (model deciding)", pct(r.idle)], ["Decisions / episode", r.dec.toFixed(1)], ["Median gap between actions", s1(r.gap ?? 0)], ["Episodes", r.n]]);
+    svg.append(hit);
+  });
+  tb.append(svg);
+  const th = rows.find(r => r.mode === "fast_shared_think"), jv = rows.find(r => r.mode === "fast_shared_jev");
+  document.getElementById("tbTxt").textContent = `Share of episode time (${ckName} clock). ` + (th && jv ? `When ${MODELS[tbState.model].short} thinks before every action, the robot stands idle ${pct(th.idle)} of the time; with one-token Jev decisions, ${pct(jv.idle)}.` : "") + (ck === "paused" ? " Under the paused clock the world stops during inference, so the robot is never kept waiting." : "");
+  // 2 建议注入：同位置比较失败后第一次决策重复失败动作的比例
+  const rp = EV.repeat_pos.filter(r => r.clock === ck && MODELS[r.model]).sort((a, b) => byParams(a.model, b.model));
+  const at = EV.advice_timing.filter(r => r.clock === ck && r.early !== null);
+  const ac = document.getElementById("advChart"); ac.innerHTML = "";
+  const al = document.getElementById("advLegend"); al.innerHTML = "";
+  al.append(el("span", {}, el("span", { class: "dot", style: { background: mcol(0) } }), "Fast · Jev"), el("span", {}, el("span", { class: "dot", style: { background: mcol(4) } }), "Dual · Advice"));
+  if (rp.length) {
+    const W2 = 560, L2 = 120, R2 = 20, rh2 = 24, x0 = 0.3, x1 = 0.65, Xr = v => L2 + (v - x0) / (x1 - x0) * (W2 - L2 - R2);
+    const s2 = el("svg", { viewBox: `0 0 ${W2} ${rp.length * rh2 + 30}`, role: "img", "aria-label": "Repeat rate after a failure" });
+    for (let v = x0; v <= x1 + 1e-9; v += 0.05) s2.append(el("line", { x1: Xr(v), x2: Xr(v), y1: 0, y2: rp.length * rh2, stroke: "var(--grid)" }), el("text", { x: Xr(v), y: rp.length * rh2 + 14, "text-anchor": "middle", text: Math.round(v * 100) + "%" }));
+    rp.forEach((r, k) => {
+      const yc = k * rh2 + rh2 / 2;
+      s2.append(el("text", { x: L2 - 8, y: yc + 4, "text-anchor": "end", text: MODELS[r.model].short }),
+        el("line", { x1: Xr(r.adv1), x2: Xr(r.jev1), y1: yc, y2: yc, stroke: "var(--axis)", "stroke-width": 3 }),
+        el("circle", { cx: Xr(r.jev1), cy: yc, r: 5.5, fill: mcol(0), stroke: "var(--surface)", "stroke-width": 2 }),
+        el("circle", { cx: Xr(r.adv1), cy: yc, r: 5.5, fill: mcol(4), stroke: "var(--surface)", "stroke-width": 2 }));
+      const hit = el("rect", { x: L2, y: yc - rh2 / 2, width: W2 - L2 - R2, height: rh2, fill: "transparent" });
+      const t_ = at.find(a => a.model === r.model);
+      tipOn(hit, MODELS[r.model].label, [["Fast · Jev: 1st decision repeats", pct(r.jev1)], ["Dual · Advice: 1st decision repeats", pct(r.adv1)], ["2nd decision (Jev / Advice)", `${pct(r.jev2)} / ${pct(r.adv2)}`], t_ ? ["1st decision before the advice", pct(t_.early)] : null]);
+      s2.append(hit);
+    });
+    s2.append(el("text", { x: (L2 + W2 - R2) / 2, y: rp.length * rh2 + 28, "text-anchor": "middle", class: "axis-label", text: "First decision after a failed skill repeats the failed action" }));
+    ac.append(s2);
+  }
+  const ear = at.map(a => a.early), dif = rp.map(r => r.jev1 - r.adv1);
+  document.getElementById("advTxt").textContent = at.length ? `After a skill fails, the fast branch decides again within a fraction of a second; the advice triggered by the same failure arrives after that decision in ${pct(Math.min(...ear))}–${pct(Math.max(...ear))} of cases (${ckName} clock). Advice already in context still helps: at the same position, the first decision after a failure repeats the failed action ${Math.round(Math.min(...dif) * 100)}–${Math.round(Math.max(...dif) * 100)} points less often than without advice.` : "";
+  // 3 完整计划
+  const pl = EV.plans.filter(r => r.clock !== "paused" && MODELS[r.model]).sort((a, b) => byParams(a.model, b.model) || (a.clock > b.clock ? -1 : 1));
+  const pt = document.getElementById("planTbl"); pt.innerHTML = "";
+  if (pl.length) {
+    const t_ = el("table", { class: "mini" }); t_.append(el("thead", {}, el("tr", {}, ...["Model", "Clock", "Plan latency (median)", "Plans adopted", "Skills from plans"].map((h, i) => el("th", { class: i > 1 ? "num" : "", text: h })))));
+    const b_ = el("tbody"); for (const r of pl) b_.append(el("tr", {}, el("td", { text: MODELS[r.model].short }), el("td", { text: r.clock }), el("td", { class: "num", text: s1(r.lat) }), el("td", { class: "num", text: `${pct(r.adopt)} (${r.pub}/${r.pub + r.rej})` }), el("td", { class: "num", text: pct(r.from_plan) })));
+    t_.append(b_); pt.append(t_);
+    const q = pl.find(r => r.model === "qwen3.8-27b" && r.clock === "wall");
+    document.getElementById("planTxt").textContent = (q ? `Under the wall clock a complete plan from Qwen3.8-27B takes a median ${s1(q.lat)} to arrive; the fast branch keeps acting meanwhile, so ${pct(1 - q.adopt)} of plans no longer apply when they arrive (a step is no longer executable, or the call ran out of tokens) and only ${pct(q.from_plan)} of executed skills come from plans. ` : "") +
+      "Under the paused clock the world is frozen while the planner thinks, which removes the delay but exposes a different failure: a discarded plan triggers an immediate re-plan from the same frozen snapshot, sometimes dozens of times in a row.";
+  }
+  // 4 Jev 置信度
+  const cal = EV.calib.filter(r => r.model === "all" || MODELS[r.model]).sort((a, b) => (a.model === "all") - (b.model === "all") || byParams(a.model, b.model));
+  const ct = document.getElementById("calTbl"); ct.innerHTML = "";
+  if (cal.length) {
+    const bins = cal[0].bins.map(b => b.hi >= 1 ? `≥ ${b.lo}` : `${b.lo}–${b.hi}`);
+    const t_ = el("table", { class: "mini" }); t_.append(el("thead", {}, el("tr", {}, el("th", { text: "Model" }), ...bins.map(b => el("th", { class: "num", text: "p " + b })), el("th", { class: "num", text: "AUC" }))));
+    const b_ = el("tbody");
+    for (const r of cal) b_.append(el("tr", {}, el("td", { text: r.model === "all" ? "All models" : MODELS[r.model].short, style: r.model === "all" ? { "font-weight": 650 } : null }),
+      ...r.bins.map(b => el("td", { class: "num", text: b.fail === null ? "—" : pct(b.fail), title: `${b.n} decisions`, style: b.fail === null ? null : { background: `color-mix(in srgb, var(--bad) ${Math.round(Math.max(0, Math.min(1, (b.fail - 0.2) / 0.4)) * 45)}%, transparent)` } })),
+      el("td", { class: "num", text: r.auc === null ? "—" : r.auc.toFixed(2) })));
+    t_.append(b_); ct.append(t_);
+    const all = cal.find(r => r.model === "all");
+    document.getElementById("calTxt").textContent = all ? `Failure rate of the skill a Jev decision issued, by the probability of the chosen option (all clocks; executor failures included). Low-confidence decisions fail more often (${pct(all.bins[0].fail)} below 0.5 vs ${pct(all.bins[all.bins.length - 1].fail)} at ≥ 0.99), but confidence separates failures from successes only weakly (AUC ${all.auc.toFixed(2)}; 0.5 is chance), so it is a poor trigger for slow thinking on its own.` : "";
+  }
+}
+
+function orgs() { document.getElementById("orgs").append(...DATA.orgs.map(o => el("span", { class: "org" }, el("img", { src: o.logo, alt: "" }), o.name))); }
+function kpis() {
+  const host = document.getElementById("kpis"); host.innerHTML = "";
+  const tiles = [[TASKS.length, `tasks · ${CATS.length} categories`], [DATA.meta.clocks.length, "timing protocols (clocks)"], [new Set(CFGS.map(c => c.model)).size, "models evaluated so far"], [DATA.meta.episodes.toLocaleString("en-US"), "real-time episodes"]];
+  for (const [v, l] of tiles) host.append(el("div", { class: "tile" }, el("div", { class: "v", text: v }), el("div", { class: "l", text: l })));
+  document.getElementById("foot").textContent = `Preview build ${DATA.meta.built} · limited circulation, please do not redistribute · ${DATA.meta.episodes} episodes · tasks derived from RoboCerebra (LIBERO / robosuite).`;
+}
+
+const THEMES = [["", "Theme: auto"], ["light", "Theme: light"], ["dark", "Theme: dark"]]; let ti = 0;
+document.getElementById("themeBtn").onclick = () => { ti = (ti + 1) % 3; if (THEMES[ti][0]) document.documentElement.setAttribute("data-theme", THEMES[ti][0]); else document.documentElement.removeAttribute("data-theme"); document.getElementById("themeBtn").textContent = THEMES[ti][1]; };
+function render() { controls(); leaderboard(); anytime(); scatter(); clocks(); analysis(); findings(); }
+{ const m = location.hash.match(/^#ep-(\w+)/), i = m ? (DATA.demos || []).findIndex(d => d.id === m[1]) : -1; if (i >= 0) demoState.story = i; }   // #ep-<示例 id> 直接打开某个示例
+orgs(); kpis(); tasks(); diagram(); demos(); render();
+if (/^#ep-/.test(location.hash)) document.getElementById("episodes").scrollIntoView();
+</script>
+</body>
+</html>

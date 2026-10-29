@@ -1,0 +1,3 @@
+# Qwen3.8 冒烟测试（H20 仿真 → L20 GPU3 实验实例，带图像）
+Ideal/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast

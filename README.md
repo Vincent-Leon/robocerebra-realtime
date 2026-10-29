@@ -1,3 +1,17 @@
+# Embodied Real-Time Bench (preview)
+
+Language-model agents control a simulated robot on 60 long-horizon household tasks while **the world keeps moving during inference**. Three clocks — wall, token and paused — separate decision quality, the temporal cost of deliberation, and serving speed. Leaderboard preview: https://bench.vincentleon.cn
+
+```bash
+bash scripts/setup_env.sh                       # Python env, RoboCerebra code, data from Hugging Face, smoke test
+cd exp && .venv/bin/python ertbench.py run --model my-model --base-url http://127.0.0.1:8000/v1 --out my_model_wall
+.venv/bin/python ertbench.py verify --out my_model_wall && .venv/bin/python ertbench.py pack --out my_model_wall
+```
+
+Docs: [evaluation protocol](docs/evaluation.md) · [configuring a model](docs/model_configuration.md) · [submitting results](docs/submit.md) · [task list](docs/tasks.md). Container: `docker/Dockerfile`.
+
+---
+
 # robocerebra-realtime：RoboCerebra 实时快慢思考基准
 
 在 RoboCerebra（NeurIPS 2025 Datasets & Benchmarks）的长程操作任务上，研究实时条件下的快慢思考调度。最终方法是同一模型、共享前缀 KV 缓存的快慢双分支。计划文档：`realtime_robot_reasoning_benchmark_plan-2.md`。

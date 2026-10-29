@@ -1,0 +1,37 @@
+# Qwen3-VL 小试点（本机，r5b 代码）：与 r5a 相同的 12 个任务 × 3 种核心模式；模型由启动时的 LLM_EXP_MODEL 指定
+Memory_Execution/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast

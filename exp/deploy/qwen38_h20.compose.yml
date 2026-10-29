@@ -1,0 +1,42 @@
+# 硬件校准实例（10-26）：与 L20 GPU3 上的 Qwen3.8 实验实例设置相同，只换 GPU（H20 GPU0）。
+# 同一镜像（vLLM 0.27.1、transformers 5.15.0）、同一权重（HuggingFace Qwen/Qwen3.8-27B，18 个分片 sha256 与 L20 副本一致）、
+# FP8 在线量化与其余参数相同。显存利用率 0.308：本实例可用显存 ≈ 0.308 × 140.4 GiB ≈ 43.2 GiB，
+# 与 L20 上 0.90 × 48.0 GiB 相同，使 KV 缓存规模大致对齐（避免"缓存更大、命中更多"混进硬件差异）。
+# 只绑定 127.0.0.1（仿真也在 H20 本机），不对局域网开放，不设密钥。GPU0 上另有实验室的嵌入模型服务（负载很轻）。
+# 用法（H20 上，本文件所在目录）：docker compose -p embodied-q38h20 up -d / down
+services:
+  vllm-exp-q38-h20:
+    container_name: vllm-exp-q38-h20
+    image: vllm/vllm-openai:latest
+    restart: "no"
+    ipc: host
+    shm_size: '32G'
+    ports:
+      - "127.0.0.1:11593:8000"
+    environment:
+      PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      HF_HUB_OFFLINE: "1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              device_ids: ["0"]
+    volumes:
+      - "/data/embodied-rt/weights/qwen3.8-27b:/app/model:ro"
+    command: >
+      --served-model-name exp-qwen3.8-27b-fp8
+      --model /app/model
+      --quantization fp8
+      --tensor-parallel-size 1
+      --max-model-len 32768
+      --max-num-seqs 16
+      --gpu-memory-utilization 0.308
+      --enable-prefix-caching
+      --enable-prompt-tokens-details
+      --trust-remote-code
+      --reasoning-parser qwen3
+      --host 0.0.0.0
+      --port 8000

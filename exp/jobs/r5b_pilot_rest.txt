@@ -1,0 +1,16 @@
+# r5b 补齐：Qwen3.8 在其余 5 个试点任务上（r5a 只用屏蔽 2 跑过），使本机试点的 Qwen3.8 参考全部为 r5b
+Memory_Execution/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast

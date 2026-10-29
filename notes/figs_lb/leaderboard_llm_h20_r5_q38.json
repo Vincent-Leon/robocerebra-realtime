@@ -1,0 +1,459 @@
+{
+ "rows": [
+  {
+   "cfg": "dual_advice_jev",
+   "mode": "dual_advice_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "双分支·建议注入·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.8096608484108483
+   ],
+   "score": 0.8096608484108483,
+   "sd": null,
+   "succ": 0.48333333333333334,
+   "cat": {
+    "Ideal": 0.8016150516150515,
+    "Memory_Execution": 0.8196428571428571,
+    "Memory_Exploration": 0.8573809523809525,
+    "Mix": 0.8200854700854702,
+    "Observation_Mismatching": 0.7833333333333332,
+    "Random_Disturbance": 0.7759074259074259
+   },
+   "fast_p50": 0.5481191873550415,
+   "fast_p95": 0.8232712507247923,
+   "slow_p50": 2.962766647338867,
+   "time_med": 105.15,
+   "tok_med": 29475.0,
+   "tok_cached_med": 34104.0,
+   "gpu_med": 42.009650111198425,
+   "tok_mean": {
+    "tok_cached": 39121.6,
+    "tok_in_nc": 28952.383333333335,
+    "tok_out": 586.75
+   },
+   "fail_med": 6.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 7.383333333333334,
+   "repeat_mean": 4.583333333333333,
+   "wait_mean": 4.8,
+   "premature": 9,
+   "premature_gt": 6,
+   "verify_mean": 0.4,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 29,
+    "planner_done": 9,
+    "abort": 0,
+    "max_skills": 22,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.5012244237244237,
+    "60": 0.7067072742072741,
+    "120": 0.797018398268398,
+    "180": 0.8041052928552929,
+    "None": 0.8096608484108483
+   }
+  },
+  {
+   "cfg": "dual_shared_jev",
+   "mode": "dual_shared_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "双分支·完整计划·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.806301615051615
+   ],
+   "score": 0.806301615051615,
+   "sd": null,
+   "succ": 0.43333333333333335,
+   "cat": {
+    "Ideal": 0.8197968697968697,
+    "Memory_Execution": 0.8065476190476192,
+    "Memory_Exploration": 0.862857142857143,
+    "Mix": 0.7973581973581975,
+    "Observation_Mismatching": 0.7788888888888889,
+    "Random_Disturbance": 0.7723609723609723
+   },
+   "fast_p50": 0.499881386756897,
+   "fast_p95": 0.6834138154983513,
+   "slow_p50": 48.6916538476944,
+   "time_med": 96.275,
+   "tok_med": 31385.0,
+   "tok_cached_med": 42336.0,
+   "gpu_med": 62.7874755859375,
+   "tok_mean": {
+    "tok_cached": 29582.933333333334,
+    "tok_in_nc": 23174.016666666666,
+    "tok_out": 1284.2333333333333
+   },
+   "fail_med": 3.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 6.383333333333334,
+   "repeat_mean": 3.966666666666667,
+   "wait_mean": 7.733333333333333,
+   "premature": 3,
+   "premature_gt": 2,
+   "verify_mean": 0.15,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 26,
+    "planner_done": 3,
+    "abort": 0,
+    "max_skills": 31,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.5060767473267473,
+    "60": 0.6793583731083731,
+    "120": 0.7903624616124617,
+    "180": 0.7991587579087579,
+    "None": 0.806301615051615
+   }
+  },
+  {
+   "cfg": "fast_shared_jev",
+   "mode": "fast_shared_jev",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "仅快·Jev",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.803465885965886
+   ],
+   "score": 0.803465885965886,
+   "sd": null,
+   "succ": 0.48333333333333334,
+   "cat": {
+    "Ideal": 0.7974891774891775,
+    "Memory_Execution": 0.763095238095238,
+    "Memory_Exploration": 0.8528571428571429,
+    "Mix": 0.8348484848484847,
+    "Observation_Mismatching": 0.8555555555555555,
+    "Random_Disturbance": 0.716949716949717
+   },
+   "fast_p50": 0.48177027702331543,
+   "fast_p95": 0.6936993122100827,
+   "slow_p50": null,
+   "time_med": 92.0,
+   "tok_med": 23703.5,
+   "tok_cached_med": 18424.0,
+   "gpu_med": 12.920928239822388,
+   "tok_mean": {
+    "tok_cached": 26133.333333333332,
+    "tok_in_nc": 22052.45,
+    "tok_out": 29.733333333333334
+   },
+   "fail_med": 4.0,
+   "invalid_mean": 0.0,
+   "fail_mean": 6.483333333333333,
+   "repeat_mean": 4.1,
+   "wait_mean": 5.583333333333333,
+   "premature": 3,
+   "premature_gt": 2,
+   "verify_mean": 0.13333333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 29,
+    "planner_done": 3,
+    "abort": 0,
+    "max_skills": 28,
+    "max_sim": 0
+   },
+   "budget": {
+    "30": 0.4946000758500759,
+    "60": 0.6769435656935657,
+    "120": 0.784061124061124,
+    "180": 0.8020769970769971,
+    "None": 0.803465885965886
+   }
+  },
+  {
+   "cfg": "fast_shared_text",
+   "mode": "fast_shared_text",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "仅快·文本",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.7869647482147483
+   ],
+   "score": 0.7869647482147483,
+   "sd": null,
+   "succ": 0.43333333333333335,
+   "cat": {
+    "Ideal": 0.8774891774891774,
+    "Memory_Execution": 0.8196428571428571,
+    "Memory_Exploration": 0.7940476190476191,
+    "Mix": 0.6946581196581196,
+    "Observation_Mismatching": 0.7699999999999999,
+    "Random_Disturbance": 0.765950715950716
+   },
+   "fast_p50": 2.684678554534912,
+   "fast_p95": 4.133525967597961,
+   "slow_p50": null,
+   "time_med": 144.675,
+   "tok_med": 17024.0,
+   "tok_cached_med": 16464.0,
+   "gpu_med": 53.66451096534729,
+   "tok_mean": {
+    "tok_cached": 29844.266666666666,
+    "tok_in_nc": 18615.416666666668,
+    "tok_out": 1561.0833333333333
+   },
+   "fail_med": 3.5,
+   "invalid_mean": 0.13333333333333333,
+   "fail_mean": 6.1,
+   "repeat_mean": 3.8,
+   "wait_mean": 6.616666666666666,
+   "premature": 9,
+   "premature_gt": 6,
+   "verify_mean": 0.4666666666666667,
+   "blocked_mean": 1.9333333333333333,
+   "ends": {
+    "all_done": 26,
+    "planner_done": 9,
+    "abort": 0,
+    "max_skills": 17,
+    "max_sim": 8
+   },
+   "budget": {
+    "30": 0.38610287860287856,
+    "60": 0.637216255966256,
+    "120": 0.7465218577718578,
+    "180": 0.7806155418655418,
+    "None": 0.7869647482147483
+   }
+  },
+  {
+   "cfg": "fast_shared_think",
+   "mode": "fast_shared_think",
+   "model": "qwen3.8-27b",
+   "variant": "屏蔽3·核实",
+   "name": "仅慢（每步开思考）",
+   "n": 60,
+   "tasks": 60,
+   "seeds": [
+    1
+   ],
+   "full_seeds": [
+    1
+   ],
+   "ntask": {
+    "1": 60
+   },
+   "batch": [
+    0.6988144263144263
+   ],
+   "score": 0.6988144263144263,
+   "sd": null,
+   "succ": 0.38333333333333336,
+   "cat": {
+    "Ideal": 0.8190309690309692,
+    "Memory_Execution": 0.4982142857142856,
+    "Memory_Exploration": 0.770952380952381,
+    "Mix": 0.6079156954156953,
+    "Observation_Mismatching": 0.8033333333333333,
+    "Random_Disturbance": 0.6934398934398934
+   },
+   "fast_p50": 11.95802915096283,
+   "fast_p95": 59.861542999744415,
+   "slow_p50": null,
+   "time_med": 300.0,
+   "tok_med": 10152.0,
+   "tok_cached_med": 6272.0,
+   "gpu_med": 195.09418213367462,
+   "tok_mean": {
+    "tok_cached": 6559.466666666666,
+    "tok_in_nc": 6161.1,
+    "tok_out": 4056.6833333333334
+   },
+   "fail_med": 2.0,
+   "invalid_mean": 0.06666666666666667,
+   "fail_mean": 2.1666666666666665,
+   "repeat_mean": 0.7833333333333333,
+   "wait_mean": 0.31666666666666665,
+   "premature": 1,
+   "premature_gt": 0,
+   "verify_mean": 0.03333333333333333,
+   "blocked_mean": 0.0,
+   "ends": {
+    "all_done": 23,
+    "planner_done": 1,
+    "abort": 0,
+    "max_skills": 0,
+    "max_sim": 36
+   },
+   "budget": {
+    "30": 0.17618136493136494,
+    "60": 0.35582311207311207,
+    "120": 0.5398295223295223,
+    "180": 0.6234766622266623,
+    "None": 0.6988144263144263
+   }
+  }
+ ],
+ "gt": {
+  "score": 0.8249085636585637,
+  "succ": 0.4,
+  "n": 60,
+  "cat": {
+   "Ideal": 0.7851781551781551,
+   "Memory_Execution": 0.83234126984127,
+   "Memory_Exploration": 0.8928571428571429,
+   "Mix": 0.7817599067599068,
+   "Observation_Mismatching": 0.8277777777777778,
+   "Random_Disturbance": 0.8295371295371294
+  }
+ },
+ "bad": [],
+ "pairs": [
+  {
+   "cfg": "dual_advice_jev",
+   "mode": "dual_advice_jev",
+   "name": "双分支·建议注入·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.006194962444962446,
+   "lo": -0.03460608257483256,
+   "hi": 0.04974861712361713,
+   "win": 13,
+   "tie": 33,
+   "loss": 14
+  },
+  {
+   "cfg": "dual_shared_jev",
+   "mode": "dual_shared_jev",
+   "name": "双分支·完整计划·Jev",
+   "budget": null,
+   "n": 60,
+   "diff": 0.0028357290857290865,
+   "lo": -0.03744576603951605,
+   "hi": 0.04311535570910568,
+   "win": 8,
+   "tie": 42,
+   "loss": 10
+  },
+  {
+   "cfg": "fast_shared_text",
+   "mode": "fast_shared_text",
+   "name": "仅快·文本",
+   "budget": null,
+   "n": 60,
+   "diff": -0.01650113775113775,
+   "lo": -0.07128699888074888,
+   "hi": 0.03802137677137674,
+   "win": 9,
+   "tie": 34,
+   "loss": 17
+  },
+  {
+   "cfg": "fast_shared_think",
+   "mode": "fast_shared_think",
+   "name": "仅慢（每步开思考）",
+   "budget": null,
+   "n": 60,
+   "diff": -0.10465145965145965,
+   "lo": -0.17063901376401375,
+   "hi": -0.040985202297702306,
+   "win": 9,
+   "tie": 28,
+   "loss": 23
+  },
+  {
+   "cfg": "dual_advice_jev",
+   "mode": "dual_advice_jev",
+   "name": "双分支·建议注入·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.029763708513708513,
+   "lo": -0.009998241341991338,
+   "hi": 0.07118693806193806,
+   "win": 15,
+   "tie": 32,
+   "loss": 13
+  },
+  {
+   "cfg": "dual_shared_jev",
+   "mode": "dual_shared_jev",
+   "name": "双分支·完整计划·Jev",
+   "budget": 60,
+   "n": 60,
+   "diff": 0.002414807414807411,
+   "lo": -0.02162824212824213,
+   "hi": 0.02891143578643578,
+   "win": 8,
+   "tie": 43,
+   "loss": 9
+  },
+  {
+   "cfg": "fast_shared_text",
+   "mode": "fast_shared_text",
+   "name": "仅快·文本",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.03972730972730973,
+   "lo": -0.08866794663669662,
+   "hi": 0.011441543410293381,
+   "win": 10,
+   "tie": 22,
+   "loss": 28
+  },
+  {
+   "cfg": "fast_shared_think",
+   "mode": "fast_shared_think",
+   "name": "仅慢（每步开思考）",
+   "budget": 60,
+   "n": 60,
+   "diff": -0.3211204536204536,
+   "lo": -0.3826262071262071,
+   "hi": -0.259192908942909,
+   "win": 4,
+   "tie": 8,
+   "loss": 48
+  }
+ ]
+}

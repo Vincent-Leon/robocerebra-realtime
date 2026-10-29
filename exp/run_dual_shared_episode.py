@@ -6,8 +6,15 @@
 第三轮（2026-10-20，组会行动项"Prompt 注入"）：--slow=advice 时慢分支关闭思维链，只输出一两句建议（ADVISE 模式），
 注入快分支的上下文（历史与当前状态之后）；在开局、技能失败、检测到循环、新消息时触发（--advice_every=N 另加每 N 个动作定期刷新）。
 r3b：建议模式下快分支首次判"完成"后等慢分支核实建议（--done_verify_wait，默认 8 s，0 = 关闭）再决定。
+r5（2026-10-26，两项改进，默认关闭即 r4 行为）：
+  --fail_block=N：同一调用自上次成功以来失败 N 次即屏蔽（Jev 移出候选；文本 / 思考模式在提示中列出，仍选则按无效回复处理；
+                  完整计划中的该步骤作废并重新规划）；任一子目标完成或发生随机扰动时清零。
+  --done_verify=think|fast：快分支判"完成"时，由慢分支对照任务逐条核实（think 开思考；fast 关思考，最多 256 token）；未完成则把缺项作为建议交给快分支继续，每局最多 --verify_max 次。
 用法: python run_dual_shared_episode.py Ideal/case6 [--events=...] [--fast=text|jev|think] [--slow=on|off|advice] [--cache_bust=on|off] [--monitor=on|off]
                                  [--fast_fallback=on|off] [--semantic_check=on|off] [--image=on|off] [--max_sim=240] [--max_skills=30] [--video] [--tag=NAME] [--seed=0]
+                                 [--fail_block=0] [--done_verify=off|think|fast] [--verify_max=2]
+                                 [--fast_model=NAME] [--slow_model=NAME] [--fast_profile=exp|gateway] [--slow_profile=exp|gateway]
+                                 [--clock=wall|paused|token]
 """
 import sys, time, threading, json
 import numpy as np
@@ -17,7 +24,7 @@ from llm_client import LLMClient
 from llm_planner import SYSTEM, scene_text, parse_action, validate_action, to_executor_call
 from dual_planner import Plan, parse_plan, call_str, step_status, check_plan, align_prefix, apply_effect
 from shared_prompt import SharedPromptBuilder, static_block
-from jev_fast import candidate_actions, candidates_text, jev_choose, LETTERS
+from jev_fast import candidate_actions, candidates_text, jev_choose as _jev_choose_raw, LETTERS
 from events import EventManager, load_specs
 
 args = [a for a in sys.argv[1:] if not a.startswith("--")]
@@ -36,9 +43,22 @@ SLOW_ON = SLOW_MODE != "off"; ADVICE = SLOW_MODE == "advice"
 ADVICE_MAX_TOKENS = int(opt.get("advice_max_tokens", 120)); ADVICE_EVERY = int(opt.get("advice_every", 0))
 DONE_VERIFY_WAIT = float(opt.get("done_verify_wait", 8))   # r3b：建议模式下快分支首次判"完成"后，等慢分支核实建议的最长时间（s）
 MON_ASYNC = opt.get("monitor_async", "on") == "on"     # r2b：监控在独立线程判断，技能结束后协调器立即决策，不等监控（off = r2 的阻塞监控）
+FAIL_BLOCK = int(opt.get("fail_block", 0))          # r5：失败屏蔽阈值，0 = 关闭
+DONE_VERIFY = opt.get("done_verify", "off")         # r5：完成核实，off | think（慢分支开思考）| fast（关思考，也适用于不支持思考的模型）
+assert DONE_VERIFY in ("off", "think", "fast"), DONE_VERIFY
+CLOCK = opt.get("clock", "wall")                    # 10-27：计时方式 wall（真实时钟，默认）| paused（暂停时钟）| token（token 时钟），见 realtime_env.py
+assert CLOCK in ("wall", "paused", "token"), CLOCK
+BLOCK_INSIST = int(opt.get("block_insist", 3))      # r5：文本 / 思考模式连续第 N 次坚持选同一个被屏蔽的调用时放行执行（0 = 永不放行）
+ADVICE_WAIT = float(opt.get("advice_wait", 0))      # r5d（10-29）：建议模式下技能失败后，快分支先等由这次失败触发的建议送达（最长这么多秒，墙钟）再决策；0 = 不等（r5c 行为）
+REPLAN_WAIT = opt.get("replan_wait", "off")         # r5d：完整计划被状态检查 / 对账作废后，off = 立即重新规划（r5c）；state = 等下一个技能结束或仿真时间前进 5 s 再规划
+assert REPLAN_WAIT in ("off", "state"), REPLAN_WAIT
+VERIFY_MAX = int(opt.get("verify_max", 2)); VERIFY_MAX_TOKENS = int(opt.get("verify_max_tokens", 3072))
+R5 = bool(FAIL_BLOCK) or DONE_VERIFY != "off"
 max_sim = float(opt.get("max_sim", 240)); max_skills = int(opt.get("max_skills", 30)); seed = int(opt.get("seed", 0))
 ev_path = opt.get("events"); ev_name = ev_path.split("/")[-1].replace(".json", "") if ev_path else "noevent"
-tag = opt.get("tag", f"{ev_name}_{'dualadvice' if ADVICE else ('dualshared' if SLOW_ON else 'fastshared')}_{FAST_MODE}{'_bust' if cache_bust else ''}{'' if monitor else '_nomon'}{'_monsync' if (monitor and not MON_ASYNC) else ''}_s{seed}")
+_sfx = (f"_fb{FAIL_BLOCK}" if FAIL_BLOCK else "") + {"off": "", "think": "_dv", "fast": "_dvf"}[DONE_VERIFY] + ("" if use_image else "_noimg") + ("" if CLOCK == "wall" else f"_clk{CLOCK}") \
+    + (f"_aw{ADVICE_WAIT:g}" if ADVICE_WAIT > 0 else "") + ("_rws" if REPLAN_WAIT == "state" else "")
+tag = opt.get("tag", f"{ev_name}_{'dualadvice' if ADVICE else ('dualshared' if SLOW_ON else 'fastshared')}_{FAST_MODE}{'_bust' if cache_bust else ''}{'' if monitor else '_nomon'}{'_monsync' if (monitor and not MON_ASYNC) else ''}{_sfx}_s{seed}")
 import os as _os
 out = R.RUNS_ROOT / _os.environ.get("RUNS_SUBDIR", "llm") / f"{tt}_{cn}" / tag
 if "skip_existing" in flags and (out / "episode.json").exists():
@@ -46,7 +66,7 @@ if "skip_existing" in flags and (out / "episode.json").exists():
 out.mkdir(parents=True, exist_ok=True)
 from rc_dynamics import RCDynamics, SHIFT_TYPES
 case = R.load_case(tt, R.BENCH_ROOT / ("Ideal" if tt in R.USE_IDEAL_FILES else tt) / cn, load_demo=tt in SHIFT_TYPES)
-sim = RealtimeSim(case, rtr=1.0, camera=True, max_sim_time=max_sim)
+sim = RealtimeSim(case, rtr=1.0, camera=True, max_sim_time=max_sim, clock=CLOCK)
 sim.dynamics = RCDynamics(case, seed=seed)          # r4：RoboCerebra 官方动态条件（Random_Disturbance / Observation_Mismatching / Mix）
 hide_closed = opt.get("hide_closed", "on") == "on"; sim.hide_closed = hide_closed      # 关闭抽屉内的物体不可见（保留原任务的探索/记忆要求）
 frames = []
@@ -56,16 +76,37 @@ def grab(s):
 sim.on_tick = grab
 mgr = None
 if ev_path: mgr = EventManager(load_specs(ev_path)); mgr.attach(sim)
-slow_client, fast_client = LLMClient(), LLMClient()
+# r5：快慢分支可分别指定模型与服务（--fast_model / --slow_model，--fast_profile / --slow_profile = exp | gateway）；默认两分支同一模型
+slow_client = LLMClient(model=opt.get("slow_model"), profile=opt.get("slow_profile"))
+fast_client = LLMClient(model=opt.get("fast_model"), profile=opt.get("fast_profile"))
 slow_client.seed = seed; fast_client.seed = seed + 1000
 if cache_bust and BUST_MODE == "salt":
     for _c in (slow_client, fast_client): _c.cache_salt_per_request = True
 for _c in (slow_client, fast_client):                    # 开局前预热连接，避免首个请求与仿真主线程争用 GIL
     _c.chat(_c.build_messages(None, "ok"), max_tokens=1, thinking=False); _c.log.clear()
 
+
+def _clocked_chat(fn):
+    """暂停 / token 时钟：调用在途时仿真冻结，返回后按时钟规则推进到交付时刻再把结果交给调用方；真实时钟下为空操作。"""
+    def w(*a, **k):
+        sim.clock_begin(); r = None
+        try:
+            r = fn(*a, **k); return r
+        finally:
+            u = (getattr(r, "usage", None) or {}) if r is not None else {}
+            sim.clock_wait(sim.clock_end(u.get("prompt_tokens"), cached_of(r) if r is not None else None, u.get("completion_tokens"),
+                                         getattr(r, "latency", None) if r is not None else None))
+    return w
+
+
+if CLOCK != "wall":
+    for _c in (slow_client, fast_client): _c.chat = _clocked_chat(_c.chat)
+
 lock = threading.Lock()
 st = {"plan": None, "cursor": 0, "seq": 0, "replan_reason": None, "executed": [], "done": False, "slow_busy": False, "inflight": None,
-      "advice": None, "since_advice": 0}
+      "advice": None, "since_advice": 0,
+      "fail_streak": {}, "world": None, "n_verify": 0, "n_blocked": 0, "insist": {"call": None, "n": 0}, "n_override": 0,
+      "adv_calls": 0, "adv_last_reason": None}                                                                            # r5d：建议调用完成计数（失败后等建议用）      # r5：失败计数、进展 / 扰动签名、核实次数、被拒的屏蔽调用数
 replan_evt = threading.Event()
 history, calls_log = [], []
 
@@ -101,6 +142,16 @@ def drawer_regions():
         env = sim.env
         _drawers["d"] = [r_ for r_ in env.regions if env.object_sites_dict.get(r_) is not None and (env.object_sites_dict[r_].joints or [])]
     return _drawers["d"]
+
+
+def jev_choose(client, msgs, cands):
+    """Jev 一次前向；暂停 / token 时钟下与 chat 相同地冻结仿真并按时钟规则交付（真实时钟下为空操作）。"""
+    sim.clock_begin(); act = info = None
+    try:
+        act, info = _jev_choose_raw(client, msgs, cands); return act, info
+    finally:
+        inf = info or {}; u = inf.get("usage") or {}
+        sim.clock_wait(sim.clock_end(u.get("prompt_tokens"), inf.get("cached_tokens"), u.get("completion_tokens"), inf.get("latency")))
 
 
 def cached_of(r):
@@ -165,9 +216,18 @@ def slow_thread():
             perr = check_plan(steps[k_chk:], held, drw, drawer_regions())
             if perr is not None: plan_err = f"{perr}; the robot is currently holding {now.held or 'nothing'}"
         if plan_err is not None:
-            with lock: st["slow_busy"] = False
+            with lock: st["slow_busy"] = False; n_ex = len(st["executed"])
             slow_rec["error"] = plan_err; slow_rec["rejected_stage"] = "state check"
             sim.log_event("plan_rejected", error=plan_err[:160], stage="state check", align=how, steps=[call_str(s_) for s_ in steps][:12])
+            if REPLAN_WAIT == "state":
+                # r5d：等世界状态变化再重新规划。暂停时钟下规划期间仿真冻结，快分支已提交但未执行的动作不在规划快照里，
+                # 立即重新规划会在同一快照上得到同一份计划、再次作废（r5c 中单局最多作废近 300 次）
+                t_s = sim.latest().sim_time; t_w = time.time()
+                while sim.running:
+                    with lock: changed = len(st["executed"]) > n_ex
+                    if changed or sim.latest().sim_time - t_s >= 5.0: break
+                    time.sleep(0.05)
+                sim.log_event("replan_wait", changed=changed, waited_sim=round(sim.latest().sim_time - t_s, 2), waited_wall=round(time.time() - t_w, 2))
             request_replan(f"previous plan rejected: {plan_err[:200]}"); continue
         with lock:
             st["seq"] += 1
@@ -180,7 +240,8 @@ def slow_thread():
 
 def advise(snap, objects, reason):
     """r3 建议模式：关闭思维链，慢分支只输出一两句建议；成功解析后替换当前建议（快分支下一次决策即可看到）。"""
-    msgs = get_builder().messages(snap, objects, list(history), "ADVISE", extra=f"WHY YOU ARE ASKED NOW: {reason}")
+    with lock: blk = set(st.get("blocked") or ())
+    msgs = get_builder().messages(snap, objects, list(history), "ADVISE", extra=(f"WHY YOU ARE ASKED NOW: {reason}" + ("\n" + blocked_note(blk) if blk else "")))
     sim.log_event("think_start", step_idx=f"adv{st['seq']}", obs_version=snap.version, branch="slow", reason=reason[:80])
     r = slow_client.chat(msgs, max_tokens=ADVICE_MAX_TOKENS, thinking=False)
     sim.log_event("think_end", step_idx=f"adv{st['seq']}", latency=round(r.latency, 2), completion_tokens=(r.usage or {}).get("completion_tokens"), error=r.error)
@@ -195,7 +256,7 @@ def advise(snap, objects, reason):
     calls_log.append({"branch": "slow", "mode": "ADVISE", "t_obs": rel(snap.sim_time), "latency": r.latency, "ttft": r.ttft, "cached_tokens": cached_of(r), "usage": r.usage,
                       "response": r.text, "error": err, "reason": reason, "advice": text, "n_retries": r.n_retries, "retry_wait_s": r.retry_wait_s})
     with lock:
-        st["slow_busy"] = False
+        st["slow_busy"] = False; st["adv_calls"] += 1; st["adv_last_reason"] = reason
         if not err:
             st["seq"] += 1; st["advice"] = {"text": text, "t": snap.sim_time, "reason": reason, "seq": st["seq"]}; st["since_advice"] = 0
     if err:
@@ -252,10 +313,37 @@ def fast_resume_point(snap, steps, t_obs):
     return k
 
 
-_last_err = {"e": None}
+_last_err = {"e": None, "blocked": False}
 
 
-def fast_next_action(snap, objects, fixtures, regions):
+def verify_done(snap, objects):
+    """r5：快分支判"完成"时，由慢分支对照任务逐条核实（--done_verify=think 开思考，fast 关思考），返回 (complete, missing)。
+    出错或无法解析时按"完成"处理，不因核实本身失败把 episode 卡住。"""
+    k = st["n_verify"]
+    msgs = get_builder().messages(snap, objects, list(history), "VERIFY")
+    sim.log_event("think_start", step_idx=f"ver{k}", obs_version=snap.version, branch="verify")
+    think = DONE_VERIFY == "think"
+    r = slow_client.chat(msgs, max_tokens=VERIFY_MAX_TOKENS if think else 256, thinking=think)
+    sim.log_event("think_end", step_idx=f"ver{k}", latency=round(r.latency, 2), completion_tokens=(r.usage or {}).get("completion_tokens"), error=r.error)
+    complete, missing, perr = True, "", None
+    if not r.error:
+        try:
+            d = json.loads(r.text[r.text.index("{"):r.text.rindex("}") + 1])
+            complete = bool(d.get("complete", True)); missing = " ".join(str(d.get("missing", "")).split())[:300]
+        except Exception as e:
+            perr = f"unparsable verify reply: {e!r}"[:120]
+    calls_log.append({"branch": "verify", "mode": "VERIFY", "t_obs": rel(snap.sim_time), "latency": r.latency, "ttft": r.ttft, "cached_tokens": cached_of(r), "usage": r.usage,
+                      "response": r.text, "error": r.error or perr, "complete": complete, "missing": missing, "n_retries": r.n_retries, "retry_wait_s": r.retry_wait_s})
+    sim.log_event("done_verify", complete=complete, missing=missing[:120], latency=round(r.latency, 2), error=(r.error or perr))
+    return complete, missing
+
+
+def blocked_note(blocked):
+    return (f"BLOCKED CALLS (each failed {FAIL_BLOCK} times since its last success or the last progress; do not choose them again): "
+            + "; ".join(sorted(blocked))) if blocked else ""
+
+
+def fast_next_action(snap, objects, fixtures, regions, blocked=frozenset()):
     plan_txt = ""
     with lock:
         p = st["plan"]; adv = st["advice"]
@@ -263,9 +351,14 @@ def fast_next_action(snap, objects, fixtures, regions):
             plan_txt = "\nCURRENT PLAN from the deliberate planner (made at sim time %.1fs, may be outdated): %s" % (rel(p.sim_time), " -> ".join(call_str(s_) for s_ in p.steps[st["cursor"]:]) or "(finished)")
         elif adv is not None:
             plan_txt = "\nADVICE from the deliberate planner (given at sim time %.1fs; it was asked because: %s): %s" % (rel(adv["t"]), adv["reason"][:100], adv["text"])
+    if blocked:
+        plan_txt = (plan_txt + "\n" + blocked_note(blocked)).strip()
     if FAST_MODE == "jev":
         drawers = [r_ for r_ in regions if sim.env.object_sites_dict.get(r_) is not None and (sim.env.object_sites_dict[r_].joints or [])]
         cands = candidate_actions(snap, objects, fixtures, regions, drawers)
+        if blocked:                                              # r5：屏蔽的调用移出候选（至少留下一个技能候选，否则不过滤）
+            kept = [c for c in cands if c.get("done") or c.get("skill") in (None, "wait") or call_str(c) not in blocked]
+            if any(c.get("skill") not in (None, "wait") and not c.get("done") for c in kept): cands = kept
         msgs = get_builder().messages(snap, objects, list(history), "CHOOSE", extra=(plan_txt.strip() + "\n\n" + candidates_text(cands)).strip())
         sim.log_event("think_start", step_idx=f"fast{len(calls_log)}", obs_version=snap.version, branch="fast")
         act, info = jev_choose(fast_client, msgs, cands)
@@ -284,6 +377,20 @@ def fast_next_action(snap, objects, fixtures, regions):
     sim.log_event("think_end", step_idx=f"fast{len(calls_log)}", latency=round(r.latency, 2), completion_tokens=(r.usage or {}).get("completion_tokens"))
     act, perr = parse_action(r.text)
     verr = validate_action(act, objects, regions, fixtures) if act else None
+    _last_err["blocked"] = False
+    if act and not verr and not act.get("done") and blocked and call_str(act) in blocked:     # r5：仍选被屏蔽的调用 → 退回让模型另选
+        c = call_str(act)
+        with lock:
+            ins = st["insist"]; ins["n"] = ins["n"] + 1 if ins["call"] == c else 1; ins["call"] = c; k = ins["n"]
+            st["n_blocked"] += 1
+        if BLOCK_INSIST and k >= BLOCK_INSIST:                   # 连续坚持 N 次：放行执行，避免陷在拒绝循环里（例如手上的东西只能放这里）
+            with lock: st["n_override"] += 1; ins["n"] = 0
+            sim.log_event("blocked_override", call=c, insist=k)
+        else:
+            verr = f"blocked call chosen again: {c} (failed {FAIL_BLOCK} times; choose something else)"
+            _last_err["blocked"] = True
+    elif act and not verr:
+        with lock: st["insist"]["n"] = 0
     calls_log.append({"branch": "fast", "t_obs": rel(snap.sim_time), "latency": r.latency, "ttft": r.ttft, "cached_tokens": cached_of(r), "usage": r.usage, "response": r.text, "error": r.error or perr or verr,
                       "n_retries": r.n_retries, "retry_wait_s": r.retry_wait_s})
     _last_err["e"] = r.error or perr or verr
@@ -339,8 +446,9 @@ def run_skill(act, snap, objects, source, plan_obj=None):
     cs = call_str(act)
     with lock: st["inflight"] = act
     cid = sim.submit_skill(name, *cargs, obs_version=snap.version, plan_id=source)
-    seen = len(snap.messages); oc = None; t_wait = time.time()
-    while time.time() - t_wait < 90:
+    seen = len(snap.messages); oc = None; t_wait = time.time(); s_wait = sim.latest().sim_time
+    # 超时 90 s：真实时钟按真实时间（与 r5b 相同）；暂停 / token 时钟按仿真时间（冻结期间不计）
+    while (time.time() - t_wait < 90) if CLOCK == "wall" else (sim.latest().sim_time - s_wait < 90):
         with sim._lock: oc = sim.outcomes.get(cid)
         if oc is not None or not sim.running: break
         cur = sim.latest()
@@ -367,6 +475,32 @@ def run_skill(act, snap, objects, source, plan_obj=None):
         if ok and p is not None and p is not plan_obj and st["cursor"] < len(p.steps) and call_str(p.steps[st["cursor"]]) == cs:
             st["cursor"] += 1; sim.log_event("plan_step_dedup", step=cs, plan_id=p.plan_id)
     return ok
+
+
+def world_sig():
+    """r5：进展 / 扰动签名（修复版计分已完成的子目标数、已执行的随机扰动次数），变化时清零失败计数。"""
+    return (int(sim.scorer.last[2]), sum(1 for e in sim.dynamics.log if e.get("type") == "rc_disturbance"))
+
+
+def note_outcome(ok):
+    """r5：把最近一次技能结果计入失败计数（成功则清零该调用）。"""
+    if not FAIL_BLOCK or not history: return
+    cs = history[-1]["call"]
+    with lock:
+        fs = st["fail_streak"]
+        if ok: fs.pop(cs, None)
+        else: fs[cs] = fs.get(cs, 0) + 1
+
+
+def current_blocked():
+    """r5：当前被屏蔽的调用集合；同时写入 st["blocked"] 供慢分支建议使用。"""
+    if not FAIL_BLOCK: return frozenset()
+    sig = world_sig()
+    with lock:
+        if sig != st["world"]: st["world"] = sig; st["fail_streak"].clear()
+        b = frozenset(c for c, n in st["fail_streak"].items() if n >= FAIL_BLOCK)
+        st["blocked"] = b
+    return b
 
 
 def coordinator():
@@ -408,7 +542,14 @@ def coordinator():
                         if st["plan"] is p: st["plan"] = None
                     if not busy: request_replan("plan invalidated by new message")
                     continue
+            if FAIL_BLOCK and call_str(step) in current_blocked():   # r5：计划步骤已反复失败 → 作废计划、请求换一种做法
+                sim.log_event("plan_step_blocked", step=call_str(step), plan_id=p.plan_id)
+                with lock:
+                    if st["plan"] is p: st["plan"] = None
+                if SLOW_ON and not busy: request_replan(f"step {call_str(step)} failed {FAIL_BLOCK} times; plan another way")
+                continue
             ok = run_skill(step, snap, objects, f"plan{p.plan_id}", plan_obj=p)
+            note_outcome(ok)
             n_skills += 1
             with lock:
                 if st["plan"] is p: st["cursor"] += 1
@@ -421,7 +562,12 @@ def coordinator():
         if SLOW_ON and p is not None and cur >= len(p.steps) and not busy:
             request_replan("plan exhausted"); continue
         if fast_fallback:
-            act, r = fast_next_action(snap, objects, fixtures, regions)
+            act, r = fast_next_action(snap, objects, fixtures, regions, current_blocked())
+            if act is None and _last_err.get("blocked"):
+                # r5：选了被屏蔽的调用：写进历史作为反馈，但不计入"连续 5 次无效回复即中止"（它不是格式错误）
+                history.append({"t_sim": rel(snap.sim_time), "call": "<blocked choice>", "ok": False, "reason": str(_last_err["e"])[:220]})
+                sim.log_event("blocked_choice", reason=str(_last_err["e"])[:120])
+                time.sleep(0.2); continue
             if act is None:
                 n_invalid += 1
                 history.append({"t_sim": rel(snap.sim_time), "call": "<invalid reply>", "ok": False, "reason": str(_last_err["e"])[:220]})
@@ -429,6 +575,18 @@ def coordinator():
                 if n_invalid >= 5: sim.log_event("abort", reason="5 consecutive invalid replies"); break
                 time.sleep(0.2); continue
             n_invalid = 0
+            if act.get("done") and DONE_VERIFY != "off" and st["n_verify"] < VERIFY_MAX:
+                # r5：先由慢分支逐条核实；未完成则把缺项作为建议交给快分支继续
+                complete, missing = verify_done(snap, objects)
+                st["n_verify"] += 1
+                if complete:
+                    sim.log_event("planner_done", by="fast branch, verified"); break
+                with lock:
+                    st["seq"] += 1
+                    st["advice"] = {"text": "NOT DONE YET (completion check): " + (missing or "some requirement of the task is not met"),
+                                    "t": snap.sim_time, "reason": "completion check before finishing", "seq": st["seq"]}
+                fast_done_streak = 0
+                continue
             if act.get("done"):
                 fast_done_streak += 1
                 if fast_done_streak >= 2:
@@ -448,12 +606,23 @@ def coordinator():
                 time.sleep(0.5); continue
             fast_done_streak = 0
             ok = run_skill(act, snap, objects, "fast"); n_skills += 1
+            note_outcome(ok)
             if ADVICE:
                 with lock:
                     st["since_advice"] += 1; busy2 = st["slow_busy"] or replan_evt.is_set(); n_since = st["since_advice"]
                 why = (f"skill failed: {history[-1]['call']} ({history[-1]['reason'][:60]})" if not ok else loop_reason(n_skills))
                 if why is None and ADVICE_EVERY and n_since >= ADVICE_EVERY: why = "periodic refresh"
+                if why is not None and ADVICE_WAIT > 0 and not ok:
+                    with lock: n0 = st["adv_calls"]
                 if why is not None: request_replan(why)                 # 慢分支忙时排队：完成当前建议后按最新原因再给一次
+                if why is not None and ADVICE_WAIT > 0 and not ok:
+                    # r5d：失败后先等这次失败触发的建议送达（或超时）再决策；r5c 中失败后的下一次决策 91–100% 早于这条建议
+                    t_w = time.time(); got = False
+                    while sim.running and time.time() - t_w < ADVICE_WAIT:
+                        with lock: got = st["adv_calls"] > n0 and st["adv_last_reason"] == why
+                        if got: break
+                        time.sleep(0.02)
+                    sim.log_event("advice_wait", got=got, waited_s=round(time.time() - t_w, 2))
         else:
             time.sleep(0.1)
     time.sleep(0.3)
@@ -472,7 +641,7 @@ sim.dump(out / "timeline.json")
 final = {"original": int(sim.scorer.last[0]), "repaired": int(sim.scorer.last[2]), "n_goals": int(sim.scorer.n_goals), "all_done": bool(sim.scorer.last[3]),
          "excluded": int(sim.dynamics.excluded)}
 ends = [e for e in sim.events if e["type"] == "episode_end"]
-summary = {"case": f"{tt}/{cn}", "events": ev_name, "thinking": ("dual_advice" if ADVICE else ("dual_shared" if SLOW_ON else "fast_shared")) + "_" + FAST_MODE + ("_bust" if cache_bust else "") + ("" if monitor else "_nomon") + ("_monsync" if (monitor and not MON_ASYNC) else ""), "coordinator": "r4", "rc_dynamics": sim.dynamics.log, "slow_mode": SLOW_MODE, "done_verify_wait": DONE_VERIFY_WAIT if ADVICE else None, "advice_max_tokens": ADVICE_MAX_TOKENS if ADVICE else None, "advice_every": ADVICE_EVERY if ADVICE else None, "hide_closed": hide_closed, "monitor_async": MON_ASYNC, "fast_mode": FAST_MODE, "slow_on": SLOW_ON, "monitor": monitor, "cache_bust": cache_bust, "bust_mode": BUST_MODE if cache_bust else None, "fast_fallback": fast_fallback, "semantic_check": semantic_check,
+summary = {"case": f"{tt}/{cn}", "events": ev_name, "thinking": ("dual_advice" if ADVICE else ("dual_shared" if SLOW_ON else "fast_shared")) + "_" + FAST_MODE + ("_bust" if cache_bust else "") + ("" if monitor else "_nomon") + ("_monsync" if (monitor and not MON_ASYNC) else ""), "coordinator": ("r5" if R5 else "r4"), "fail_block": FAIL_BLOCK, "done_verify": DONE_VERIFY, "n_verify": st["n_verify"], "n_blocked": st["n_blocked"], "n_override": st["n_override"], "block_insist": BLOCK_INSIST, "clock": CLOCK, "token_rates": list(sim.token_rates) if CLOCK == "token" else None, "frozen_wall": round(sim.frozen_wall, 2), "models": {"fast": fast_client.model, "slow": slow_client.model, "profile": getattr(fast_client, "profile", None), "slow_profile": getattr(slow_client, "profile", None)}, "rc_dynamics": sim.dynamics.log, "slow_mode": SLOW_MODE, "done_verify_wait": DONE_VERIFY_WAIT if ADVICE else None, "advice_wait": ADVICE_WAIT if ADVICE else None, "replan_wait": REPLAN_WAIT if (SLOW_ON and not ADVICE) else None, "advice_max_tokens": ADVICE_MAX_TOKENS if ADVICE else None, "advice_every": ADVICE_EVERY if ADVICE else None, "hide_closed": hide_closed, "monitor_async": MON_ASYNC, "fast_mode": FAST_MODE, "slow_on": SLOW_ON, "monitor": monitor, "cache_bust": cache_bust, "bust_mode": BUST_MODE if cache_bust else None, "fast_fallback": fast_fallback, "semantic_check": semantic_check,
            "image": use_image, "seed": seed, "final": final, "sim_time": round(float(sim.env.sim.data.time - sim.sim_t0), 2), "wall": round(time.time() - t0, 1),
            "realized_rtr": ends[0]["realized_rtr"] if ends else None, "n_calls": len(calls_log),
            "event_report": mgr.report() if mgr else {}, "history": history, "subgoal_events": [(round(t - sim.sim_t0, 2), w) for t, w in sim.scorer.rep.events]}

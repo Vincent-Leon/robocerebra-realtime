@@ -1,0 +1,181 @@
+# r5 正式作业：60 个任务 × 3 种模式（jev, text, advice），种子 1，失败屏蔽 3，完成核实 fast，时钟 paused，--image=off
+Ideal/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Ideal/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Execution/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Memory_Exploration/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Mix/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Observation_Mismatching/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off
+Random_Disturbance/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast --clock=paused --image=off

@@ -1,0 +1,39 @@
+# 真实时钟参考硬件改为 H20 后（10-27）的 Qwen3-VL 实例：与 L20 GPU3 上的设置相同（同一镜像 vLLM 0.27.1、同一权重、最长 16384、
+# 前缀缓存、最多 16 个并发序列），只换 GPU。可用显存 0.308 × 140.4 GiB ≈ 43.2 GiB，与 L20 上 0.90 × 48.0 GiB 相同。
+# 只绑定 127.0.0.1（仿真也在 H20 本机），不设密钥。每张卡一个 compose 项目（-p embodied-vl-h20-gpu<GPU>），可同时在两张卡上各起一个。
+# 用法（H20 上，本文件所在目录）：
+#   VL_GPU=1 VL_PORT=11594 VL_DIR=/data/embodied-rt/weights/qwen3-vl-2b-instruct VL_NAME=exp-qwen3-vl-2b docker compose -p embodied-vl-h20-gpu1 up -d
+services:
+  vllm-exp-vl-h20:
+    container_name: vllm-exp-vl-h20-gpu${VL_GPU:?需要 VL_GPU}
+    image: vllm/vllm-openai:latest
+    restart: "no"
+    ipc: host
+    shm_size: '32G'
+    ports:
+      - "127.0.0.1:${VL_PORT:?需要 VL_PORT}:8000"
+    environment:
+      PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      HF_HUB_OFFLINE: "1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              device_ids: ["${VL_GPU}"]
+    volumes:
+      - "${VL_DIR:?需要 VL_DIR}:/app/model:ro"
+    command: >
+      --served-model-name ${VL_NAME:?需要 VL_NAME}
+      --model /app/model
+      --tensor-parallel-size 1
+      --max-model-len 16384
+      --max-num-seqs 16
+      --gpu-memory-utilization 0.308
+      --enable-prefix-caching
+      --enable-prompt-tokens-details
+      --limit-mm-per-prompt '{"image":2,"video":0}'
+      --host 0.0.0.0
+      --port 8000

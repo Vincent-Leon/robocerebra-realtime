@@ -188,6 +188,8 @@ class ScriptedExecutor:
     def retreat_if_needed(self, gripper: float, skill: str) -> None:
         """技能开始时若手中物体（或空夹爪）低于末端所在敞口容器的顶面（例如上一个放置在下降途中被取消），
         先竖直抬到能越过顶面的高度，再朝基座方向水平退出 15 cm，避免在伸直姿态下直接长距离搬运而停滞。"""
+        if self.elbow_straight():
+            self.joint_retract(gripper, skill)                      # r5：上一个技能把手臂留在伸直姿态
         if not self.CLEAR_LOCAL_OBSTACLE: return
         e = self.eef()
         # 末端在前后开口的储物盒里面（顶板以下）：沿开口方向水平退出，不能竖直上抬（会撞顶板）
@@ -680,8 +682,11 @@ class ScriptedExecutor:
         if ok:
             self.held_drop = float(self.eef()[2] - self.obj_zrange(obj)[0])     # 手持物体最低点到末端的距离
             if np.linalg.norm(gp[:2] - self.base_xy()) > 0.62:                   # 远端抓取：先向基座方向回收，避免卡在工作空间边界
-                back = self.eef()[:2] + 0.5 * (self.HOME[:2] - self.eef()[:2])
-                self.move_xy(back[0], back[1], CLOSE, name, tol=0.02, max_steps=60)
+                if self.elbow_straight():
+                    self.joint_retract(CLOSE, name)                              # r5：手臂已伸直，末端空间回收无效
+                else:
+                    back = self.eef()[:2] + 0.5 * (self.HOME[:2] - self.eef()[:2])
+                    self.move_xy(back[0], back[1], CLOSE, name, tol=0.02, max_steps=60)
         if ok and self.PICK_VERIFY_STEPS and not self.cancel_flag:
             self.hold(self.PICK_VERIFY_STEPS, CLOSE, name)
             still = bool(self.checker._in_hand(obj)) or np.linalg.norm(self.obj_pos(obj) - self.eef()) < max(0.06, min(rb, 0.12) + 0.03)
@@ -913,8 +918,47 @@ class ScriptedExecutor:
 
     HOME = np.array([-0.05, 0.0, 0.66])
 
+    JOINT_RETRACT = True       # r5：肘关节接近伸直限位时改用关节空间收臂（见 joint_retract）
+    ELBOW_STRAIGHT_Q4 = -0.30  # Panda 肘关节 q4 上限 −0.07（完全伸直）；高于此值视为接近伸直
+
+    def arm_q(self) -> np.ndarray:
+        return np.array(self.env.sim.data.qpos[self.env.robots[0]._ref_joint_pos_indexes])
+
+    def elbow_straight(self) -> bool:
+        return bool(self.JOINT_RETRACT and self.arm_q()[3] > self.ELBOW_STRAIGHT_Q4)
+
+    def joint_retract(self, gripper: float, skill: str, ramp: int = 30, max_steps: int = 60,
+                      kp: float = 150.0, kd: float = 24.0) -> bool:
+        """r5：在关节空间把手臂收回标准姿态（保留底座转角 q1 与腕部转角 q7，手持物体朝向不变），再交还给末端空间控制器。
+        伸直的手臂在末端空间是奇异的：沿手臂方向的回收指令对肘关节不产生力矩，肘部一直顶在限位上，
+        末端只能横向摆动（记忆·执行 case5：柜顶布丁离基座 0.76 m，抓起后 place_on(plate_1) 与 go_home 都在半径 0.66–0.72 m 处停滞）。
+        做法：临时替换 OSC 的力矩计算为关节 PD（质量矩阵加权 + 重力补偿），设定点在 ramp 步内从当前关节角线性插值到目标。"""
+        ctrl = self.env.robots[0].controller
+        q0 = self.arm_q(); qg = np.array(self.env.robots[0].init_qpos, float); qg[0] = q0[0]; qg[6] = q0[6]
+        k = {"i": 0}
+
+        def pd_torques():
+            ctrl.update()
+            qd = q0 + min(1.0, (k["i"] + 1) / ramp) * (qg - q0)
+            tau = ctrl.mass_matrix @ (kp * (qd - ctrl.joint_pos) - kd * ctrl.joint_vel) + ctrl.torque_compensation
+            ctrl.new_update = True
+            return tau
+
+        ctrl.run_controller = pd_torques
+        try:
+            for i in range(max_steps):
+                if self.cancel_flag: return False
+                k["i"] = i
+                self.step([0, 0, 0, 0, 0, 0, gripper], skill, "joint_retract" if i == 0 else "")
+                if i + 1 >= ramp and np.linalg.norm(self.arm_q() - qg) < 0.05: break
+        finally:
+            del ctrl.run_controller                              # 恢复类方法 OSC.run_controller
+        return bool(np.linalg.norm(self.arm_q() - qg) < 0.10)
+
     def go_home(self, gripper: float, skill: str) -> bool:
-        """停滞恢复：先抬到当前高度与 0.66 的较大值，再回到基座前方中立位。"""
+        """停滞恢复：先抬到当前高度与 0.66 的较大值，再回到基座前方中立位。r5：肘关节接近伸直时先在关节空间收臂。"""
+        if self.elbow_straight():
+            self.joint_retract(gripper, skill)
         cur = self.eef()
         self.move_to(np.array([cur[0], cur[1], max(cur[2], 0.62 + self.zoff)]), gripper, skill, 0.02, 30)
         return self.move_to(self.HOME.copy(), gripper, skill, 0.03, 80)

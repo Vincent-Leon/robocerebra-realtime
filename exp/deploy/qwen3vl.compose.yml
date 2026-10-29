@@ -1,0 +1,43 @@
+# 实验实例（第五轮模型阶梯）：Qwen3-VL Instruct 2B / 4B / 8B / 32B-FP8，在 L20 GPU3 上依次部署，与 Qwen3.8-27B 实验实例轮流使用同一端口
+# 用法（L20 上，/data/vllm/exp/embodied-rt/qwen3vl/ 目录内；密钥从上级目录 .env 的 EXP_API_KEY 读取）：
+#   docker compose -p embodied-vl --env-file ../.env down
+#   VL_DIR=/data/vllm/weights/qwen3-vl-2b-instruct VL_NAME=exp-qwen3-vl-2b docker compose -p embodied-vl --env-file ../.env up -d
+# 先停 Qwen3.8 实例（cd .. && docker compose down），两者共用 10.0.2.220:11591。
+# 与 Qwen3.8 实例的设置一致：前缀缓存、提示 token 明细、最多 16 个并发序列；Instruct 版无思考，不加 reasoning parser。
+# 最长上下文 16384（r4 的 21298 次调用中提示最长 3509 token、提示 + 输出最长 6205），使 32B-FP8（权重约 35.5 GB）在 48 GB 卡上仍有足够 KV 缓存；四个尺寸统一。
+services:
+  vllm-exp-embodied-vl:
+    container_name: vllm-exp-embodied-vl
+    image: vllm/vllm-openai:latest
+    restart: "no"
+    ipc: host
+    shm_size: '32G'
+    ports:
+      - "10.0.2.220:11591:8000"
+    environment:
+      PYTORCH_CUDA_ALLOC_CONF: "expandable_segments:True"
+      NVIDIA_DRIVER_CAPABILITIES: compute,utility
+      HF_HUB_OFFLINE: "1"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              capabilities: ["gpu"]
+              device_ids: ["3"]
+    volumes:
+      - "${VL_DIR:?需要 VL_DIR}:/app/model:ro"
+    command: >
+      --served-model-name ${VL_NAME:?需要 VL_NAME}
+      --model /app/model
+      --tensor-parallel-size 1
+      --max-model-len ${VL_MAXLEN:-16384}
+      --max-num-seqs 16
+      --gpu-memory-utilization ${VL_UTIL:-0.90}
+      --enable-prefix-caching
+      --enable-prompt-tokens-details
+      --limit-mm-per-prompt '{"image":2,"video":0}'
+      --api-key ${EXP_API_KEY:?需要 EXP_API_KEY}
+      --host 0.0.0.0
+      --port 8000
+      ${VL_EXTRA:-}

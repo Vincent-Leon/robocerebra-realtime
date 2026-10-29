@@ -1,0 +1,301 @@
+# r5 正式作业：60 个任务 × 5 种模式（jev, text, think, plan, advice），种子 1，失败屏蔽 3，完成核实 fast
+Ideal/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case1 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case1 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case1 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case1 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case1 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case2 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case2 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case2 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case2 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case2 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case3 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case4 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case4 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case4 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case4 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case4 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case5 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case5 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case5 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case5 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case5 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case6 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case6 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case6 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case6 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case6 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case7 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case7 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case7 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case7 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case7 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case8 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case8 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case8 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case8 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case8 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case9 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case9 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case9 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case9 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case9 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Ideal/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Execution/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Memory_Exploration/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Mix/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Observation_Mismatching/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case10 --fast=jev --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case10 --fast=text --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case10 --fast=think --slow=off --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case10 --fast=jev --slow=on --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast
+Random_Disturbance/case10 --fast=jev --slow=advice --done_verify_wait=0 --max_sim=300 --max_skills=40 --seed=1 --fail_block=3 --done_verify=fast

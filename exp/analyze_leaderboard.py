@@ -10,8 +10,11 @@
   - 不同时间预算下的得分：每局前 B 秒内完成的子目标比例（同主表口径）；最后一列"全程"即主表得分（含 300 s 到时后正在执行的技能完成的子目标）。
 参考行：标准计划（GT plan，无语言模型）在同一任务集上的完成率，即执行器上限。
 输出：<out>/leaderboard_<root>.md、leaderboard_<root>.json（每模式一行）、leaderboard_<root>_episodes.json（每局一条，供 plot_leaderboard.py）。
-用法: python analyze_leaderboard.py [--root=llm_l20_r4lb] [--gt=gtplan_r4_final] [--out=../notes/figs_lb] [--seeds=1,2]
+用法: python analyze_leaderboard.py [--root=llm_l20_r4lb[,其他目录...]] [--gt=gtplan_r4_final] [--out=../notes/figs_lb] [--seeds=1,2] [--name=输出名]
   --seeds：只统计这些种子（批次），输出文件名加后缀，如 leaderboard_llm_l20_r4lb_s1.md
+  --root 可给多个目录（逗号分隔）。r5 起每局记录模型名与改进开关（失败屏蔽、完成核实、图像），按"模型 × 模式 × 开关"分组；
+  只有一种模型与开关组合时，分组即模式，输出与 r4 相同。r4 的记录没有模型名，按 --default_model（默认 exp-qwen3.8-27b-fp8）计。
+  r5 新增辅助列：重复失败（与本局更早一次失败完全相同的调用）、等待次数、提前宣布完成局数、完成核实次数、被屏蔽的选择次数。
 """
 import sys, json, glob, collections
 from pathlib import Path
@@ -19,7 +22,8 @@ import numpy as np
 import rc_env as R
 
 opt = {a.split("=")[0][2:]: a.split("=", 1)[1] for a in sys.argv[1:] if a.startswith("--") and "=" in a}
-root = opt.get("root", "llm_l20_r4lb"); gt_tag = opt.get("gt", "gtplan_r4_final")
+roots = opt.get("root", "llm_l20_r4lb").split(","); root = opt.get("name", "+".join(roots)); gt_tag = opt.get("gt", "gtplan_r4_final")
+DEFAULT_MODEL = opt.get("default_model", "exp-qwen3.8-27b-fp8")
 out = Path(opt.get("out", str(R.PROJECT_ROOT / "notes" / "figs_lb"))); out.mkdir(parents=True, exist_ok=True)
 SEEDS = {int(x) for x in opt["seeds"].split(",")} if opt.get("seeds") else None
 stem = f"leaderboard_{root}" + (f"_s{''.join(map(str, sorted(SEEDS)))}" if SEEDS else "")
@@ -43,11 +47,35 @@ def end_reason(tl, hist):
     types = {e["type"] for e in tl}
     for k in ("all_done", "planner_done", "abort"):
         if k in types: return k
-    return "max_skills" if len(hist) >= MAX_SKILLS else "max_sim"
+    return "max_skills" if sum(1 for h in hist if not str(h.get("call", "")).startswith("<")) >= MAX_SKILLS else "max_sim"   # 不计无效回复与被屏蔽的选择
+
+
+def short_model(m):
+    return m.replace("exp-", "").replace("-fp8", "").replace("-instruct", "")
+
+
+def variant(ep):
+    """r5 改进开关；r4 记录没有这些字段，记为空串。"""
+    v = []
+    if ep.get("fail_block"): v.append(f"屏蔽{ep['fail_block']}")
+    if ep.get("done_verify", "off") != "off": v.append({"think": "核实·开思考", "fast": "核实"}.get(ep["done_verify"], ep["done_verify"]))
+    if ep.get("image") is False: v.append("无图像")
+    if ep.get("clock", "wall") != "wall": v.append({"paused": "暂停时钟", "token": "token 时钟"}.get(ep["clock"], ep["clock"]))
+    if ep.get("advice_wait"): v.append(f"失败后等建议{ep['advice_wait']:g}s")          # r5d
+    if ep.get("replan_wait") == "state": v.append("作废后等状态变化")
+    return "·".join(v)
+
+
+def repeat_fails(hist):
+    seen, n = set(), 0
+    for h in hist:
+        if h.get("ok") or str(h.get("call", "")).startswith("<"): continue
+        n += h["call"] in seen; seen.add(h["call"])
+    return n
 
 
 eps = collections.defaultdict(list); bad = []; dyn = collections.defaultdict(lambda: [0, 0])
-for f in sorted(glob.glob(str(R.RUNS_ROOT / root / "*" / "*" / "episode.json"))):
+for rt, f in sorted((rt, x) for rt in roots for x in glob.glob(str(R.RUNS_ROOT / rt / "*" / "*" / "episode.json"))):
     p = Path(f); ep = json.load(open(f))
     if SEEDS and int(ep["seed"]) not in SEEDS: continue
     tl = json.load(open(p.with_name("timeline.json")))["events"]
@@ -57,32 +85,60 @@ for f in sorted(glob.glob(str(R.RUNS_ROOT / root / "*" / "*" / "episode.json")))
         rs = json.load(open(p.with_name("rescored.json"))); fin = {"repaired": rs["repaired"], "n_goals": rs["n_goals"], "all_done": rs["repaired_all"]}; exc = int(rs.get("excluded", exc))
     n = fin["n_goals"] - exc; d = fin["repaired"] - exc
     calls = ep.get("calls", []); hist = ep.get("history", [])
-    fast = [c["latency"] for c in calls if c.get("branch") == "fast" and c.get("latency")]
-    slow = [c["latency"] for c in calls if c.get("branch") == "slow" and c.get("latency")]
+    clock = ep.get("clock", "wall"); ta, tP, tD = ep.get("token_rates") or (0.145, 2821.0, 23.6)
+    def eff_lat(c):   # 环境感受到的决策延迟：真实时钟 = 实测；token 时钟 = 按用量折算；暂停时钟 = 不计（不列入）
+        if clock == "wall": return c.get("latency")
+        if clock == "paused": return None
+        u = c.get("usage") or {}
+        if u.get("prompt_tokens") is None: return c.get("latency")
+        return ta + max(u["prompt_tokens"] - (c.get("cached_tokens") or 0), 0) / tP + (u.get("completion_tokens") or 0) / tD
+    fast = [x for c in calls if c.get("branch") == "fast" for x in [eff_lat(c)] if x]
+    slow = [x for c in calls if c.get("branch") == "slow" for x in [eff_lat(c)] if x]
     pt = sum((c.get("usage") or {}).get("prompt_tokens") or 0 for c in calls); ct = sum(c.get("cached_tokens") or 0 for c in calls)
     ot = sum((c.get("usage") or {}).get("completion_tokens") or 0 for c in calls)
     log = ep.get("rc_dynamics") or []
     nd = sum(1 for e in log if e.get("type") == "rc_disturbance"); ns = sum(1 for e in log if e.get("type") == "rc_disturbance_skipped")
     dyn[ep["case"]][0] += nd; dyn[ep["case"]][1] += ns
-    eps[ep["thinking"]].append({"mode": ep["thinking"], "task": ep["case"], "type": ep["case"].split("/")[0], "seed": ep["seed"], "score": d / max(n, 1),
+    mods = ep.get("models") or {}; fm = mods.get("fast") or DEFAULT_MODEL; sm = mods.get("slow") or fm
+    model = short_model(fm) if (sm == fm or not ep.get("slow_on")) else f"{short_model(fm)}+{short_model(sm)}"
+    key = (model, ep["thinking"], variant(ep))
+    eps[key].append({"mode": ep["thinking"], "model": model, "variant": key[2], "clock": clock, "root": rt, "task": ep["case"], "type": ep["case"].split("/")[0], "seed": ep["seed"], "score": d / max(n, 1),
                                 "done": d, "n": n, "success": bool(fin["all_done"]), "time": ep["sim_time"], "fast": fast, "slow": slow,
                                 "tok_nc": pt - ct + ot, "tok_cached": ct, "tok_in_nc": pt - ct, "tok_out": ot, "gpu": sum(c.get("latency") or 0 for c in calls),
-                                "n_skills": len(hist), "failed": sum(1 for h in hist if not h.get("ok") and h.get("call") != "<invalid reply>"),
+                                "n_skills": len(hist), "failed": sum(1 for h in hist if not h.get("ok") and not str(h.get("call", "")).startswith("<")),
                                 "invalid": sum(1 for h in hist if h.get("call") == "<invalid reply>"), "end": end_reason(tl, hist), "dist": nd, "dist_skipped": ns,
+                                "repeat_fail": repeat_fails(hist), "waits": sum(1 for h in hist if str(h.get("call", "")).startswith("wait")),
+                                "n_verify": int(ep.get("n_verify") or 0), "n_blocked": int(ep.get("n_blocked") or 0),
                                 "events": [float(t) for t, _ in ep.get("subgoal_events", [])]})       # 子目标完成时刻（不含描述错位预完成的），用于时间预算得分
 
 gt = {}
 for f in glob.glob(str(R.RUNS_ROOT / gt_tag / "*" / "result.json")):
     r = json.load(open(f)); exc = int(r.get("excluded", 0)); gt[r["task"]] = ((r["repaired_done"] - exc) / max(r["n_goals"] - exc, 1), bool(r["repaired_all"]))
 
+MULTI = len({(k[0], k[2]) for k in eps}) > 1                 # 多于一种"模型 × 开关"组合时，分组键带模型与开关
+MULTI_MODEL = len({k[0] for k in eps}) > 1; MULTI_VAR = len({k[2] for k in eps}) > 1   # 名称里只写有差别的部分
+
+
+def cfg_of(k):
+    return f"{k[0]}|{k[1]}|{k[2]}" if MULTI else k[1]
+
+
+def name_of(k):
+    n = (f"{k[0]} · " if MULTI_MODEL else "") + NAME.get(k[1], k[1])
+    return n + (f"（{k[2] or 'r4 设置'}）" if MULTI_VAR else "")
+
+
+for k, v in eps.items():
+    for e in v: e["cfg"] = cfg_of(k)
 rows = []
-for m, v in eps.items():
+for k, v in eps.items():
+    m = k[1]
     seeds = sorted({e["seed"] for e in v}); ntask = {s: len({e["task"] for e in v if e["seed"] == s}) for s in seeds}
     full = [s for s in seeds if ntask[s] >= 0.95 * max(ntask.values())]      # SD 只用任务基本齐全的批次，跑到一半的批次不计
     batch = [float(np.mean([e["score"] for e in v if e["seed"] == s])) for s in full]
     f_ = np.array([x for e in v for x in e["fast"]]) if any(e["fast"] for e in v) else np.array([np.nan])
     s_ = [x for e in v for x in e["slow"]]
-    rows.append({"mode": m, "name": NAME.get(m, m), "n": len(v), "tasks": len({e["task"] for e in v}), "seeds": seeds, "full_seeds": full, "ntask": ntask, "batch": batch,
+    rows.append({"cfg": cfg_of(k), "mode": m, "model": k[0], "variant": k[2], "name": name_of(k), "n": len(v), "tasks": len({e["task"] for e in v}), "seeds": seeds, "full_seeds": full, "ntask": ntask, "batch": batch,
                  "score": float(np.mean([e["score"] for e in v])), "sd": float(np.std(batch, ddof=1)) if len(batch) > 1 else None,
                  "succ": float(np.mean([e["success"] for e in v])),
                  "cat": {t: float(np.mean([e["score"] for e in v if e["type"] == t])) for t in TYPES if any(e["type"] == t for e in v)},
@@ -91,6 +147,10 @@ for m, v in eps.items():
                  "tok_cached_med": float(np.median([e["tok_cached"] for e in v])), "gpu_med": float(np.median([e["gpu"] for e in v])),
                  "tok_mean": {k: float(np.mean([e[k] for e in v])) for k in ("tok_cached", "tok_in_nc", "tok_out")},
                  "fail_med": float(np.median([e["failed"] for e in v])), "invalid_mean": float(np.mean([e["invalid"] for e in v])),
+                 "fail_mean": float(np.mean([e["failed"] for e in v])), "repeat_mean": float(np.mean([e["repeat_fail"] for e in v])),
+                 "wait_mean": float(np.mean([e["waits"] for e in v])), "premature": sum(1 for e in v if e["end"] == "planner_done" and not e["success"]),
+                 "premature_gt": sum(1 for e in v if e["end"] == "planner_done" and not e["success"] and e["task"] in gt and e["score"] < gt[e["task"]][0] - 1e-9),
+                 "verify_mean": float(np.mean([e["n_verify"] for e in v])), "blocked_mean": float(np.mean([e["n_blocked"] for e in v])),
                  "ends": {k: sum(1 for e in v if e["end"] == k) for k in ENDS},
                  "budget": {str(B): float(np.mean([sum(B is None or t <= B for t in e["events"]) / max(e["n"], 1) for e in v])) for B in BUDGETS}})
 rows.sort(key=lambda r: -r["score"])
@@ -100,11 +160,12 @@ if gt:
               "cat": {t: float(np.mean([g[0] for k, g in gt.items() if k.startswith(t + "/")])) for t in TYPES}}
 
 L = [f"# 排行榜（{root}" + (f"，种子 {','.join(map(str, sorted(SEEDS)))}" if SEEDS else "") + f"；实时性违规剔除 {len(bad)} 局）", "",
-     "| # | 模式 | 得分 | 整任务成功 | 单次决策 p50 / p95 | 慢分支单次 | 每任务用时 | 每任务 token（非缓存输入+输出） | 缓存输入 | 每任务 GPU 时间 | 失败技能 | 局数 |",
+     "| # | 模式 | 得分 | 整任务成功 | 单次决策 p50 / p95（环境感受到的） | 慢分支单次 | 每任务用时 | 每任务 token（非缓存输入+输出） | 缓存输入 | 每任务 GPU 时间 | 失败技能 | 局数 |",
      "|---|---|---|---|---|---|---|---|---|---|---|---|"]
 for i, r in enumerate(rows, 1):
     sc = f"{r['score']:.3f}" + (f" ± {r['sd']:.3f}" if r["sd"] is not None else "†")
-    L.append(f"| {i} | {r['name']} | {sc} | {r['succ']:.0%} | {r['fast_p50']:.2f} / {r['fast_p95']:.2f} s | "
+    lat = "–" if np.isnan(r["fast_p50"]) else f"{r['fast_p50']:.2f} / {r['fast_p95']:.2f} s"
+    L.append(f"| {i} | {r['name']} | {sc} | {r['succ']:.0%} | {lat} | "
              + (f"{r['slow_p50']:.1f} s" if r["slow_p50"] is not None else "–") + f" | {r['time_med']:.0f} s | {r['tok_med'] / 1000:.1f} k | {r['tok_cached_med'] / 1000:.1f} k | {r['gpu_med']:.0f} s | {r['fail_med']:.0f} | {r['n']} |")
 if gt_row:
     L.append(f"| – | 参考：标准计划（无语言模型，按演示步骤执行） | {gt_row['score']:.3f} | {gt_row['succ']:.0%} | – | – | – | – | – | – | – | {gt_row['n']} |")
@@ -122,29 +183,36 @@ L += [f"| {r['name']} | " + " | ".join(f"{r['budget'][str(B)]:.3f}" for B in BUD
 L += ["", "## 结束原因（局数）", "", "| 模式 | " + " | ".join(END_NAME[k] for k in ENDS) + " | 无效回复（均值） |", "|---" * (len(ENDS) + 2) + "|"]
 for r in rows:
     L.append(f"| {r['name']} | " + " | ".join(str(r["ends"][k]) for k in ENDS) + f" | {r['invalid_mean']:.1f} |")
+L += ["", "## 失败与浪费的动作（每局均值）", "",
+      "重复失败：与本局更早一次失败完全相同的调用。宣布完成（未做完）：模型宣布完成但任务没有全部完成的局数；"
+      "其中低于标准计划：宣布完成时得分低于标准计划在同一任务上的得分（执行器还能做更多），其余是剩下的步骤执行器做不了。完成核实、被屏蔽的选择为 r5 改进的触发次数。", "",
+      "| 模式 | 失败技能 | 其中重复失败 | 等待 | 宣布完成（未做完） | 其中低于标准计划 | 完成核实 | 被屏蔽的选择 | 局数 |", "|---|---|---|---|---|---|---|---|---|"]
+L += [f"| {r['name']} | {r['fail_mean']:.1f} | {r['repeat_mean']:.1f} | {r['wait_mean']:.1f} | {r['premature']} | {r['premature_gt']} | {r['verify_mean']:.2f} | {r['blocked_mean']:.2f} | {r['n']} |" for r in rows]
 REF = "fast_shared_jev"                                       # 配对比较的基线：双分支模式所用的同一个快分支单独运行
 PAIR_B = 60                                                   # 另给 60 s 时间预算下的配对比较，反映得分来得快慢
 pairs = []
-if REF in eps:
+refs = {(k[0], k[2]): k for k in eps if k[1] == REF}
+if refs:
     rng = np.random.default_rng(0)
     sc_at = lambda e, B: e["score"] if B is None else sum(t <= B for t in e["events"]) / max(e["n"], 1)
     task_mean = lambda v, B: {t: float(np.mean([sc_at(e, B) for e in v if e["task"] == t])) for t in {e["task"] for e in v}}   # 多批时先按任务平均
     for B in (None, PAIR_B):
-        ref = task_mean(eps[REF], B)
         for r in rows:
-            if r["mode"] == REF: continue
-            mine = task_mean(eps[r["mode"]], B); common = sorted(set(mine) & set(ref))
+            rk = refs.get((r["model"], r["variant"]))
+            if r["mode"] == REF or rk is None: continue
+            ref = task_mean(eps[rk], B)
+            mine = task_mean(eps[(r["model"], r["mode"], r["variant"])], B); common = sorted(set(mine) & set(ref))
             if not common: continue
             dlt = np.array([mine[t] - ref[t] for t in common])
             boot = dlt[rng.integers(0, len(dlt), size=(10000, len(dlt)))].mean(axis=1)
-            pairs.append({"mode": r["mode"], "name": r["name"], "budget": B, "n": len(common), "diff": float(dlt.mean()), "lo": float(np.percentile(boot, 2.5)),
+            pairs.append({"cfg": r["cfg"], "mode": r["mode"], "name": r["name"], "budget": B, "n": len(common), "diff": float(dlt.mean()), "lo": float(np.percentile(boot, 2.5)),
                           "hi": float(np.percentile(boot, 97.5)), "win": int((dlt > 1e-9).sum()), "tie": int((np.abs(dlt) <= 1e-9).sum()), "loss": int((dlt < -1e-9).sum())})
     L += ["", f"## 与{NAME[REF]}的逐任务配对比较", "",
-          f"同一任务上两种模式得分之差的均值（多批时先按任务平均）；95% 区间为按任务重抽样（bootstrap，10000 次），区间包含 0 即差异不显著。"
+          ("每种模型 × 开关组合各自与同组合的仅快·Jev 比较。" if MULTI else "") + f"同一任务上两种模式得分之差的均值（多批时先按任务平均）；95% 区间为按任务重抽样（bootstrap，10000 次），区间包含 0 即差异不显著。"
           f"左半为主表得分（300 s），右半为 {PAIR_B} s 时间预算下的得分。", "",
           f"| 模式 | 得分差（300 s） | 95% 区间 | 更好 / 相同 / 更差 | 得分差（{PAIR_B} s） | 95% 区间 | 更好 / 相同 / 更差 |", "|---|---|---|---|---|---|---|"]
     for r in rows:
-        a = [q for q in pairs if q["mode"] == r["mode"]]
+        a = [q for q in pairs if q["cfg"] == r["cfg"]]
         if len(a) == 2:
             L.append(f"| {r['name']} | " + " | ".join(f"{q['diff']:+.3f} | [{q['lo']:+.3f}, {q['hi']:+.3f}] | {q['win']} / {q['tie']} / {q['loss']}" for q in a) + " |")
 if dyn:

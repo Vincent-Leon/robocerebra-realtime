@@ -8,6 +8,7 @@
 （Qwen3.8 混合架构的块大小为 784 token，见 E3.1）。易变内容（图像、位置、消息、时间）放在最后。
 cache_bust=True 时在系统提示开头放随机串，内容完全相同但无法复用缓存——用于分离共享 KV 的效果（r2/r3 的做法）。
 r3b 起运行器默认改用请求级 cache_salt（llm_client / jev_fast 的 cache_salt_per_request），输入 token 与实验组完全一致。
+r5（2026-10-26）新增 VERIFY 模式：快分支判"完成"时由慢分支开思考逐条核实。
 第三轮（2026-10-20）新增 ADVISE 模式：慢分支关闭思维链，只输出一两句建议；建议放在快分支调用的当前状态之后、
 模式指令之前（历史之后），不破坏可缓存前缀。
 """
@@ -30,6 +31,7 @@ Output formats (reply with exactly one JSON object, no markdown fences):
 - RESUME mode: {"resume_step": <number of the plan step to execute next, or 0 if the plan no longer fits the current state>, "reason": "<short>"}
 - ADVISE mode: {"advice": "<at most two short sentences for the fast controller: the next sub-goal(s) and what to avoid>"}
 - CHOOSE / DECIDE mode: answer with a single option letter only (no JSON).
+- VERIFY mode: {"complete": true | false, "missing": "<short list of the unmet requirements; empty if complete>"}
 General guidance: use exact identifiers from the lists below; prefer distinct target regions when several objects go into the same container; do not repeat a failed call unchanged more than twice; if a skill keeps failing, try a different region or recover first."""
 
 
@@ -75,6 +77,9 @@ MODE_INSTR = {
     "RESUME": "MODE: RESUME. A new plan arrived (listed above) while other actions were being executed. Which plan step should be executed next so that nothing already achieved is repeated and nothing still needed is skipped? (RESUME-mode JSON)",
     "CHOOSE": "MODE: CHOOSE. Pick the best next action from the candidate list above. Answer with its single letter only.",
     "DECIDE": "MODE: DECIDE. Pick the correct option from the list above. Answer with its single letter only.",
+    "VERIFY": ("MODE: VERIFY. The fast controller believes the whole task is complete. Check every requirement of the TASK (and of any newer messages) "
+               "against the CURRENT STATE (object positions versus region centers, drawer open fractions, object in hand) and the HISTORY. "
+               "Set complete to false if any requirement is not clearly satisfied (VERIFY-mode JSON)."),
     "ADVISE": ("MODE: ADVISE. A fast controller picks one action at a time and will read your advice. Do not write a full plan. "
                "In at most two short sentences, say what the next sub-goal is and what to avoid (ADVISE-mode JSON)."),
 }

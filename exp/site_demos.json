@@ -1,0 +1,61 @@
+{
+  "_comment": "网站'单局时间线 + 视频'的示例：render_demo.py 按此渲染视频（site/videos/<id>.mp4），make_site.py 读入时间线。由 pick_demos.py 挑选，均为真实时钟（H20）上满足实时性判据的局。",
+  "stories": [
+    {
+      "id": "think",
+      "title": "Acting vs. thinking before every action",
+      "lead": "Same model (Qwen3.8-27B), task and seed. With one-token Jev decisions (median 0.35 s each) the robot is almost never idle and finishes all 11 subgoals in 52 s. Thinking before every action takes a median 3.5 s per decision — 62 s in total, during which the robot stands still — so it finishes in 120 s and has 4 of 11 subgoals done at the 60 s mark.",
+      "episodes": [
+        {
+          "id": "think_jev",
+          "dir": "llm_r5w_q38/Memory_Exploration_case10/noevent_fastshared_jev_fb3_dvf_s3"
+        },
+        {
+          "id": "think_think",
+          "dir": "llm_r5w_q38/Memory_Exploration_case10/noevent_fastshared_think_fb3_dvf_s3"
+        }
+      ]
+    },
+    {
+      "id": "advice",
+      "title": "Advice injected by a slow branch",
+      "lead": "Same small model (Qwen3-VL-8B), task and seed. After failing to put the butter into a closed drawer, the advice branch repeatedly tells the fast branch to open the drawer first; the fast branch keeps trying closed drawers for a few more decisions, then follows the advice and finishes in 40 s. Without advice, the agent opens the wrong drawer and keeps picking up the butter and putting it back on the table until it runs out of actions.",
+      "episodes": [
+        {
+          "id": "advice_jev",
+          "dir": "llm_r5w_vl8b/Ideal_case6/noevent_fastshared_jev_fb3_dvf_s1"
+        },
+        {
+          "id": "advice_adv",
+          "dir": "llm_r5w_vl8b/Ideal_case6/noevent_dualadvice_jev_fb3_dvf_s1"
+        }
+      ]
+    },
+    {
+      "id": "plan",
+      "title": "A plan that arrives too late",
+      "lead": "The slow branch writes a complete plan (thinking on) while the fast branch keeps acting. The first plan takes 21 s; by the time it arrives the robot is already holding the moka pot, so the plan's first step is impossible and it is discarded. The second plan arrives at 39 s and is followed for two steps, until a grasp fails and the fast branch takes over again.",
+      "episodes": [
+        {
+          "id": "plan_dual",
+          "dir": "llm_r5w_q38/Ideal_case3/noevent_dualshared_jev_fb3_dvf_s1"
+        }
+      ]
+    },
+    {
+      "id": "size",
+      "title": "Model size",
+      "lead": "Same framework (Fast · Jev), task and seed. The 27B model finishes all six subgoals in 27 s. The 2B model first tries to put the pudding into closed drawers (six failures within a second), then picks up the plate and puts it back on the table 16 times until it runs out of actions, completing one subgoal.",
+      "episodes": [
+        {
+          "id": "size_27b",
+          "dir": "llm_r5w_q38/Ideal_case5/noevent_fastshared_jev_fb3_dvf_s1"
+        },
+        {
+          "id": "size_2b",
+          "dir": "llm_r5w_vl2b/Ideal_case5/noevent_fastshared_jev_fb3_dvf_s1"
+        }
+      ]
+    }
+  ]
+}
