@@ -43,14 +43,13 @@ h1 { font-size: 40px; line-height: 1.15; margin: 0 0 12px; font-weight: 720; let
 .cta a.primary { background: var(--ink); color: var(--surface); border-color: var(--ink); }
 .cta a:hover { text-decoration: none; filter: brightness(0.96); }
 .orgs { margin-top: 26px; } .orgs .cap { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 8px; }
-.orgs .row { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.orgs .org { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 13px; font-weight: 600; line-height: 1.3; color: var(--ink2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 10px 12px; background: var(--surface); }
+.orgs .row { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 12px; }
+.orgs .org { display: flex; flex-direction: column; align-items: center; gap: 8px; text-align: center; font-size: 12.5px; font-weight: 600; line-height: 1.3; color: var(--ink2); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 10px 12px; background: var(--surface); }
 .orgs .org img { height: 52px; width: auto; display: block; }
-.partner { margin-top: 18px; display: flex; align-items: center; gap: 18px; flex-wrap: wrap; }
-.partner .cap { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.partner img { height: 46px; width: auto; display: block; }
-:root[data-theme="dark"] .partner img { filter: invert(1); }
-@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .partner img { filter: invert(1); } }
+.orgs .org.partner { grid-column: span 2; justify-content: center; }   /* 公司标志：与大学同一行、同样的卡片，占两格 */
+.orgs .org.partner img { height: 44px; margin: 4px 0 2px; }
+:root[data-theme="dark"] .orgs .org.partner img { filter: invert(1); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .orgs .org.partner img { filter: invert(1); } }
 .kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin: 30px 0 4px; }
 .tile { background: var(--surface); border: 1px solid var(--ring); border-radius: 12px; padding: 14px 16px; }
 .tile .v { font-size: 28px; font-weight: 700; line-height: 1.2; }
@@ -123,7 +122,7 @@ table.mini { font-size: 13px; } table.mini th, table.mini td { padding: 5px 6px;
 #tip { max-width: 400px; } #tip .p { font-size: 12.5px; line-height: 1.45; margin-top: 6px; color: var(--ink); }
 footer { color: var(--muted); font-size: 12.5px; margin-top: 30px; border-top: 1px solid var(--grid); padding-top: 14px; }
 .empty { color: var(--muted); font-size: 14px; padding: 24px 0; text-align: center; }
-@media (max-width: 900px) { .orgs .row { grid-template-columns: repeat(3, minmax(0, 1fr)); } .grid2, .grid3, .cats, .findings { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: 30px; }
+@media (max-width: 900px) { .orgs .row { grid-template-columns: repeat(4, minmax(0, 1fr)); } .grid2, .grid3, .cats, .findings { grid-template-columns: 1fr; } .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } h1 { font-size: 30px; }
   nav .links { display: none; } .hide-sm { display: none; } }
 </style>
 </head>
@@ -140,7 +139,6 @@ footer { color: var(--muted); font-size: 12.5px; margin-top: 30px; border-top: 1
   <p class="lead">A benchmark for language-model agents controlling a simulated robot on long-horizon household tasks, where <b>the world keeps moving while the model thinks</b>. Every decision costs time, objects get displaced, and the scene changes under the agent's feet.</p>
   <div class="cta"><a class="primary" href="#leaderboard">View leaderboard</a><a href="#tasks">Browse tasks</a><a href="#how">How it works</a></div>
   <div class="orgs"><div class="cap">Contributors from</div><div class="row" id="orgs"></div></div>
-  <div class="partner" id="partner"></div>
   <div class="kpis" id="kpis"></div>
 </header>
 
@@ -724,7 +722,7 @@ function analysis() {
 
 function orgs() {
   document.getElementById("orgs").append(...DATA.orgs.map(o => el("span", { class: "org" }, el("img", { src: o.logo, alt: "" }), o.name)));
-  if (DATA.partner) document.getElementById("partner").append(el("span", { class: "cap", text: "In collaboration with" }), el("img", { src: DATA.partner.logo, alt: DATA.partner.name }));
+  if (DATA.partner) document.getElementById("orgs").append(el("span", { class: "org partner" }, el("img", { src: DATA.partner.logo, alt: DATA.partner.name }), "Industry partner"));
 }
 function kpis() {
   const host = document.getElementById("kpis"); host.innerHTML = "";
