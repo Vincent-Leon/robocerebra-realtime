@@ -367,7 +367,8 @@ function leaderboard() {
     token: `Token clock: each call costs ${DATA.meta.token_rates[0]} s + uncached input / ${DATA.meta.token_rates[1]} tok/s + output / ${DATA.meta.token_rates[2]} tok/s of environment time (reference rates fitted on Qwen3.8-27B FP8, 1× L20). `,
     paused: "Paused clock: the world is frozen while any model call is in flight. " };
   document.getElementById("lbnote").textContent = clockNote[state.clock] + "Bars: selected metric; the vertical tick is the scripted reference. † one seed so far, no SD. Decision p50: the median environment time charged per fast-branch decision. Only configurations with at least one complete seed are ranked" + (running ? `; ${running} more are still running.` : ".")
-    + (notYet.length ? ` Not yet run on this clock: ${notYet.join(", ")}.` : "");
+    + (notYet.length ? ` Not yet run on this clock: ${notYet.join(", ")}.` : "")
+    + " Fast · Text scores of Gemma-4-E4B and Qwen3-VL-2B mainly reflect reply formatting: on the wall clock 144/180 and 41/180 of their episodes ended after five invalid replies in a row.";
   document.getElementById("lbhow").innerHTML = `Rows are model × agent framework. Agents act under a <b>${CLOCKS.find(c => c[0] === state.clock)[1].toLowerCase()} clock</b>; switch the clock, the metric, the time budget (score counted up to that time) or the task category above.`;
 }
 
