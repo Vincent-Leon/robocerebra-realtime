@@ -387,7 +387,8 @@ function el(tag, attrs, ...kids) {
   for (const c of kids.flat()) if (c !== null && c !== undefined && c !== false) n.append(c.nodeType ? c : document.createTextNode(c));
   return n;
 }
-const f3 = v => v === null || v === undefined || Number.isNaN(v) ? "—" : v.toFixed(3);
+const r3 = v => { const x = v * 1000, f = Math.floor(x); return (Math.abs(x - f - 0.5) < 1e-9 ? (f % 2 === 0 ? f : f + 1) : Math.round(x)) / 1000; };   // 恰好在 .xxx5 时取偶数（与论文脚本的 Python 格式化一致），其余四舍五入
+const f3 = v => v === null || v === undefined || Number.isNaN(v) ? "—" : r3(v).toFixed(3);
 const pct = v => v === null || v === undefined || Number.isNaN(v) ? "—" : Math.round(v * 100) + "%";
 const sec = v => v === null || v === undefined ? "—" : (v < 10 ? v.toFixed(2) : v.toFixed(0)) + " s";
 const ktok = v => v === null || v === undefined ? "—" : (v / 1000).toFixed(1) + "k";
