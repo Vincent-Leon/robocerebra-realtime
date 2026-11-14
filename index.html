@@ -192,7 +192,7 @@ table.rt td { white-space: nowrap; } table.rt td:first-child { white-space: norm
 <body>
 <nav><div class="in">
   <span class="brand">Embodied Real-Time Bench</span>
-  <span class="links"><a href="#questions">Questions</a><a href="#tasks">Tasks</a><a href="#leaderboard">Leaderboard</a><a href="#beyond">26 and 59 tasks</a><a href="#breakeven">Break-even</a><a href="#factors">Quality × efficiency</a><a href="#robust">Robustness</a><a href="#cheaper">Cheaper thinking</a><a href="#schedule">Plan-first</a><a href="#distill">Distillation</a><a href="#frontiermodels">Frontier models</a><a href="#jev27">Decision model</a><a href="#models">By category</a><a href="#episodes">Typical cases</a><a href="#compute">Compute</a><a href="#hardware">Hardware</a><a href="#events">Events</a><a href="#slow">Slow branch</a><a href="#clocks">Clocks</a><a href="#analysis">Analysis</a><a href="#games">Games</a><a href="#how">How it works</a><a href="#findings">Findings</a></span>
+  <span class="links"><a href="#time">Score over time</a><a href="#questions">Questions</a><a href="#tasks">Tasks</a><a href="#leaderboard">Leaderboard</a><a href="#beyond">26 and 59 tasks</a><a href="#breakeven">Break-even</a><a href="#factors">Quality × efficiency</a><a href="#robust">Robustness</a><a href="#cheaper">Cheaper thinking</a><a href="#schedule">Plan-first</a><a href="#distill">Distillation</a><a href="#frontiermodels">Frontier models</a><a href="#jev27">Decision model</a><a href="#models">By category</a><a href="#episodes">Typical cases</a><a href="#compute">Compute</a><a href="#hardware">Hardware</a><a href="#events">Events</a><a href="#slow">Slow branch</a><a href="#clocks">Clocks</a><a href="#analysis">Analysis</a><a href="#games">Games</a><a href="#how">How it works</a><a href="#findings">Findings</a></span>
   <button class="btn" id="themeBtn" type="button">Theme: auto</button>
 </div></nav>
 <div class="wrap">
@@ -204,6 +204,17 @@ table.rt td { white-space: nowrap; } table.rt td:first-child { white-space: norm
   <div class="orgs"><div class="cap">Contributors from</div><div class="row" id="orgs"></div></div>
   <div class="kpis" id="kpis"></div>
 </header>
+
+<section class="card" id="time">
+  <h2>Score over time: thinking pays late, if at all</h2>
+  <p class="how">Mean score counted up to each moment of the episode, under the clock, track and task category selected in the leaderboard below (by default the visual reasoning track at reference speed). Fast frameworks gain early; thinking before every action pays for each decision in environment time and catches up late, if at all. The dashed line is the scripted reference at the end of the episode.</p>
+  <div class="controls">
+    <span><span class="cl">Compare</span><span class="seg" id="segCmp"></span></span>
+    <span><span class="cl" id="cmpLabel">Model</span><select id="selCmp"></select></span>
+  </div>
+  <div class="legend" id="atLegend"></div>
+  <div id="anytime"></div>
+</section>
 
 <section class="card" id="questions">
   <h2>What the benchmark asks</h2>
@@ -450,18 +461,6 @@ table.rt td { white-space: nowrap; } table.rt td:first-child { white-space: norm
   <p class="keyline" id="orPlans"></p>
   <details class="tv"><summary>Table view</summary><div class="heatwrap"><table id="orTable"></table></div></details>
 </section>
-
-<section class="card" id="time">
-  <h2>Score over time</h2>
-  <p class="how">Mean score counted up to each moment of the episode, under the clock and task category selected above. Fast frameworks gain early; thinking before every action pays for each decision in environment time and catches up late, if at all. The dashed line is the scripted reference at the end of the episode.</p>
-  <div class="controls">
-    <span><span class="cl">Compare</span><span class="seg" id="segCmp"></span></span>
-    <span><span class="cl" id="cmpLabel">Model</span><select id="selCmp"></select></span>
-  </div>
-  <div class="legend" id="atLegend"></div>
-  <div id="anytime"></div>
-</section>
-
 <div class="grid2">
   <section class="card">
     <h2>Score vs. decision latency</h2>
