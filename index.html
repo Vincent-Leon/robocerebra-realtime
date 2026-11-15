@@ -1262,7 +1262,7 @@ function labels() {
 }
 
 // 前沿闭源模型
-function apiSummary() {   // Closed models 一节的汇总表：与论文正文表 3 相同（数据在 site_results.py 的 RESULTS["api_table"]）
+function apiSummary() {   // Closed models 一节的汇总表：与论文正文表 2（tab:api）相同（数据在 site_results.py 的 RESULTS["api_table"]）
   const A = RES && RES.api_table; if (!A) { document.getElementById("closed").style.display = "none"; return; }
   const K = ["jev", "text", "slow"], rows = A.rows, mx = {};
   for (const k of K) for (const i of [0, 1]) mx[k + i] = Math.max(...rows.filter(r => r[k]).map(r => r[k][i]));
